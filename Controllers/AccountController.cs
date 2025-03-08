@@ -1,5 +1,4 @@
-﻿// Controllers/AccountController.cs
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -11,70 +10,92 @@ namespace UetdsProgramiNet.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
+        // Şifremi Unuttum Sayfası
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult ForgotPassword()
         {
-            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
+        // Şifremi Unuttum Sayfasından Gelen Post İsteği
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
                 {
-                    return RedirectToLocal(returnUrl);
+                    // E-posta varsa, kullanıcıyı bilgilendirebiliriz veya yeni şifre isteği gönderebiliriz.
+                    return RedirectToAction(nameof(ResetPassword), new { email = model.Email });
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Geçersiz giriş denemesi.");
+                    ModelState.AddModelError(string.Empty, "Bu e-posta adresi ile kayıtlı bir kullanıcı bulunmamaktadır.");
                     return View(model);
                 }
             }
-
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(HomeController.Index), "Home");
-        }
-
+        // Şifre Sıfırlama Sayfası
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult AccessDenied()
+        public IActionResult ResetPassword(string email)
         {
-            return View();
+            var model = new ResetPasswordViewModel { Email = email };
+            return View(model);
         }
 
-        private IActionResult RedirectToLocal(string returnUrl)
+        // Şifreyi Güncelleme İşlemi
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if (ModelState.IsValid)
             {
-                return Redirect(returnUrl);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    if (model.NewPassword == model.ConfirmPassword)
+                    {
+                        // Şifreyi hashleyip kaydediyoruz.
+                        var passwordHasher = new PasswordHasher<AppUser>();
+                        var hashedPassword = passwordHasher.HashPassword(user, model.NewPassword);
+
+                        user.PasswordHash = hashedPassword;
+                        var result = await _userManager.UpdateAsync(user);
+
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("Login", "Account");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Şifre güncellenirken bir hata oluştu.");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Şifreler uyuşmuyor.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Bu e-posta adresi ile kayıtlı bir kullanıcı bulunmamaktadır.");
+                }
             }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
+            return View(model);
         }
     }
 }

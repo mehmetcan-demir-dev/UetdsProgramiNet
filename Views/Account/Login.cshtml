@@ -1,15 +1,10 @@
-﻿<!-- Views/Account/Login.cshtml -->
-@model UetdsProgramiNet.Models.LoginViewModel
-
-@{
-    ViewData["Title"] = "Giriş";
-}
+﻿@model UetdsProgramiNet.Models.LoginViewModel
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <h2>@ViewData["Title"]</h2>
         <hr />
-        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <form asp-controller="Account" asp-action="Login" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group mb-3">
                 <label asp-for="Email"></label>
@@ -28,12 +23,13 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Giriş Yap</button>
             </div>
+            <div>
+                <a href="@Url.Action("ForgotPassword", "Account")">Şifremi Unuttum?</a>
+            </div>
         </form>
     </div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial");
 }
