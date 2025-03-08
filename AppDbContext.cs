@@ -13,6 +13,11 @@ namespace UetdsProgramiNet
         public DbSet<Hizmet> Hizmetler  { get; set; }
         public DbSet<Referans> Referanslar  { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var item in ChangeTracker.Entries())
