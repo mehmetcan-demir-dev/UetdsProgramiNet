@@ -1,0 +1,32 @@
+﻿@model UetdsProgramiNet.Models.ReferansModel
+
+@{
+    ViewData["Title"] = "Yeni Referans Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Yeni Referans Ekle</h1>
+
+<form asp-action="Ekle" method="post">
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Referans Açıklaması</label>
+        <input asp-for="Description" class="form-control" required />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label">Resim URL</label>
+        <input asp-for="ImageUrl" class="form-control" required />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-check">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label">Aktif mi?</label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>
+
+
