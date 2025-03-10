@@ -14,7 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserService, UserService>();
-
 builder.Services.AddDbContext<AppDbContext>(m =>
 {
     m.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), option =>
@@ -56,6 +55,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerB
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Oturum süresi
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();
@@ -67,16 +68,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
-// Kimlik doðrulama ve yetkilendirme middleware'lerini ekliyoruz
-app.UseAuthentication(); // Kimlik doðrulama
-app.UseAuthorization();  // Yetkilendirme
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.UseRouting();
 app.UseSession();
 
+// Middleware sýralamasý - ÖNEMLÝ!
+app.UseRouting();           // Ýlk önce routing
+
+app.UseAuthentication();     // Sonra authentication
+app.UseAuthorization();      // Sonra authorization
+
+// Son olarak endpoint yapýlandýrmasý
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
