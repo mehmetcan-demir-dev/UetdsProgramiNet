@@ -1,37 +1,82 @@
 ﻿@model UetdsProgramiNet.Models.HizmetModel
+
 @{
-    ViewData["Title"] = "Ekle";
+    ViewData["Title"] = "Yeni Hizmet Ekle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Yeni Hizmet Ekle</h1>
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+                        <h4 class="mb-sm-0">Yeni Hizmet Ekle</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="/Hizmet/Index">Hizmetler</a></li>
+                                <li class="breadcrumb-item active">Yeni Hizmet Ekle</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
 
-<form asp-action="Ekle" method="post">
-    
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Yeni Hizmet Ekle</h4><br />
+                            <form asp-action="Ekle" method="post">
+                                <div class="mb-3">
+                                    <label asp-for="Title" class="form-label">Başlık</label>
+                                    <input asp-for="Title" class="form-control" required />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
 
-    <div class="mb-3">
-        <label asp-for="IconUrl" class="form-label">Icon URL</label>
-        <input asp-for="IconUrl" class="form-control" required />
-        <span asp-validation-for="IconUrl" class="text-danger"></span>
+                                <div class="mb-3">
+                                    <label asp-for="Description" class="form-label">Açıklama</label>
+                                    <input asp-for="Description" class="form-control" required />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="IconUrl" class="form-label">Icon URL</label>
+                                    <input asp-for="IconUrl" class="form-control" required />
+                                    <span asp-validation-for="IconUrl" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="InfoUrl" class="form-label">Yönlendirme Linki</label>
+                                    <input asp-for="InfoUrl" class="form-control" required />
+                                    <span asp-validation-for="InfoUrl" class="text-danger"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-success">Kaydet</button>
+                                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label asp-for="Title" class="form-label">Hizmet Başlık</label>
-        <input asp-for="Title" class="form-control" required />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label">Hizmet Açıklama</label>
-        <input asp-for="Description" class="form-control" required />
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="InfoUrl" class="form-label">Hizmet URL</label>
-        <input asp-for="InfoUrl" class="form-control" required />
-        <span asp-validation-for="InfoUrl" class="text-danger"></span>
-    </div>
+    <!-- End Page-content -->
 
-    <button type="submit" class="btn btn-success">Kaydet</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form>
-
-
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script> © Velzon.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end d-none d-sm-block">
+                        Design & Develop by Mehmetcan Demir
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

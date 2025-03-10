@@ -1,0 +1,96 @@
+﻿@model UetdsProgramiNet.Models.FiyatModel
+
+@{
+    ViewData["Title"] = "Fiyat Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+                        <h4 class="mb-sm-0">Fiyat Güncelle</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="/Fiyat/Index">Fiyatlar</a></li>
+                                <li class="breadcrumb-item active">Fiyat Güncelle</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Fiyat Güncelle</h4><br />
+                            <form asp-action="Guncelle" method="post">
+                                <input type="hidden" asp-for="Id" />
+
+                                <div class="mb-3">
+                                    <label asp-for="AracSayiAciklamasi" class="form-label">Araç Sayısı Açıklaması</label>
+                                    <input asp-for="AracSayiAciklamasi" class="form-control" required />
+                                    <span asp-validation-for="AracSayiAciklamasi" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="KullaniciMiktari" class="form-label">Kullanıcı Miktarı</label>
+                                    <input asp-for="KullaniciMiktari" class="form-control" required />
+                                    <span asp-validation-for="KullaniciMiktari" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="MobilBilgisi" class="form-label">Mobil Ücretsiz Mi?</label>
+                                    <input asp-for="MobilBilgisi" class="form-control" required />
+                                    <span asp-validation-for="MobilBilgisi" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="DestekBilgisi" class="form-label">Destek Ücretsiz Mi?</label>
+                                    <input asp-for="DestekBilgisi" class="form-control" required />
+                                    <span asp-validation-for="DestekBilgisi" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="DestekSaatleri" class="form-label">Destek Saatleri</label>
+                                    <input asp-for="DestekSaatleri" class="form-control" required />
+                                    <span asp-validation-for="DestekSaatleri" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="YedeklemeTuru" class="form-label">Yedekleme Türü</label>
+                                    <input asp-for="YedeklemeTuru" class="form-control" required />
+                                    <span asp-validation-for="YedeklemeTuru" class="text-danger"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-success">Kaydet</button>
+                                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page-content -->
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script> © Velzon.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end d-none d-sm-block">
+                        Design & Develop by Mehmetcan Demir
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

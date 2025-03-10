@@ -1,7 +1,7 @@
-﻿@model List<UetdsProgramiNet.Models.HizmetModel>
+﻿@model List<UetdsProgramiNet.Models.FiyatModel>
 
 @{
-    ViewData["Title"] = "Hizmet Listesi";
+    ViewData["Title"] = "Fiyat Listesi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -12,11 +12,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                        <h4 class="mb-sm-0">Hizmet Listesi</h4>
+                        <h4 class="mb-sm-0">Fiyat Listesi</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Hizmet/Index">Hizmetler</a></li>
-                                <li class="breadcrumb-item active">Hizmet Listesi</li>
+                                <li class="breadcrumb-item"><a href="/Fiyat/Index">Fiyatlar</a></li>
+                                <li class="breadcrumb-item active">Fiyat Listesi</li>
                             </ol>
                         </div>
                     </div>
@@ -28,15 +28,17 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Hizmetler</h4>
+                            <h4 class="card-title">Fiyatlar</h4>
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Icon</th>
-                                            <th>Başlık</th>
                                             <th>Açıklama</th>
-                                            <th>Yönlendirme Linki</th>
+                                            <th>Kullanıcı Miktarı</th>
+                                            <th>Mobil Bilgisi</th>
+                                            <th>Destek Bilgisi</th>
+                                            <th>Destek Saatleri</th>
+                                            <th>Yedekleme Türü</th>
                                             <th>İşlemler</th>
                                         </tr>
                                     </thead>
@@ -44,13 +46,13 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>
-                                                    <i class="@item.IconUrl" style="font-size: 1.5rem;"></i>
-                                                </td>
-
-                                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IconUrl)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.InfoUrl)</td>
+                                                <h1>@item.Id</h1>
+                                                <td>@Html.DisplayFor(modelItem => item.AracSayiAciklamasi)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.KullaniciMiktari)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.MobilBilgisi)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.DestekBilgisi)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.DestekSaatleri)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.YedeklemeTuru)</td>
                                                 <td>
                                                     <a asp-action="Guncelle" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
                                                 </td>
@@ -59,7 +61,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <a asp-action="Ekle" class="btn btn-primary mt-3">Yeni Hizmet Ekle</a>
+                            <a asp-action="Ekle" class="btn btn-primary mt-3">Yeni Fiyat Ekle</a>
                         </div>
                     </div>
                 </div>
