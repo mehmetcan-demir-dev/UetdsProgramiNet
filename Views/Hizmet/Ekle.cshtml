@@ -1,0 +1,37 @@
+﻿@model UetdsProgramiNet.Models.HizmetModel
+@{
+    ViewData["Title"] = "Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Yeni Hizmet Ekle</h1>
+
+<form asp-action="Ekle" method="post">
+    
+
+    <div class="mb-3">
+        <label asp-for="IconUrl" class="form-label">Icon URL</label>
+        <input asp-for="IconUrl" class="form-control" required />
+        <span asp-validation-for="IconUrl" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Hizmet Başlık</label>
+        <input asp-for="Title" class="form-control" required />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Hizmet Açıklama</label>
+        <input asp-for="Description" class="form-control" required />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="InfoUrl" class="form-label">Hizmet URL</label>
+        <input asp-for="InfoUrl" class="form-control" required />
+        <span asp-validation-for="InfoUrl" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>
+
+

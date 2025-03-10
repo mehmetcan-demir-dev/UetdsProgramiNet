@@ -1,0 +1,38 @@
+﻿@model UetdsProgramiNet.Models.HizmetModel
+
+@{
+    ViewData["Title"] = "Hizmet Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Hizmet Güncelle</h1>
+
+<form asp-action="Guncelle" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="IconUrl" class="form-label">Hizmet Icon</label>
+        <input asp-for="IconUrl" class="form-control" required />
+        <span asp-validation-for="IconUrl" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Hizmet Başlığı</label>
+        <input asp-for="Title" class="form-control" required />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Hizmet Açıklaması</label>
+        <input asp-for="Description" class="form-control" required />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="InfoUrl" class="form-label">Hizmet Info Url</label>
+        <input asp-for="InfoUrl" class="form-control" required />
+        <span asp-validation-for="InfoUrl" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Güncelle</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

@@ -1,58 +1,59 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet;
 using UetdsProgramiNet.Entities;
 using UetdsProgramiNet.Models;
 
-public class ReferansController : Controller
+public class HizmetController: Controller
 {
     private readonly AppDbContext _context;
-
-    public ReferansController(AppDbContext context)
+    public HizmetController(AppDbContext context)
     {
         _context = context;
     }
 
     public async Task<IActionResult> Index()
     {
-        var referanslar = await _context.Referanslar
-            .Select(r => new ReferansModel
+        var hizmetler = await _context.Hizmetler
+            .Select(r => new HizmetModel
             {
                 Id = r.Id,
-                ImageUrl = r.ImageUrl,
+                IconUrl = r.IconUrl,
+                Title = r.Title,
                 Description = r.Description,
-                IsActive = r.IsActive
+                InfoUrl = r.InfoUrl
             })
             .ToListAsync();
 
-        return View(referanslar);
+        return View(hizmetler);
     }
-
-    // Referans Ekleme Sayfası
+    // Hizmet Ekleme Sayfası
     public IActionResult Ekle()
     {
         return View();
     }
 
-    // Referans Ekleme POST
+    // Hizmet Ekleme POST
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Ekle(ReferansModel model)
+    public async Task<IActionResult> Ekle(HizmetModel model)
     {
         if (ModelState.IsValid)
         {
-            var yeniReferans = new Referans
+            var yeniHizmet = new Hizmet
             {
+                IconUrl = model.IconUrl,
+                Title = model.Title,
                 Description = model.Description,
-                ImageUrl = model.ImageUrl,
-                IsActive = model.IsActive,
+                InfoUrl = model.InfoUrl,
                 CreatedDate = DateTime.Now,  // CreatedDate'i şimdi atıyoruz
                 UpdatedDate = DateTime.Now,  // İlk güncelleme tarihini atıyoruz
                 CreatedUsername = User.Identity.Name,  // Giriş yapan kullanıcı adını alıyoruz
                 UpdatedUsername = User.Identity.Name  // Güncelleyen kullanıcıyı da aynı şekilde alıyoruz
             };
 
-            _context.Referanslar.Add(yeniReferans);
+            _context.Hizmetler.Add(yeniHizmet);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
@@ -60,7 +61,6 @@ public class ReferansController : Controller
 
         return View(model);
     }
-
     // Referans Güncelleme Sayfası
     public async Task<IActionResult> Guncelle(int? id)
     {
@@ -69,18 +69,19 @@ public class ReferansController : Controller
             return NotFound();
         }
 
-        var referans = await _context.Referanslar.FindAsync(id);
-        if (referans == null)
+        var hizmetler = await _context.Hizmetler.FindAsync(id);
+        if (hizmetler == null)
         {
             return NotFound();
         }
 
-        var model = new ReferansModel
+        var model = new HizmetModel
         {
-            Id = referans.Id,
-            Description = referans.Description,
-            ImageUrl = referans.ImageUrl,
-            IsActive = referans.IsActive
+            Id = hizmetler.Id,
+            IconUrl = hizmetler.IconUrl,
+            Title = hizmetler.Title,
+            Description = hizmetler.Description,
+            InfoUrl = hizmetler.InfoUrl
         };
 
         return View(model);
@@ -89,7 +90,7 @@ public class ReferansController : Controller
     // Referans Güncelleme POST
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Guncelle(int id, ReferansModel model)
+    public async Task<IActionResult> Guncelle(int id, HizmetModel model)
     {
         if (id != model.Id)
         {
@@ -98,27 +99,28 @@ public class ReferansController : Controller
 
         if (ModelState.IsValid)
         {
-            var referans = await _context.Referanslar.FindAsync(id);
+            var hizmet = await _context.Hizmetler.FindAsync(id);
 
-            if (referans == null)
+            if (hizmet == null)
             {
                 return NotFound();
             }
 
-            referans.Description = model.Description;
-            referans.ImageUrl = model.ImageUrl;
-            referans.IsActive = model.IsActive;
-            referans.UpdatedDate = DateTime.Now;  // Güncellenme tarihi
-            referans.UpdatedUsername = User.Identity.Name;  // Güncellenen kullanıcı adı
+            hizmet.Description = model.Description;
+            hizmet.IconUrl = model.IconUrl;
+            hizmet.Title = model.Title;
+            hizmet.InfoUrl = model.InfoUrl;
+            hizmet.UpdatedDate = DateTime.Now;  // Güncellenme tarihi
+            hizmet.UpdatedUsername = User.Identity.Name;  // Güncellenen kullanıcı adı
 
             try
             {
-                _context.Update(referans);
+                _context.Update(hizmet);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ReferansExists(referans.Id))
+                if (!HizmetExists(hizmet.Id))
                 {
                     return NotFound();
                 }
@@ -134,8 +136,8 @@ public class ReferansController : Controller
         return View(model);
     }
 
-    private bool ReferansExists(int id)
+    private bool HizmetExists(int id)
     {
-        return _context.Referanslar.Any(e => e.Id == id);
+        return _context.Hizmetler.Any(e => e.Id == id);
     }
 }
