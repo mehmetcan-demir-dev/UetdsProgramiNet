@@ -1,9 +1,10 @@
 ﻿@model UetdsProgramiNet.Models.FiyatModel
-
 @{
-    ViewData["Title"] = "Fiyat Güncelle";
+    ViewData["Title"] = "Guncelle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
+
 
 <div class="main-content">
     <div class="page-content">
@@ -12,11 +13,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                        <h4 class="mb-sm-0">Fiyat Güncelle</h4>
+                        <h4 class="mb-sm-0">Hizmet Güncelle</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Fiyat/Index">Fiyatlar</a></li>
-                                <li class="breadcrumb-item active">Fiyat Güncelle</li>
+                                <li class="breadcrumb-item"><a href="/Hizmet/Index">Hizmetler</a></li>
+                                <li class="breadcrumb-item active">Hizmet Güncelle</li>
                             </ol>
                         </div>
                     </div>
@@ -28,47 +29,45 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Fiyat Güncelle</h4><br />
-                            <form asp-action="Guncelle" method="post">
+                            <h4 class="card-title">Hizmet Güncelle</h4>
+                            <form asp-action="Guncelle" method="post" enctype="multipart/form-data">
                                 <input type="hidden" asp-for="Id" />
 
                                 <div class="mb-3">
-                                    <label asp-for="AracSayiAciklamasi" class="form-label">Araç Sayısı Açıklaması</label>
-                                    <input asp-for="AracSayiAciklamasi" class="form-control" required />
-                                    <span asp-validation-for="AracSayiAciklamasi" class="text-danger"></span>
+                                    <label asp-for="AracPaketi" class="form-label">Araç Paketi</label>
+                                    <input asp-for="AracPaketi" class="form-control" required />
+                                    <span asp-validation-for="AracPaketi" class="text-danger"></span>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label asp-for="KullaniciMiktari" class="form-label">Kullanıcı Miktarı</label>
+                                    <label asp-for="KullaniciMiktari" class="form-label">Kullanıcı Miktari</label>
                                     <input asp-for="KullaniciMiktari" class="form-control" required />
                                     <span asp-validation-for="KullaniciMiktari" class="text-danger"></span>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label asp-for="MobilBilgisi" class="form-label">Mobil Ücretsiz Mi?</label>
+                                    <label asp-for="MobilBilgisi" class="form-label">Mobil Bilgisi</label>
                                     <input asp-for="MobilBilgisi" class="form-control" required />
                                     <span asp-validation-for="MobilBilgisi" class="text-danger"></span>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label asp-for="DestekBilgisi" class="form-label">Destek Ücretsiz Mi?</label>
+                                    <label asp-for="DestekBilgisi" class="form-label">Destek Bilgisi</label>
                                     <input asp-for="DestekBilgisi" class="form-control" required />
                                     <span asp-validation-for="DestekBilgisi" class="text-danger"></span>
                                 </div>
-
                                 <div class="mb-3">
                                     <label asp-for="DestekSaatleri" class="form-label">Destek Saatleri</label>
                                     <input asp-for="DestekSaatleri" class="form-control" required />
                                     <span asp-validation-for="DestekSaatleri" class="text-danger"></span>
                                 </div>
-
                                 <div class="mb-3">
                                     <label asp-for="YedeklemeTuru" class="form-label">Yedekleme Türü</label>
                                     <input asp-for="YedeklemeTuru" class="form-control" required />
                                     <span asp-validation-for="YedeklemeTuru" class="text-danger"></span>
                                 </div>
 
-                                <button type="submit" class="btn btn-success">Kaydet</button>
+                                <button type="submit" class="btn btn-success">Güncelle</button>
                                 <a asp-action="Index" class="btn btn-secondary">İptal</a>
                             </form>
                         </div>

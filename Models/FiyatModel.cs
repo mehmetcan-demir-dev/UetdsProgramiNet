@@ -5,7 +5,7 @@ namespace UetdsProgramiNet.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Arac Sayısı Açıklaması zorunludur.")]
-        public string AracSayiAciklamasi { get; set; }
+        public string AracPaketi { get; set; }
 
         [Required(ErrorMessage = "Kullanıcı Miktarı zorunludur.")]
         public string KullaniciMiktari { get; set; }

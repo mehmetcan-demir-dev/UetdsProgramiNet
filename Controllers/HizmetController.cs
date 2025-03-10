@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet;
 using UetdsProgramiNet.Entities;
@@ -61,7 +60,7 @@ public class HizmetController: Controller
 
         return View(model);
     }
-    // Referans Güncelleme Sayfası
+    // Hizmet Güncelleme Sayfası
     public async Task<IActionResult> Guncelle(int? id)
     {
         if (id == null)
@@ -87,7 +86,7 @@ public class HizmetController: Controller
         return View(model);
     }
 
-    // Referans Güncelleme POST
+    // Hizmet Güncelleme POST
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Guncelle(int id, HizmetModel model)

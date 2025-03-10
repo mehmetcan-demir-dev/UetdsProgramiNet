@@ -2,7 +2,7 @@
 {
     public class Fiyat : BaseEntity
     {
-        public string AracSayiAciklamasi { get; set; }
+        public string AracPaketi { get; set; }
         public string KullaniciMiktari { get; set; }
         public string MobilBilgisi { get; set; }
         public string DestekBilgisi { get; set; }

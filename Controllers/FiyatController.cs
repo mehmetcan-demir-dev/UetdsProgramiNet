@@ -1,91 +1,99 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UetdsProgramiNet.Models;
-using UetdsProgramiNet.Entities;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
+using UetdsProgramiNet.Entities;
+using UetdsProgramiNet.Models;
 
 namespace UetdsProgramiNet.Controllers
 {
     public class FiyatController : Controller
     {
         private readonly AppDbContext _context;
-
         public FiyatController(AppDbContext context)
         {
             _context = context;
         }
-
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var fiyatListesi = _context.Fiyatlar.Select(f => new FiyatModel
+            var fiyatlar = await _context.Fiyatlar
+            .Select(r => new FiyatModel
             {
-                AracSayiAciklamasi = f.AracSayiAciklamasi,
-                KullaniciMiktari = f.KullaniciMiktari,
-                MobilBilgisi = f.MobilBilgisi,
-                DestekBilgisi = f.DestekBilgisi,
-                DestekSaatleri = f.DestekSaatleri,
-                YedeklemeTuru = f.YedeklemeTuru
-            }).ToList();
+                Id = r.Id,
+                AracPaketi = r.AracPaketi,
+                KullaniciMiktari = r.KullaniciMiktari,
+                MobilBilgisi = r.MobilBilgisi,
+                DestekBilgisi = r.DestekBilgisi,
+                DestekSaatleri= r.DestekSaatleri,
+                YedeklemeTuru= r.YedeklemeTuru
+            })
+            .ToListAsync();
 
-            return View(fiyatListesi);
+            return View(fiyatlar);
         }
-
+        // Fiyat Ekleme Sayfası
         public IActionResult Ekle()
         {
             return View();
         }
 
+        // Fiyat Ekleme POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Ekle(FiyatModel model)
+        public async Task<IActionResult> Ekle(FiyatModel model)
         {
             if (ModelState.IsValid)
             {
-                var fiyat = new Fiyat
+                var yeniFiyat = new Fiyat
                 {
-                    AracSayiAciklamasi = model.AracSayiAciklamasi,
+                    AracPaketi = model.AracPaketi,
                     KullaniciMiktari = model.KullaniciMiktari,
                     MobilBilgisi = model.MobilBilgisi,
                     DestekBilgisi = model.DestekBilgisi,
                     DestekSaatleri = model.DestekSaatleri,
                     YedeklemeTuru = model.YedeklemeTuru,
-                    CreatedDate = DateTime.Now, // CreatedDate olarak mevcut zaman
-                    UpdatedDate = DateTime.Now, // İlk kaydın da güncel olmasını istiyoruz
-                    CreatedUsername = User.Identity.Name // Giriş yapan kullanıcının ismi
+                    CreatedDate = DateTime.Now,  // CreatedDate'i şimdi atıyoruz
+                    UpdatedDate = DateTime.Now,  // İlk güncelleme tarihini atıyoruz
+                    CreatedUsername = User.Identity.Name,  // Giriş yapan kullanıcı adını alıyoruz
+                    UpdatedUsername = User.Identity.Name  // Güncelleyen kullanıcıyı da aynı şekilde alıyoruz
                 };
 
-                _context.Fiyatlar.Add(fiyat);
-                _context.SaveChanges();
+                _context.Fiyatlar.Add(yeniFiyat);
+                await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
 
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult Guncelle(int id)
+        // Fiyat Güncelleme Sayfası
+        public async Task<IActionResult> Guncelle(int? id)
         {
-            var fiyat = _context.Fiyatlar.FirstOrDefault(f => f.Id == id);
-            if (fiyat == null)
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var fiyatlar = await _context.Fiyatlar.FindAsync(id);
+            if (fiyatlar == null)
             {
                 return NotFound();
             }
 
             var model = new FiyatModel
             {
-                Id = fiyat.Id,
-                AracSayiAciklamasi = fiyat.AracSayiAciklamasi,
-                KullaniciMiktari = fiyat.KullaniciMiktari,
-                MobilBilgisi = fiyat.MobilBilgisi,
-                DestekBilgisi = fiyat.DestekBilgisi,
-                DestekSaatleri = fiyat.DestekSaatleri,
-                YedeklemeTuru = fiyat.YedeklemeTuru
+                Id = fiyatlar.Id,
+                AracPaketi = fiyatlar.AracPaketi,
+                KullaniciMiktari = fiyatlar.KullaniciMiktari,
+                MobilBilgisi = fiyatlar.MobilBilgisi,
+                DestekBilgisi = fiyatlar.DestekBilgisi,
+                DestekSaatleri = fiyatlar.DestekSaatleri,
+                YedeklemeTuru = fiyatlar.YedeklemeTuru
             };
 
             return View(model);
         }
+
+        // Fiyat Güncelleme POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Guncelle(int id, FiyatModel model)
@@ -103,8 +111,7 @@ namespace UetdsProgramiNet.Controllers
                 {
                     return NotFound();
                 }
-
-                fiyat.AracSayiAciklamasi = model.AracSayiAciklamasi;
+                fiyat.AracPaketi = model.AracPaketi;
                 fiyat.KullaniciMiktari = model.KullaniciMiktari;
                 fiyat.MobilBilgisi = model.MobilBilgisi;
                 fiyat.DestekBilgisi = model.DestekBilgisi;
@@ -140,7 +147,5 @@ namespace UetdsProgramiNet.Controllers
         {
             return _context.Fiyatlar.Any(e => e.Id == id);
         }
-
-
     }
 }
