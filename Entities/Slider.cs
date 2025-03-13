@@ -8,6 +8,8 @@ namespace UetdsProgramiNet.Entities
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public string Description { get; set; }
-        public string Info { get; set; }
+        public string SubDescription { get; set; }
+        public string InfoUrl { get; set; }
+        public string ImgUrl { get; set; }
     }
 }

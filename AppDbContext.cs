@@ -13,6 +13,7 @@ namespace UetdsProgramiNet
         public DbSet<Hizmet> Hizmetler  { get; set; }
         public DbSet<Referans> Referanslar  { get; set; }
         public DbSet<Fiyat> Fiyatlar  { get; set; }
+        public DbSet<Blog> Bloglar  { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -24,12 +25,22 @@ namespace UetdsProgramiNet.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Admin"); // Zaten giriş yaptıysa admin paneline yönlendir
+                return RedirectToAction("Index", "Admin");
             }
 
             ViewData["Title"] = "Giriş Yap";
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+
+            // Hatırlanan bilgileri formda göster
+            var model = new LoginViewModel();
+
+            if (Request.Cookies.TryGetValue("RememberedEmail", out string email))
+            {
+                model.Email = email;
+                model.RememberMe = true; // Checkbox'ı da işaretle
+            }
+
+            return View(model);
         }
 
         [HttpPost]
@@ -52,10 +63,31 @@ namespace UetdsProgramiNet.Controllers
                 return View(model);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+            // Oturum açma işlemi - RememberMe'den bağımsız olarak 30 dakika sonra sona erecek
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = false, // Tarayıcı kapatıldığında oturum kapansın
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) // Kesin süre
+            };
+
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
+
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Admin"); // Giriş başarılıysa admin paneline yönlendir
+                // Oturum durumunu session'a kaydet
+                HttpContext.Session.SetString("IUL", "true");
+
+                // Diğer RememberMe vs. kodları
+
+                // ReturnUrl varsa oraya yönlendir, yoksa Referans/Index'e git
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Referans");
+                }
             }
 
             ModelState.AddModelError(string.Empty, "Geçersiz giriş bilgileri.");
@@ -71,7 +103,11 @@ namespace UetdsProgramiNet.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+
+            // Session'ı temizle
+            HttpContext.Session.Remove("IUL");
+
+            return RedirectToAction("Login", "Account");
         }
 
         // Şifremi Unuttum Sayfası

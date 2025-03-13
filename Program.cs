@@ -36,15 +36,15 @@ builder.Services.AddIdentity<AppUser, AppRole>(options =>
 .AddDefaultTokenProviders();  // Varsayýlan token saðlayýcýlarý ekliyoruz
 
 // Kimlik doðrulama yapýlandýrmasýný ekleyin
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)  // Default þemayý ekliyoruz
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login"; // Giriþ yapýlacak URL
-        options.LogoutPath = "/Account/Logout"; // Çýkýþ yapýlacak URL
-        options.AccessDeniedPath = "/Account/AccessDenied"; // Eriþim reddedildi sayfasý
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+        options.AccessDeniedPath = "/Account/AccessDenied";
         options.Cookie.HttpOnly = true;
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Cookie süresi
-        options.SlidingExpiration = true; // Oturum kaybolduðunda süreyi uzatacak
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Cookie süresi 30 dakika
+        options.SlidingExpiration = false; // Süre uzamasýn
     });
 
 // AutoFac entegreasyonu
@@ -81,6 +81,6 @@ app.UseAuthorization();      // Sonra authorization
 // Son olarak endpoint yapýlandýrmasý
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Referans}/{action=Index}/{id?}");
 
 app.Run();

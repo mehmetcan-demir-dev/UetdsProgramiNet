@@ -1,9 +1,9 @@
-﻿@model List<ReferansModel>
-
+﻿@model List<SliderModel>
 @{
-    ViewData["Title"] = "Referans Listesi";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -11,11 +11,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                        <h4 class="mb-sm-0">Referans Listesi</h4>
+                        <h4 class="mb-sm-0">Slider Listesi</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Referans/Index">Referanslar</a></li>
-                                <li class="breadcrumb-item active">Referans Listesi</li>
+                                <li class="breadcrumb-item"><a href="/Slider/Index">Sliderlar</a></li>
+                                <li class="breadcrumb-item active">Slider Listesi</li>
                             </ol>
                         </div>
                     </div>
@@ -27,36 +27,42 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Referans Listesi</h4>
+                            <h4 class="card-title">Slider Listesi</h4>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Referans</th>
+                                        <th>Başlık</th>
+                                        <th>Alt Başlık</th>
+                                        <th>Açıklama</th>
+                                        <th>Alt Açıklama</th>
+                                        <th>Link Yolu</th>
                                         <th>Resim Yolu</th>
-                                        <th>Aktif mi?</th>
-                                        <th></th>
+                                        <th>İşlemler</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Title)</td>
+                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Subtitle)</td>
+                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Description)</td>
+                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.SubDescription)</td>
+                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.InfoUrl)</td>
                                             <td>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal-@item.Id">
-                                                    <img src="@item.ImageUrl" style="width: 40px; height: 40px; object-fit: cover;" alt="Referans Resmi" />
+                                                    <img src="@item.ImgUrl" style="width: 100px; height: auto; object-fit: cover;" alt="Slider Resmi" />
                                                 </a>
                                             </td>
-                                            <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
-                                            <td>
-                                                <a asp-action="Guncelle" asp-route-id="@item.Id" class="btn btn-warning">Güncelle</a>
+                                            <td style="padding-top: 25px;">
+                                                <a asp-action="Guncelle" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
                             <p>
-                                <a asp-action="Ekle" class="btn btn-primary">Yeni Referans Ekle</a>
+                                <a asp-action="Ekle" class="btn btn-primary">Yeni Slider Ekle</a>
                             </p>
                         </div>
                     </div>
@@ -86,18 +92,17 @@
 @foreach (var item in Model)
 {
     <div class="modal fade" id="imageModal-@item.Id" tabindex="-1" aria-labelledby="imageModalLabel-@item.Id" aria-hidden="true">
-        <div class="modal-dialog" modal-lg">
+        <div class="modal-dialog modal-lg">
             <!-- modal-lg sınıfı ile modal daha geniş yapılır -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="imageModalLabel-@item.Id">Referans Resmi</h5>
+                    <h5 class="modal-title" id="imageModalLabel-@item.Id">Slider Resmi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="@item.ImageUrl" class="img-fluid" alt="Referans Resmi" />
+                    <img src="@item.ImgUrl" class="img-fluid" alt="Slider Resmi" />
                 </div>
             </div>
         </div>
     </div>
 }
-
