@@ -33,6 +33,7 @@
                                     <tr>
                                         <th>Başlık</th>
                                         <th>Açıklama</th>
+                                        <th>Alt Açıklama</th>
                                         <th>Link Yolu</th>
                                         <th>Resim Yolu</th>
                                         <th>İşlemler</th>
@@ -43,11 +44,18 @@
                                     {
                                         <tr>
                                             <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Title)</td>
-                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Description)</td>
+                                            <td style="padding-top: 30px;">
+                                                @(item.Description?.Length > 20 ? item.Description.Substring(0, 20) + "..." : item.Description)
+                                            </td>
+
+                                            <td style="padding-top: 30px;">
+                                                @(item.SubDescription?.Length > 50 ? item.SubDescription.Substring(0, 50) + "..." : item.SubDescription)
+                                            </td>
+
                                             <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.InfoUrl)</td>
                                             <td>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal-@item.Id">
-                                                    <img src="@item.ImgUrl" style="width: 100px; height: auto; object-fit: cover;" alt="Blog Resmi" />
+                                                    <img src="@item.ImgUrl" style="width: 100px; height: auto; object-fit: cover;" alt="Slider Resmi" />
                                                 </a>
                                             </td>
                                             <td style="padding-top: 25px;">

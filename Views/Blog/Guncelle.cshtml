@@ -36,9 +36,14 @@
                                     <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label asp-for="Description" class="form-label">Blog Açıklaması</label>
+                                    <label asp-for="Description" class="form-label">Açıklama</label>
                                     <input asp-for="Description" class="form-control" required />
                                     <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="SubDescription" class="form-label">Alt Açıklama</label>
+                                    <textarea asp-for="SubDescription" class="form-control" rows="4" required></textarea>
+                                    <span asp-validation-for="SubDescription" class="text-danger"></span>
                                 </div>
 
                                 <div class="mb-3">

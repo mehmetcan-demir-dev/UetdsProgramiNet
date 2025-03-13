@@ -20,6 +20,7 @@ namespace UetdsProgramiNet.Controllers
                 Id = r.Id,
                 Title = r.Title,
                 Description = r.Description,
+                SubDescription = r.SubDescription,
                 InfoUrl = r.InfoUrl,
                 ImgUrl = r.ImgUrl,
 
@@ -50,6 +51,7 @@ namespace UetdsProgramiNet.Controllers
                 {
                     Title = model.Title,
                     Description = model.Description,
+                    SubDescription = model.SubDescription,
                     InfoUrl = model.InfoUrl,
                     ImgUrl = model.ImgUrl,
                     CreatedDate = DateTime.Now,  // CreatedDate'i şimdi atıyoruz
@@ -86,6 +88,7 @@ namespace UetdsProgramiNet.Controllers
                 Id = bloglar.Id,
                 Title = bloglar.Title,
                 Description = bloglar.Description,
+                SubDescription = bloglar.SubDescription,
                 InfoUrl = bloglar.InfoUrl,
                 ImgUrl = bloglar.ImgUrl
             };
@@ -105,6 +108,11 @@ namespace UetdsProgramiNet.Controllers
 
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrEmpty(model.ImgUrl) && !model.ImgUrl.StartsWith("/assets/images/") && !model.ImgUrl.StartsWith("http"))
+                {
+                    model.ImgUrl = "/assets/images/" + model.ImgUrl;
+                }
+
                 var blog = await _context.Bloglar.FindAsync(id);
 
                 if (blog == null)
@@ -113,6 +121,7 @@ namespace UetdsProgramiNet.Controllers
                 }
                 blog.Title = model.Title;
                 blog.Description = model.Description;
+                blog.SubDescription = model.SubDescription;
                 blog.InfoUrl = model.InfoUrl;
                 blog.ImgUrl = model.ImgUrl;
                 blog.UpdatedDate = DateTime.Now;  // Güncellenme tarihi

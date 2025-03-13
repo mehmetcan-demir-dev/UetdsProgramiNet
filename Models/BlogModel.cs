@@ -9,6 +9,8 @@ namespace UetdsProgramiNet.Models
         public string Title { get; set; }
         [Required(ErrorMessage = "Açıklama gereklidir")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "Açıklama gereklidir")]
+        public string SubDescription { get; set; }
         [Required(ErrorMessage = "Bağlantı yolu gereklidir")]
         public string InfoUrl { get; set; }
         [Required(ErrorMessage = "Resim yolu gereklidir")]
