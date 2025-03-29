@@ -47,19 +47,20 @@
                                             <td style="padding-top: 30px;">
                                                 @(item.Description?.Length > 20 ? item.Description.Substring(0, 20) + "..." : item.Description)
                                             </td>
-
                                             <td style="padding-top: 30px;">
                                                 @(item.SubDescription?.Length > 50 ? item.SubDescription.Substring(0, 50) + "..." : item.SubDescription)
                                             </td>
-
-                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.InfoUrl)</td>
+                                            <td style="padding-top: 30px;">
+                                                @(item.InfoUrl.Length > 30 ? item.InfoUrl.Substring(0, 30) + "..." : item.InfoUrl)
+                                            </td>
                                             <td>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal-@item.Id">
-                                                    <img src="@item.ImgUrl" style="width: 100px; height: auto; object-fit: cover;" alt="Slider Resmi" />
+                                                    <img src="@item.ImgUrl" style="width: 100px; height: auto; object-fit: cover;" alt="Blog Resmi" />
                                                 </a>
                                             </td>
                                             <td style="padding-top: 25px;">
                                                 <a asp-action="Guncelle" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
+                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">Sil</button>
                                             </td>
                                         </tr>
                                     }
@@ -76,28 +77,13 @@
     </div>
     <!-- End Page-content -->
 
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    <script>document.write(new Date().getFullYear())</script> © Velzon.
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end d-none d-sm-block">
-                        Design & Develop by Themesbrand
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
 </div>
 
-<!-- Modal için HTML -->
+<!-- Resim Modalı -->
 @foreach (var item in Model)
 {
     <div class="modal fade" id="imageModal-@item.Id" tabindex="-1" aria-labelledby="imageModalLabel-@item.Id" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <!-- modal-lg sınıfı ile modal daha geniş yapılır -->
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="imageModalLabel-@item.Id">Blog Resmi</h5>
@@ -105,6 +91,45 @@
                 </div>
                 <div class="modal-body">
                     <img src="@item.ImgUrl" class="img-fluid" alt="Blog Resmi" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alt Açıklama ve Link Modalı -->
+    <div class="modal fade" id="subDescriptionModal-@item.Id" tabindex="-1" aria-labelledby="subDescriptionModalLabel-@item.Id" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="subDescriptionModalLabel-@item.Id">Blog Detayları</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Alt Açıklama:</h5>
+                    <p>@item.SubDescription</p>
+                    <h5>Link:</h5>
+                    <a href="@item.InfoUrl" target="_blank">@item.InfoUrl</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Silme Onayı Modalı -->
+    <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel-@item.Id">Silme Onayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bu blogu silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                    <form asp-action="Sil" asp-route-id="@item.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                    </form>
                 </div>
             </div>
         </div>

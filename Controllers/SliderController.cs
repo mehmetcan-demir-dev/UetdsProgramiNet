@@ -13,9 +13,12 @@ namespace UetdsProgramiNet.Controllers
         {
             _context = context;
         }
+
+        // Ana Sayfa - Slider Listesi
         public async Task<IActionResult> Index()
         {
             var sliders = await _context.Sliders
+                .Where(r => !r.IsDeleted)  // Silinmiş olanları hariç tutuyoruz
                 .Select(r => new SliderModel
                 {
                     Id = r.Id,
@@ -30,11 +33,14 @@ namespace UetdsProgramiNet.Controllers
 
             return View(sliders);
         }
+
+        // Slider Ekleme Sayfası
         public IActionResult Ekle()
         {
             return View();
         }
 
+        // Slider Ekleme POST işlemi
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Ekle(SliderModel model)
@@ -58,7 +64,8 @@ namespace UetdsProgramiNet.Controllers
                     CreatedDate = DateTime.Now,  // İlk oluşturma tarihi
                     UpdatedDate = DateTime.Now,  // İlk güncelleme tarihi
                     CreatedUsername = User.Identity.Name,  // Giriş yapan kullanıcı
-                    UpdatedUsername = User.Identity.Name   // Güncelleyen kullanıcı
+                    UpdatedUsername = User.Identity.Name,   // Güncelleyen kullanıcı
+                    IsDeleted = false  // Varsayılan olarak silinmemiş
                 };
 
                 _context.Sliders.Add(yeniSlider);
@@ -70,6 +77,124 @@ namespace UetdsProgramiNet.Controllers
             return View(model);
         }
 
+        // Slider Güncelleme Sayfası
+        public async Task<IActionResult> Guncelle(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var slider = await _context.Sliders
+                .Where(r => !r.IsDeleted) // Silinmiş verileri hariç tutuyoruz
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (slider == null)
+            {
+                return NotFound();
+            }
+
+            var model = new SliderModel
+            {
+                Id = slider.Id,
+                Title = slider.Title,
+                Subtitle = slider.Subtitle,
+                Description = slider.Description,
+                SubDescription = slider.SubDescription,
+                InfoUrl = slider.InfoUrl,
+                ImgUrl = slider.ImgUrl
+            };
+
+            return View(model);
+        }
+
+        // Slider Güncelleme POST işlemi
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Guncelle(int id, SliderModel model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var slider = await _context.Sliders.FindAsync(id);
+
+                if (slider == null || slider.IsDeleted)
+                {
+                    return NotFound();
+                }
+
+                slider.Title = model.Title;
+                slider.Subtitle = model.Subtitle;
+                slider.Description = model.Description;
+                slider.SubDescription = model.SubDescription;
+                slider.InfoUrl = model.InfoUrl;
+                slider.ImgUrl = model.ImgUrl; // Güncellenmiş resim yolu
+                slider.UpdatedDate = DateTime.Now;  // Güncelleme tarihi
+                slider.UpdatedUsername = User.Identity.Name;  // Güncellenen kullanıcı adı
+
+                _context.Update(slider);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
+
+        // Slider Silme Sayfası
+        public async Task<IActionResult> Sil(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var slider = await _context.Sliders
+                .Where(r => !r.IsDeleted)  // Silinmiş olanları hariç tutuyoruz
+                .Select(r => new SliderModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Subtitle = r.Subtitle,
+                    Description = r.Description,
+                    SubDescription = r.SubDescription,
+                    InfoUrl = r.InfoUrl,
+                    ImgUrl = r.ImgUrl
+                })
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (slider == null)
+            {
+                return NotFound();
+            }
+
+            return View(slider);
+        }
+
+        // Slider Silme POST işlemi
+        [HttpPost, ActionName("Sil")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SilConfirmed(int id)
+        {
+            var slider = await _context.Sliders.FindAsync(id);
+            if (slider == null)
+            {
+                return NotFound();
+            }
+
+            // Silme işlemi yerine IsDeleted alanını true yapıyoruz
+            slider.IsDeleted = true;
+            slider.UpdatedDate = DateTime.Now;
+            slider.UpdatedUsername = User.Identity.Name;
+
+            _context.Sliders.Update(slider);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

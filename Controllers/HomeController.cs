@@ -18,7 +18,7 @@ namespace UetdsProgramiNet.Controllers
         public IActionResult Index()
         {
             return View();
-            HttpContext.Session.SetString("IUL", "true");
+            //HttpContext.Session.SetString("IUL", "true");
         }
 
         public IActionResult Privacy()

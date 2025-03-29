@@ -4,9 +4,10 @@ using UetdsProgramiNet;
 using UetdsProgramiNet.Entities;
 using UetdsProgramiNet.Models;
 
-public class HizmetController: Controller
+public class HizmetController : Controller
 {
     private readonly AppDbContext _context;
+
     public HizmetController(AppDbContext context)
     {
         _context = context;
@@ -15,6 +16,8 @@ public class HizmetController: Controller
     public async Task<IActionResult> Index()
     {
         var hizmetler = await _context.Hizmetler
+            .Where(h => !h.IsDeleted)  // Silinmiş olanları hariç tutuyor
+            .AsNoTracking()
             .Select(r => new HizmetModel
             {
                 Id = r.Id,
@@ -27,39 +30,7 @@ public class HizmetController: Controller
 
         return View(hizmetler);
     }
-    // Hizmet Ekleme Sayfası
-    public IActionResult Ekle()
-    {
-        return View();
-    }
 
-    // Hizmet Ekleme POST
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Ekle(HizmetModel model)
-    {
-        if (ModelState.IsValid)
-        {
-            var yeniHizmet = new Hizmet
-            {
-                IconUrl = model.IconUrl,
-                Title = model.Title,
-                Description = model.Description,
-                InfoUrl = model.InfoUrl,
-                CreatedDate = DateTime.Now,  // CreatedDate'i şimdi atıyoruz
-                UpdatedDate = DateTime.Now,  // İlk güncelleme tarihini atıyoruz
-                CreatedUsername = User.Identity.Name,  // Giriş yapan kullanıcı adını alıyoruz
-                UpdatedUsername = User.Identity.Name  // Güncelleyen kullanıcıyı da aynı şekilde alıyoruz
-            };
-
-            _context.Hizmetler.Add(yeniHizmet);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("Index");
-        }
-
-        return View(model);
-    }
     // Hizmet Güncelleme Sayfası
     public async Task<IActionResult> Guncelle(int? id)
     {
@@ -68,7 +39,8 @@ public class HizmetController: Controller
             return NotFound();
         }
 
-        var hizmetler = await _context.Hizmetler.FindAsync(id);
+        var hizmetler = await _context.Hizmetler
+            .FirstOrDefaultAsync(h => h.Id == id && !h.IsDeleted); // Silinmiş olmayanları getir
         if (hizmetler == null)
         {
             return NotFound();
@@ -98,7 +70,8 @@ public class HizmetController: Controller
 
         if (ModelState.IsValid)
         {
-            var hizmet = await _context.Hizmetler.FindAsync(id);
+            var hizmet = await _context.Hizmetler
+                .FirstOrDefaultAsync(h => h.Id == id && !h.IsDeleted); // Silinmiş olmayanları getir
 
             if (hizmet == null)
             {
@@ -109,8 +82,8 @@ public class HizmetController: Controller
             hizmet.IconUrl = model.IconUrl;
             hizmet.Title = model.Title;
             hizmet.InfoUrl = model.InfoUrl;
-            hizmet.UpdatedDate = DateTime.Now;  // Güncellenme tarihi
-            hizmet.UpdatedUsername = User.Identity.Name;  // Güncellenen kullanıcı adı
+            hizmet.UpdatedDate = DateTime.Now;
+            hizmet.UpdatedUsername = User.Identity.Name;
 
             try
             {
@@ -135,8 +108,45 @@ public class HizmetController: Controller
         return View(model);
     }
 
+    // Silme Sayfasına Yönlendiren Aksiyon
+    public async Task<IActionResult> Sil(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var hizmet = await _context.Hizmetler
+            .FirstOrDefaultAsync(m => m.Id == id && !m.IsDeleted); // Silinmiş olmayanları getir
+        if (hizmet == null)
+        {
+            return NotFound();
+        }
+
+        return View(hizmet); // Silmeden önce onay ekranını göstermek için
+    }
+
+    // Silme Onayı (SilConfirmed) Aksiyon
+    [HttpPost, ActionName("Sil")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SilConfirmed(int id)
+    {
+        var hizmet = await _context.Hizmetler
+            .FirstOrDefaultAsync(h => h.Id == id && !h.IsDeleted); // Silinmiş olmayanları getir
+
+        if (hizmet == null)
+        {
+            return NotFound();
+        }
+
+        hizmet.IsDeleted = true;  // Gerçekten silmek yerine "IsDeleted" değerini true yapıyoruz
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index)); // Silme işlemi tamamlandıktan sonra listeye geri dön
+    }
+
     private bool HizmetExists(int id)
     {
-        return _context.Hizmetler.Any(e => e.Id == id);
+        return _context.Hizmetler.Any(e => e.Id == id && !e.IsDeleted); // Silinmiş olanları kontrol etmiyoruz
     }
 }

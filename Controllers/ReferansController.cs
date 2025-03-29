@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet;
 using UetdsProgramiNet.Entities;
+using UetdsProgramiNet.Filters;
 using UetdsProgramiNet.Models;
 
 public class ReferansController : Controller
@@ -11,11 +12,13 @@ public class ReferansController : Controller
     public ReferansController(AppDbContext context)
     {
         _context = context;
-    }
-
+    } 
+    [AccessControl]
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
         var referanslar = await _context.Referanslar
+            .Where(r => !r.IsDeleted)  // Silinmiş olanları hariç tutuyoruz
             .Select(r => new ReferansModel
             {
                 Id = r.Id,
@@ -27,6 +30,7 @@ public class ReferansController : Controller
 
         return View(referanslar);
     }
+
 
     // Referans Ekleme Sayfası
     public IActionResult Ekle()
@@ -133,6 +137,47 @@ public class ReferansController : Controller
 
         return View(model);
     }
+
+    // Silme Sayfası
+    public async Task<IActionResult> Sil(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var referans = await _context.Referanslar
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (referans == null)
+        {
+            return NotFound();
+        }
+
+        return View(referans);
+    }
+
+    // Silme İşlemini Onaylama (POST)
+    [HttpPost, ActionName("Sil")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SilConfirmed(int id)
+    {
+        var referans = await _context.Referanslar.FindAsync(id);
+        if (referans == null)
+        {
+            return NotFound();
+        }
+
+        // Veriyi silmek yerine sadece IsDeleted alanını 1 yapıyoruz
+        referans.IsDeleted = true;
+        referans.UpdatedDate = DateTime.Now;
+        referans.UpdatedUsername = User.Identity.Name;  // Güncellenen kullanıcı adı
+
+        _context.Referanslar.Update(referans);
+        await _context.SaveChangesAsync();  
+
+        return RedirectToAction(nameof(Index));
+    }
+
 
     private bool ReferansExists(int id)
     {

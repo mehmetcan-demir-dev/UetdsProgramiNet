@@ -1,4 +1,4 @@
-using Autofac;
+ï»¿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,31 +11,37 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// DI Container kullanÄ±mÄ±
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+    containerBuilder.RegisterModule(new RepoServiceModule()));
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddDbContext<AppDbContext>(m =>
+
+// DbContext ve Identity yapÄ±landÄ±rmasÄ±
+builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    m.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), option =>
-    {
-        option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
-    });
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"),
+        sqlOptions =>
+        {
+            sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name);
+        });
 });
 
-// Identity servislerini ekliyoruz
+// Identity yapÄ±landÄ±rmasÄ± (EKLEMEN GEREKEN KISIM!)
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
-    // Password policy settings (isteðe baðlý)
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 6;
 })
-.AddEntityFrameworkStores<AppDbContext>()  // AppDbContext ile Identity'yi entegre ediyoruz
-.AddDefaultTokenProviders();  // Varsayýlan token saðlayýcýlarý ekliyoruz
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders(); // ðŸ”¥ BU Ã‡OK Ã–NEMLÄ°!
 
-// Kimlik doðrulama yapýlandýrmasýný ekleyin
+// Kimlik doÄŸrulama yapÄ±landÄ±rmasÄ±
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -43,25 +49,20 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/Account/Logout";
         options.AccessDeniedPath = "/Account/AccessDenied";
         options.Cookie.HttpOnly = true;
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Cookie süresi 30 dakika
-        options.SlidingExpiration = false; // Süre uzamasýn
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.SlidingExpiration = false;
     });
-
-// AutoFac entegreasyonu
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-// Module Register Etme Tarafý
-builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Oturum süresi
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware SÄ±ralamasÄ±
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -72,13 +73,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 
-// Middleware sýralamasý - ÖNEMLÝ!
-app.UseRouting();           // Ýlk önce routing
+app.UseRouting();  // ðŸ“Œ Ã–nce Routing!
 
-app.UseAuthentication();     // Sonra authentication
-app.UseAuthorization();      // Sonra authorization
+app.UseAuthentication();  // ðŸ“Œ Sonra Authentication
+app.UseAuthorization();   // ðŸ“Œ En son Authorization
 
-// Son olarak endpoint yapýlandýrmasý
+// Endpoint yapÄ±landÄ±rmasÄ±
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Referans}/{action=Index}/{id?}");

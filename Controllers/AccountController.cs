@@ -23,10 +23,10 @@ namespace UetdsProgramiNet.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Admin");
-            }
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    return RedirectToAction("Index", "Admin");
+            //}
 
             ViewData["Title"] = "Giriş Yap";
             ViewData["ReturnUrl"] = returnUrl;
@@ -86,7 +86,7 @@ namespace UetdsProgramiNet.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Referans");
+                    return RedirectToAction("Index", "Admin");
                 }
             }
 
@@ -167,17 +167,13 @@ namespace UetdsProgramiNet.Controllers
                 {
                     if (model.NewPassword == model.ConfirmPassword)
                     {
-                        // Kullanıcının şifresini direkt değiştiriyoruz
-                        // Token kısmı normalde email üzerinden gönderilir ama burada
-                        // manuel sıfırlama yaptığımız için geçiyoruz
                         string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
                         var result = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
 
                         if (result.Succeeded)
                         {
-                            // Başarı mesajı
-                            TempData["SuccessMessage"] = "Şifreniz başarıyla güncellendi.";
-                            return RedirectToAction("Login", "Account");
+                            TempData["SuccessMessage"] = "Şifreniz başarıyla değiştirildi. Giriş yapabilirsiniz.";
+                            return RedirectToAction("Login", "Account"); // Kullanıcı login sayfasına yönlendiriliyor
                         }
                         else
                         {
@@ -199,6 +195,7 @@ namespace UetdsProgramiNet.Controllers
             }
             return View(model);
         }
+
 
         // Yardımcı metod - local URL'e yönlendirme
         private IActionResult RedirectToLocal(string returnUrl)
@@ -242,7 +239,6 @@ namespace UetdsProgramiNet.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Aynı e-posta adresi ile kullanıcı var mı kontrol et
                 var existingUser = await _userManager.FindByEmailAsync(model.Email);
                 if (existingUser != null)
                 {
@@ -250,37 +246,30 @@ namespace UetdsProgramiNet.Controllers
                     return View(model);
                 }
 
-                // Yeni kullanıcı oluştur
                 var user = new AppUser
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    EmailConfirmed = true,
-                    // Diğer gerekli kullanıcı bilgilerini ekleyin
-                    // Örneğin: FullName = model.FullName
+                    EmailConfirmed = true
                 };
 
-                // Kullanıcıyı veritabanına ekle
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    // Başarılı kayıt sonrası otomatik giriş yap
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-
-                    // Ana sayfaya yönlendir
-                    return RedirectToAction("Index", "Home");
+                    TempData["SuccessMessage"] = "Kullanıcı başarıyla oluşturuldu. Giriş yapabilirsiniz.";
+                    return RedirectToAction("Login", "Account"); // Kullanıcı giriş sayfasına yönlendiriliyor
                 }
 
-                // Eğer hata oluştuysa hataları ekle
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
-            // Eğer model geçerli değilse veya kayıt başarısız olduysa formu tekrar göster
             return View(model);
         }
+
+        
     }
 }

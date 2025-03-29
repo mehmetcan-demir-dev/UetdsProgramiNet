@@ -34,7 +34,7 @@
                                         <th>Referans</th>
                                         <th>Resim Yolu</th>
                                         <th>Aktif mi?</th>
-                                        <th></th>
+                                        <th>İşlemler</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,6 +50,7 @@
                                             <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                             <td>
                                                 <a asp-action="Guncelle" asp-route-id="@item.Id" class="btn btn-warning">Güncelle</a>
+                                                <a asp-action="Sil" asp-route-id="@item.Id" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">Sil</a>
                                             </td>
                                         </tr>
                                     }
@@ -85,9 +86,9 @@
 <!-- Modal için HTML -->
 @foreach (var item in Model)
 {
+    <!-- Resim Modalı -->
     <div class="modal fade" id="imageModal-@item.Id" tabindex="-1" aria-labelledby="imageModalLabel-@item.Id" aria-hidden="true">
-        <div class="modal-dialog" modal-lg">
-            <!-- modal-lg sınıfı ile modal daha geniş yapılır -->
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="imageModalLabel-@item.Id">Referans Resmi</h5>
@@ -99,5 +100,25 @@
             </div>
         </div>
     </div>
-}
 
+    <!-- Silme Onayı Modalı -->
+    <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel-@item.Id">Referansı Sil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bu referansı silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="Sil" asp-route-id="@item.Id" method="post">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

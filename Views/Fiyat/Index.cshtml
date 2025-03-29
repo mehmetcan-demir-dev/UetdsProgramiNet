@@ -1,11 +1,9 @@
 ﻿@model List<UetdsProgramiNet.Models.FiyatModel>
 
-
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
 
 <div class="main-content">
     <div class="page-content">
@@ -48,16 +46,16 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                
-
                                                 <td>@Html.DisplayFor(modelItem => item.AracPaketi)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.KullaniciMiktari)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.MobilBilgisi)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DestekBilgisi)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DestekSaatleri)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.YedeklemeTuru)</td>
-                                                <td>
+                                                <td style="padding-top: 25px;">
                                                     <a asp-action="Guncelle" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
+                                                    <!-- Silme Butonu -->
+                                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">Sil</button>
                                                 </td>
                                             </tr>
                                         }
@@ -88,3 +86,27 @@
         </div>
     </footer>
 </div>
+
+<!-- Silme Onayı Modalı -->
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel-@item.Id">Silme Onayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bu fiyatlandırma kaydını silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                    <form asp-action="Sil" asp-route-id="@item.Id" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

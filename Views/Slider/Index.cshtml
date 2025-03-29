@@ -46,9 +46,21 @@
                                         <tr>
                                             <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Title)</td>
                                             <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Subtitle)</td>
-                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Description)</td>
+                                            <td style="padding-top: 30px;">
+                                                @{
+                                                    var description = @Html.DisplayFor(modelItem => item.Description).ToString();
+                                                    var truncatedDescription = description.Length > 30 ? description.Substring(0, 30) + "..." : description;
+                                                }
+                                                @truncatedDescription
+                                            </td>
                                             <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.SubDescription)</td>
-                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.InfoUrl)</td>
+                                            <td style="padding-top: 30px;">
+                                                @{
+                                                    var infoUrl = @Html.DisplayFor(modelItem => item.InfoUrl).ToString();
+                                                    var truncatedInfoUrl = infoUrl.Length > 30 ? infoUrl.Substring(0, 30) + "..." : infoUrl;
+                                                }
+                                                @truncatedInfoUrl
+                                            </td>
                                             <td>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal-@item.Id">
                                                     <img src="@item.ImgUrl" style="width: 100px; height: auto; object-fit: cover;" alt="Slider Resmi" />
@@ -56,6 +68,8 @@
                                             </td>
                                             <td style="padding-top: 25px;">
                                                 <a asp-action="Guncelle" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
+                                                <!-- Silme Butonu -->
+                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">Sil</button>
                                             </td>
                                         </tr>
                                     }
@@ -91,9 +105,9 @@
 <!-- Modal için HTML -->
 @foreach (var item in Model)
 {
+    <!-- Slider Resim Modalı -->
     <div class="modal fade" id="imageModal-@item.Id" tabindex="-1" aria-labelledby="imageModalLabel-@item.Id" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <!-- modal-lg sınıfı ile modal daha geniş yapılır -->
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="imageModalLabel-@item.Id">Slider Resmi</h5>
@@ -101,6 +115,27 @@
                 </div>
                 <div class="modal-body">
                     <img src="@item.ImgUrl" class="img-fluid" alt="Slider Resmi" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Silme Onayı Modalı -->
+    <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel-@item.Id">Silme Onayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bu sliderı silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                    <form asp-action="Sil" asp-route-id="@item.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                    </form>
                 </div>
             </div>
         </div>

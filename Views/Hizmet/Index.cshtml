@@ -48,11 +48,13 @@
                                                     <i class="@item.IconUrl" style="font-size: 1.5rem;"></i>
                                                 </td>
 
-                                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IconUrl)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.InfoUrl)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                                <td>@(item.Description.Length > 30 ? item.Description.Substring(0, 30) + "..." : item.Description)</td>
+                                                <td>@(item.InfoUrl.Length > 30 ? item.InfoUrl.Substring(0, 30) + "..." : item.InfoUrl)</td>
                                                 <td>
                                                     <a asp-action="Guncelle" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
+                                                    <!-- Silme Butonu -->
+                                                    <button type="button" class="btn btn-danger btn-sm ml-2" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">Sil</button>
                                                 </td>
                                             </tr>
                                         }
@@ -83,3 +85,27 @@
         </div>
     </footer>
 </div>
+
+<!-- Silme Onayı Modalı -->
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel-@item.Id">Silme Onayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bu hizmet kaydını silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                    <form asp-action="Sil" asp-route-id="@item.Id" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
