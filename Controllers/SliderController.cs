@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet.Entities;
+using UetdsProgramiNet.Filters;
 using UetdsProgramiNet.Models;
 
 namespace UetdsProgramiNet.Controllers
@@ -33,17 +34,42 @@ namespace UetdsProgramiNet.Controllers
 
             return View(sliders);
         }
+        // Admin paneli için AdminIndex
+        [AccessControl]
+        [HttpGet]
+        public async Task<IActionResult> AdminIndex()
+        {
+            var sliders = await _context.Sliders
+                .Where(r => !r.IsDeleted)  // Silinmiş olanları hariç tutuyoruz
+                .Select(r => new SliderModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Subtitle = r.Subtitle,
+                    Description = r.Description,
+                    SubDescription = r.SubDescription,
+                    InfoUrl = r.InfoUrl,
+                    ImgUrl = r.ImgUrl
+                })
+                .ToListAsync();
+
+            return View(sliders);
+        }
+
 
         // Slider Ekleme Sayfası
-        public IActionResult Ekle()
+        [AccessControl]
+        public IActionResult AdminEkle()
         {
             return View();
         }
 
+
         // Slider Ekleme POST işlemi
+        [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Ekle(SliderModel model)
+        public async Task<IActionResult> AdminEkle(SliderModel model)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +104,8 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Slider Güncelleme Sayfası
-        public async Task<IActionResult> Guncelle(int? id)
+        [AccessControl]
+        public async Task<IActionResult> AdminGuncelle(int? id)
         {
             if (id == null)
             {
@@ -109,9 +136,10 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Slider Güncelleme POST işlemi
+        [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Guncelle(int id, SliderModel model)
+        public async Task<IActionResult> AdminGuncelle(int id, SliderModel model)
         {
             if (id != model.Id)
             {
@@ -146,7 +174,8 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Slider Silme Sayfası
-        public async Task<IActionResult> Sil(int? id)
+        [AccessControl]
+        public async Task<IActionResult> AdminSil(int? id)
         {
             if (id == null)
             {
@@ -176,6 +205,7 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Slider Silme POST işlemi
+        [AccessControl]
         [HttpPost, ActionName("Sil")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SilConfirmed(int id)

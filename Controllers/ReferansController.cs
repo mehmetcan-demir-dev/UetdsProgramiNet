@@ -12,10 +12,30 @@ public class ReferansController : Controller
     public ReferansController(AppDbContext context)
     {
         _context = context;
-    } 
-    [AccessControl]
+    }
+
+    // Kullanıcı sayfası için Index
     [HttpGet]
     public async Task<IActionResult> Index()
+    {
+        var referanslar = await _context.Referanslar
+            .Where(r => !r.IsDeleted && r.IsActive)  // Aktif ve silinmemiş referansları göster
+            .Select(r => new ReferansModel
+            {
+                Id = r.Id,
+                ImageUrl = r.ImageUrl,
+                Description = r.Description,
+                IsActive = r.IsActive
+            })
+            .ToListAsync();
+
+        return View(referanslar);
+    }
+
+    // Admin paneli için AdminIndex
+    [AccessControl]
+    [HttpGet]
+    public async Task<IActionResult> AdminIndex()
     {
         var referanslar = await _context.Referanslar
             .Where(r => !r.IsDeleted)  // Silinmiş olanları hariç tutuyoruz
@@ -31,17 +51,18 @@ public class ReferansController : Controller
         return View(referanslar);
     }
 
-
-    // Referans Ekleme Sayfası
-    public IActionResult Ekle()
+    // Referans Ekleme Sayfası - Admin
+    [AccessControl]
+    public IActionResult AdminEkle()
     {
         return View();
     }
 
-    // Referans Ekleme POST
+    // Referans Ekleme POST - Admin
+    [AccessControl]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Ekle(ReferansModel model)
+    public async Task<IActionResult> AdminEkle(ReferansModel model)
     {
         if (ModelState.IsValid)
         {
@@ -50,23 +71,24 @@ public class ReferansController : Controller
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
                 IsActive = model.IsActive,
-                CreatedDate = DateTime.Now,  // CreatedDate'i şimdi atıyoruz
-                UpdatedDate = DateTime.Now,  // İlk güncelleme tarihini atıyoruz
-                CreatedUsername = User.Identity.Name,  // Giriş yapan kullanıcı adını alıyoruz
-                UpdatedUsername = User.Identity.Name  // Güncelleyen kullanıcıyı da aynı şekilde alıyoruz
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                CreatedUsername = User.Identity.Name,
+                UpdatedUsername = User.Identity.Name
             };
 
             _context.Referanslar.Add(yeniReferans);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex");
         }
 
         return View(model);
     }
 
-    // Referans Güncelleme Sayfası
-    public async Task<IActionResult> Guncelle(int? id)
+    // Referans Güncelleme Sayfası - Admin
+    [AccessControl]
+    public async Task<IActionResult> AdminGuncelle(int? id)
     {
         if (id == null)
         {
@@ -90,10 +112,11 @@ public class ReferansController : Controller
         return View(model);
     }
 
-    // Referans Güncelleme POST
+    // Referans Güncelleme POST - Admin
+    [AccessControl]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Guncelle(int id, ReferansModel model)
+    public async Task<IActionResult> AdminGuncelle(int id, ReferansModel model)
     {
         if (id != model.Id)
         {
@@ -112,8 +135,8 @@ public class ReferansController : Controller
             referans.Description = model.Description;
             referans.ImageUrl = model.ImageUrl;
             referans.IsActive = model.IsActive;
-            referans.UpdatedDate = DateTime.Now;  // Güncellenme tarihi
-            referans.UpdatedUsername = User.Identity.Name;  // Güncellenen kullanıcı adı
+            referans.UpdatedDate = DateTime.Now;
+            referans.UpdatedUsername = User.Identity.Name;
 
             try
             {
@@ -132,14 +155,15 @@ public class ReferansController : Controller
                 }
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminIndex");
         }
 
         return View(model);
     }
 
-    // Silme Sayfası
-    public async Task<IActionResult> Sil(int? id)
+    // Silme Sayfası - Admin
+    [AccessControl]
+    public async Task<IActionResult> AdminSil(int? id)
     {
         if (id == null)
         {
@@ -156,10 +180,11 @@ public class ReferansController : Controller
         return View(referans);
     }
 
-    // Silme İşlemini Onaylama (POST)
-    [HttpPost, ActionName("Sil")]
+    // Silme İşlemini Onaylama (POST) - Admin
+    [AccessControl]
+    [HttpPost, ActionName("AdminSil")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SilConfirmed(int id)
+    public async Task<IActionResult> AdminSilConfirmed(int id)
     {
         var referans = await _context.Referanslar.FindAsync(id);
         if (referans == null)
@@ -170,14 +195,13 @@ public class ReferansController : Controller
         // Veriyi silmek yerine sadece IsDeleted alanını 1 yapıyoruz
         referans.IsDeleted = true;
         referans.UpdatedDate = DateTime.Now;
-        referans.UpdatedUsername = User.Identity.Name;  // Güncellenen kullanıcı adı
+        referans.UpdatedUsername = User.Identity.Name;
 
         _context.Referanslar.Update(referans);
-        await _context.SaveChangesAsync();  
+        await _context.SaveChangesAsync();
 
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction("AdminIndex");
     }
-
 
     private bool ReferansExists(int id)
     {

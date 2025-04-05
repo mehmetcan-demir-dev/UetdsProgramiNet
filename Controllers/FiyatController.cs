@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet.Entities;
+using UetdsProgramiNet.Filters;
 using UetdsProgramiNet.Models;
 
 namespace UetdsProgramiNet.Controllers
@@ -31,17 +32,38 @@ namespace UetdsProgramiNet.Controllers
 
             return View(fiyatlar);
         }
+        // Admin paneli için AdminIndex
+        [AccessControl]
+        [HttpGet]
+        public async Task<IActionResult> AdminIndex()
+        {
+            var fiyatlar = await _context.Fiyatlar
+                .Where(r => !r.IsDeleted)  // Silinmiş olanları hariç tutuyoruz
+                .Select(r => new FiyatModel
+                {
+                    Id = r.Id,
+                    AracPaketi = r.AracPaketi,
+                    KullaniciMiktari = r.KullaniciMiktari,
+                    MobilBilgisi = r.MobilBilgisi,
+                    DestekBilgisi = r.DestekBilgisi,
+                    DestekSaatleri = r.DestekSaatleri,
+                    YedeklemeTuru = r.YedeklemeTuru,
+                })
+                .ToListAsync();
 
+            return View(fiyatlar);
+        }
         // Fiyat Ekleme Sayfası
-        public IActionResult Ekle()
+        public IActionResult AdminEkle()
         {
             return View();
         }
 
         // Fiyat Ekleme POST
+        [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Ekle(FiyatModel model)
+        public async Task<IActionResult> AdminEkle(FiyatModel model)
         {
             if (ModelState.IsValid)
             {
@@ -63,14 +85,15 @@ namespace UetdsProgramiNet.Controllers
                 _context.Fiyatlar.Add(yeniFiyat);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("AdminIndex");
             }
 
             return View(model);
         }
 
         // Fiyat Güncelleme Sayfası
-        public async Task<IActionResult> Guncelle(int? id)
+        [AccessControl]
+        public async Task<IActionResult> AdminGuncelle(int? id)
         {
             if (id == null)
             {
@@ -98,9 +121,10 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Fiyat Güncelleme POST
+        [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Guncelle(int id, FiyatModel model)
+        public async Task<IActionResult> AdminGuncelle(int id, FiyatModel model)
         {
             if (id != model.Id)
             {
@@ -154,7 +178,8 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Fiyat Silme Sayfası
-        public async Task<IActionResult> Sil(int? id)
+        [AccessControl]
+        public async Task<IActionResult> AdminSil(int? id)
         {
             if (id == null)
             {
@@ -173,6 +198,7 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Fiyat Silme POST (Silme işlemi yerine IsDeleted alanını true yapıyoruz)
+        [AccessControl]
         [HttpPost, ActionName("Sil")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SilConfirmed(int id)

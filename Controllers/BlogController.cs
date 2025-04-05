@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet.Entities;
+using UetdsProgramiNet.Filters;
 using UetdsProgramiNet.Models;
 
 namespace UetdsProgramiNet.Controllers
@@ -12,7 +13,7 @@ namespace UetdsProgramiNet.Controllers
         {
             _context = context;
         }
-
+        [AccessControl]
         public async Task<IActionResult> Index()
         {
             var bloglar = await _context.Bloglar
@@ -30,17 +31,37 @@ namespace UetdsProgramiNet.Controllers
 
             return View(bloglar);
         }
+        [AccessControl]
+        [HttpGet]
+        public async Task<IActionResult> AdminIndex()
+        {
+            var bloglar = await _context.Bloglar
+                .Where(r => !r.IsDeleted)  // Silinmiş olanları hariç tutuyoruz
+                .Select(r => new BlogModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Description = r.Description,
+                    SubDescription = r.SubDescription,
+                    InfoUrl = r.InfoUrl,
+                    ImgUrl = r.ImgUrl,
+                })
+                .ToListAsync();
 
+            return View(bloglar);
+        }
         // Blog Ekleme Sayfası
-        public IActionResult Ekle()
+        [AccessControl]
+        public IActionResult AdminEkle()
         {
             return View();
         }
 
         // Blog Ekleme POST
+        [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Ekle(BlogModel model)
+        public async Task<IActionResult> AdminEkle(BlogModel model)
         {
             if (ModelState.IsValid)
             {
@@ -66,14 +87,15 @@ namespace UetdsProgramiNet.Controllers
                 _context.Bloglar.Add(yeniBlog);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("AdminIndex");
             }
 
             return View(model);
         }
 
         // Blog Güncelleme Sayfası
-        public async Task<IActionResult> Guncelle(int? id)
+        [AccessControl]
+        public async Task<IActionResult> AdminGuncelle(int? id)
         {
             if (id == null)
             {
@@ -100,9 +122,10 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Blog Güncelleme POST
+        [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Guncelle(int id, BlogModel model)
+        public async Task<IActionResult> AdminGuncelle(int id, BlogModel model)
         {
             if (id != model.Id)
             {
@@ -160,7 +183,8 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Blog Silme Sayfası
-        public async Task<IActionResult> Sil(int? id)
+        [AccessControl]
+        public async Task<IActionResult> AdminSil(int? id)
         {
             if (id == null)
             {
@@ -186,6 +210,7 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Blog Silme POST (Silme işlemi yerine IsDeleted alanını true yapıyoruz)
+        [AccessControl]
         [HttpPost, ActionName("Sil")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SilConfirmed(int id)

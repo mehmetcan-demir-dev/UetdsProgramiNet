@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet;
 using UetdsProgramiNet.Entities;
+using UetdsProgramiNet.Filters;
 using UetdsProgramiNet.Models;
 
 public class HizmetController : Controller
@@ -12,7 +13,7 @@ public class HizmetController : Controller
     {
         _context = context;
     }
-
+    [AccessControl]
     public async Task<IActionResult> Index()
     {
         var hizmetler = await _context.Hizmetler
@@ -30,9 +31,66 @@ public class HizmetController : Controller
 
         return View(hizmetler);
     }
+    // Admin paneli için AdminIndex
+    [AccessControl]
+    [HttpGet]
+    public async Task<IActionResult> AdminIndex()
+    {
+        var hizmetler = await _context.Hizmetler
+            .Where(r => !r.IsDeleted)  // Silinmiş olanları hariç tutuyoruz
+            .Select(r => new HizmetModel
+            {
+                Id = r.Id,
+                IconUrl = r.IconUrl,
+                Title = r.Title,
+                Description = r.Description,
+                InfoUrl = r.InfoUrl
+            })
+            .ToListAsync();
+
+        return View(hizmetler);
+    }
+
+    // Referans Ekleme Sayfası - Admin
+    [AccessControl]
+    public IActionResult AdminEkle()
+    {
+        return View();
+    }
+
+    // Referans Ekleme POST - Admin
+    [AccessControl]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AdminEkle(HizmetModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var yeniHizmet = new Hizmet
+            {
+                Id = model.Id,
+                IconUrl = model.IconUrl,
+                Title = model.Title,
+                Description = model.Description,
+                InfoUrl = model.InfoUrl,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                CreatedUsername = User.Identity.Name,
+                UpdatedUsername = User.Identity.Name
+            };
+
+            _context.Hizmetler.Add(yeniHizmet);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("AdminIndex");
+        }
+
+        return View(model);
+    }
 
     // Hizmet Güncelleme Sayfası
-    public async Task<IActionResult> Guncelle(int? id)
+    [AccessControl]
+    public async Task<IActionResult> AdminGuncelle(int? id)
     {
         if (id == null)
         {
@@ -59,9 +117,10 @@ public class HizmetController : Controller
     }
 
     // Hizmet Güncelleme POST
+    [AccessControl]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Guncelle(int id, HizmetModel model)
+    public async Task<IActionResult> AdminGuncelle(int id, HizmetModel model)
     {
         if (id != model.Id)
         {
@@ -109,7 +168,8 @@ public class HizmetController : Controller
     }
 
     // Silme Sayfasına Yönlendiren Aksiyon
-    public async Task<IActionResult> Sil(int? id)
+    [AccessControl]
+    public async Task<IActionResult> AdminSil(int? id)
     {
         if (id == null)
         {
@@ -127,6 +187,7 @@ public class HizmetController : Controller
     }
 
     // Silme Onayı (SilConfirmed) Aksiyon
+    [AccessControl]
     [HttpPost, ActionName("Sil")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SilConfirmed(int id)

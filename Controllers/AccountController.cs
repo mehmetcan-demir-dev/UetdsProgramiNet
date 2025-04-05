@@ -86,7 +86,7 @@ namespace UetdsProgramiNet.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("AdminIndex", "Referans");
                 }
             }
 
@@ -109,6 +109,9 @@ namespace UetdsProgramiNet.Controllers
 
             return RedirectToAction("Login", "Account");
         }
+        //BURADAN AŞAĞISI OLDUĞU GİBİ SİLİNECEK
+
+
 
         // Şifremi Unuttum Sayfası
         [HttpGet]
