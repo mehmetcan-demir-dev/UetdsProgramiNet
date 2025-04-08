@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UetdsProgramiNet.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateUser : Migration
+    public partial class migration01 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,26 +48,6 @@ namespace UetdsProgramiNet.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Referanslar",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedUsername = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Referanslar", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -235,7 +215,22 @@ namespace UetdsProgramiNet.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Bloglar");
+
+            migrationBuilder.DropTable(
+                name: "Fiyatlar");
+
+            migrationBuilder.DropTable(
+                name: "Hizmetler");
+
+            migrationBuilder.DropTable(
+                name: "Kullanicilar");
+
+            migrationBuilder.DropTable(
                 name: "Referanslar");
+
+            migrationBuilder.DropTable(
+                name: "Sliders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

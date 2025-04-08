@@ -13,7 +13,6 @@ public class HizmetController : Controller
     {
         _context = context;
     }
-    [AccessControl]
     public async Task<IActionResult> Index()
     {
         var hizmetler = await _context.Hizmetler
@@ -31,6 +30,12 @@ public class HizmetController : Controller
 
         return View(hizmetler);
     }
+
+    public async Task<IActionResult> Bilgilendirme()
+    {
+        return View();
+    }
+
     // Admin paneli için AdminIndex
     [AccessControl]
     [HttpGet]

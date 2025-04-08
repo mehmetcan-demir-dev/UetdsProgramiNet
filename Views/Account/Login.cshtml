@@ -1,4 +1,5 @@
 ﻿@model UetdsProgramiNet.Models.LoginViewModel
+
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <h2>@ViewData["Title"]</h2>
@@ -7,17 +8,17 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group mb-3">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" type="email" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control" type="password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-check mb-3">
                 <input asp-for="RememberMe" class="form-check-input" />
-                <label asp-for="RememberMe" class="form-check-label"></label>
+                <label asp-for="RememberMe" class="form-check-label">Beni hatırla</label>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Giriş Yap</button>
@@ -29,6 +30,7 @@
         </form>
     </div>
 </div>
+
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial");
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

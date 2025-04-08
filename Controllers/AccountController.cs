@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using UetdsProgramiNet.Entities;
 using UetdsProgramiNet.Models;
@@ -10,110 +11,62 @@ namespace UetdsProgramiNet.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, AppDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login()
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    return RedirectToAction("Index", "Admin");
-            //}
-
-            ViewData["Title"] = "Giriş Yap";
-            ViewData["ReturnUrl"] = returnUrl;
-
-            // Hatırlanan bilgileri formda göster
-            var model = new LoginViewModel();
-
-            if (Request.Cookies.TryGetValue("RememberedEmail", out string email))
-            {
-                model.Email = email;
-                model.RememberMe = true; // Checkbox'ı da işaretle
-            }
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
-            ViewData["Title"] = "Giriş Yap";
-            ViewData["ReturnUrl"] = returnUrl;
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
+            if (user != null)
             {
-                ModelState.AddModelError(string.Empty, "Bu e-posta adresi ile kayıtlı kullanıcı bulunamadı.");
-                return View(model);
-            }
-
-            // Oturum açma işlemi - RememberMe'den bağımsız olarak 30 dakika sonra sona erecek
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = false, // Tarayıcı kapatıldığında oturum kapansın
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) // Kesin süre
-            };
-
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
-
-            if (result.Succeeded)
-            {
-                // Oturum durumunu session'a kaydet
-                HttpContext.Session.SetString("IUL", "true");
-
-                // Diğer RememberMe vs. kodları
-
-                // ReturnUrl varsa oraya yönlendir, yoksa Referans/Index'e git
-                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
                 {
-                    return Redirect(returnUrl);
-                }
-                else
-                {
+                    // Kullanıcı login oldu, session set ediliyor
+                    HttpContext.Session.SetString("IUL", "true");
+
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        return Redirect(returnUrl);
+
                     return RedirectToAction("AdminIndex", "Referans");
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Geçersiz giriş bilgileri.");
+            ModelState.AddModelError("", "Geçersiz giriş denemesi.");
             return View(model);
         }
 
 
-
-
-        // Çıkış Action'ı
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-
-            // Session'ı temizle
             HttpContext.Session.Remove("IUL");
-
             return RedirectToAction("Login", "Account");
         }
-        //BURADAN AŞAĞISI OLDUĞU GİBİ SİLİNECEK
 
-
-
-        // Şifremi Unuttum Sayfası
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -122,47 +75,44 @@ namespace UetdsProgramiNet.Controllers
             return View();
         }
 
-        // Şifremi Unuttum Sayfasından Gelen Post İsteği
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             ViewData["Title"] = "Şifremi Unuttum";
+
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user != null)
                 {
-                    // E-posta varsa, kullanıcıyı bilgilendirebiliriz veya yeni şifre isteği gönderebiliriz.
                     return RedirectToAction(nameof(ResetPassword), new { email = model.Email });
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Bu e-posta adresi ile kayıtlı bir kullanıcı bulunmamaktadır.");
-                    return View(model);
                 }
             }
+
             return View(model);
         }
 
-        // Şifre Sıfırlama Sayfası
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string email)
         {
             ViewData["Title"] = "Şifre Sıfırlama";
-            var model = new ResetPasswordViewModel { Email = email };
-            return View(model);
+            return View(new ResetPasswordViewModel { Email = email });
         }
 
-        // Şifreyi Güncelleme İşlemi
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             ViewData["Title"] = "Şifre Sıfırlama";
+
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
@@ -170,13 +120,13 @@ namespace UetdsProgramiNet.Controllers
                 {
                     if (model.NewPassword == model.ConfirmPassword)
                     {
-                        string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                        var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
                         var result = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
 
                         if (result.Succeeded)
                         {
                             TempData["SuccessMessage"] = "Şifreniz başarıyla değiştirildi. Giriş yapabilirsiniz.";
-                            return RedirectToAction("Login", "Account"); // Kullanıcı login sayfasına yönlendiriliyor
+                            return RedirectToAction("Login", "Account");
                         }
                         else
                         {
@@ -196,36 +146,10 @@ namespace UetdsProgramiNet.Controllers
                     ModelState.AddModelError(string.Empty, "Bu e-posta adresi ile kayıtlı bir kullanıcı bulunmamaktadır.");
                 }
             }
+
             return View(model);
         }
 
-
-        // Yardımcı metod - local URL'e yönlendirme
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        // Debug için eklemeniz gereken kod
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> TestLogin()
-        {
-            var user = await _userManager.FindByEmailAsync("test@example.com"); // Bir test e-postası kullanın
-            if (user != null)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home");
-            }
-            return Content("Kullanıcı bulunamadı.");
-        }
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
@@ -234,7 +158,6 @@ namespace UetdsProgramiNet.Controllers
             return View();
         }
 
-        // Register POST Action'ı
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -261,7 +184,7 @@ namespace UetdsProgramiNet.Controllers
                 if (result.Succeeded)
                 {
                     TempData["SuccessMessage"] = "Kullanıcı başarıyla oluşturuldu. Giriş yapabilirsiniz.";
-                    return RedirectToAction("Login", "Account"); // Kullanıcı giriş sayfasına yönlendiriliyor
+                    return RedirectToAction("Login", "Account");
                 }
 
                 foreach (var error in result.Errors)
@@ -273,6 +196,12 @@ namespace UetdsProgramiNet.Controllers
             return View(model);
         }
 
-        
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
+            else
+                return RedirectToAction("Index", "Home");
+        }
     }
 }

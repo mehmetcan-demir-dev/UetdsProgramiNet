@@ -13,7 +13,6 @@ namespace UetdsProgramiNet.Controllers
         {
             _context = context;
         }
-        [AccessControl]
         public async Task<IActionResult> Index()
         {
             var bloglar = await _context.Bloglar

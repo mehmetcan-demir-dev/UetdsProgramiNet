@@ -26,7 +26,8 @@ namespace UetdsProgramiNet.Controllers
                     MobilBilgisi = r.MobilBilgisi,
                     DestekBilgisi = r.DestekBilgisi,
                     DestekSaatleri = r.DestekSaatleri,
-                    YedeklemeTuru = r.YedeklemeTuru
+                    YedeklemeTuru = r.YedeklemeTuru,
+                    WhatsAppUrl = r.WhatsAppUrl
                 })
                 .ToListAsync();
 
@@ -48,6 +49,7 @@ namespace UetdsProgramiNet.Controllers
                     DestekBilgisi = r.DestekBilgisi,
                     DestekSaatleri = r.DestekSaatleri,
                     YedeklemeTuru = r.YedeklemeTuru,
+                    WhatsAppUrl = r.WhatsAppUrl,
                 })
                 .ToListAsync();
 
@@ -75,6 +77,7 @@ namespace UetdsProgramiNet.Controllers
                     DestekBilgisi = model.DestekBilgisi,
                     DestekSaatleri = model.DestekSaatleri,
                     YedeklemeTuru = model.YedeklemeTuru,
+                    WhatsAppUrl = model.WhatsAppUrl,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
                     CreatedUsername = User.Identity.Name,
@@ -114,7 +117,9 @@ namespace UetdsProgramiNet.Controllers
                 MobilBilgisi = fiyatlar.MobilBilgisi,
                 DestekBilgisi = fiyatlar.DestekBilgisi,
                 DestekSaatleri = fiyatlar.DestekSaatleri,
-                YedeklemeTuru = fiyatlar.YedeklemeTuru
+                YedeklemeTuru = fiyatlar.YedeklemeTuru,
+                WhatsAppUrl = fiyatlar.WhatsAppUrl
+                
             };
 
             return View(model);
@@ -146,6 +151,7 @@ namespace UetdsProgramiNet.Controllers
                 fiyat.DestekBilgisi = model.DestekBilgisi;
                 fiyat.DestekSaatleri = model.DestekSaatleri;
                 fiyat.YedeklemeTuru = model.YedeklemeTuru;
+                fiyat.WhatsAppUrl = model.WhatsAppUrl;
                 fiyat.UpdatedDate = DateTime.Now;
                 fiyat.UpdatedUsername = User.Identity.Name;
 

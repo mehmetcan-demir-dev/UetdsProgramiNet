@@ -1,0 +1,407 @@
+﻿@{
+    ViewData["Title"] = "Hakkimizda";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="container">
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item"><a href="/Home/Index">AnaSayfa</a></li>
+                <li class="breadcrumb-item active" aria-current="page">U-ETDS Bilgilendirme</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Title Section -->
+    <div class="text-center my-5">
+        <h3>UETDS Programına Dair Bilgiler</h3>
+    </div>
+
+    <!-- Section 1: UETDS Belgeleri -->
+    <section id="section1">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
+            <div class="flex-lg-6">
+                <h3>UETDS Hangi Belgeleri Kapsıyor?</h3>
+                <p style="margin-left: 20px;">
+                    Karayolu Taşıma Kanunca E-Devlet üzerinden veri gönderme <br /> zorunluluğu olan sürücü belgeleri aşağıda ki gibidir;
+                </p>
+                <ul>
+                    <li>A1, A2, B1, B2, D1 ve D2 belgeli tarifesiz ya da tarifeli yolcu taşımacılığı yapanlar</li>
+                    <li>K1, K2, K3, C1, C2 ve C3 belgeli eşya taşımacılığı yapanlar</li>
+                    <li>L1 ve L2 belgeli lojistik firmaları</li>
+                    <li>M1 ve M2 belgeli kargo işletmeleri</li>
+                    <li>N1 ve N2 belgeli nakliyat, ambar firmaları</li>
+                    <li>P1 ve P2 belgeli dağıtım yapan işletmeler</li>
+                    <li>R1 ve R2 belgesi olan organizatör taşıma işletmeleri</li>
+                    <li>T1 ve T2 belgeli terminal işletmeleri</li>
+                </ul>
+            </div>
+            <div class="flex-lg-6 mt-4 mt-lg-0">
+                <img src="path_to_image1.jpg" alt="UETDS Belgeleri" class="img-fluid">
+            </div>
+        </div>
+    </section>
+    <!-- Section 2: UETDS Sistemi Nedir -->
+    <section id="section2">
+        <div class="d-flex flex-column flex-lg-row-reverse align-items-center justify-content-between mb-5">
+            <div class="col-lg-6">
+                <h3>UETDS Sistemi Nedir?</h3>
+                <p>
+                    <strong>08.01.2018 tarihli ve 30295 sayılı Resmi Gazete yayımıyla yürürlüğe giren U-ETDS (Ulaştırma Elektronik Takip ve Denetim Sistemi), (KTY) ‘’Karayolu taşıma yönetmeliğince’’ tanımlanmış bir yasadır.</strong>
+                </p>
+                <p>
+                    4925 sayılı ‘’Karayolu Taşıma Kanunu’’ ve KTY bünyesinde taşımacılık yapmakta olan bütün firmaların taşımakta olduğu yolcu, yük ve kargo süreçlerinin elektronik ortamda, gerçek zamanlı olarak değerlendirilmesi ve denetiminin yapılmasıdır.
+                </p>
+                <span class="dots"></span>
+                <span class="more-text" style="display:none;">
+                    U-ETDS kullanımıyla direk olarak E-Devlet yasal kayıtlarına veri gönderimi yapılmaktadır. U-ETDS, Kanun ve yasal Yönetmeliğe ilişkin tüm verilerin saklandığı, gerektiği süreçte ilgili mercilerle paylaşılabileceği bir verilerin gönderim ağıdır.
+                    Yasal olarak gönderilmesi gereken veriler arasında A1, A2, B2 ve D2 sınıfı Arazi Taşımacılığı Belgesi olanlar veya K1, K2, K3, C1, C2 ve C3 Sürücü Belgesi olan yasal ve tüzel kişiler bulunmaktadır.
+                    Ulaştırma Bakanlığınca istenen veriler, U-ETDS programı aracılığıyla aktarılmaktadır.
+                </span>
+                <button class="read-more-btn" onclick="toggleReadMore('section2')">...Devamı için tıklayın</button>
+            </div>
+            <!-- Görsel Alanı -->
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <img src="path_to_image2.jpg" alt="UETDS Sistemi" class="img-fluid rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: UETDS Kullanımında Sağlanan Faydalar Nelerdir? -->
+    <section id="section3">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
+            <div class="col-lg-6">
+                <h3>UETDS Kullanımında Sağlanan Faydalar Nelerdir?</h3>
+                <p>
+                    Yasal zorunluluğun yanında UETD sistemini kullanan gerçek ve tüzel kişiler, kapsamlı bilgilerin kendi çıkarlarına kullanımını ve kolay takip edebilme gibi avantajlarından yararlanır. Belirli başlıklar altında toplamak gerekirse U-ETDS'nin sağladığı faydalar şunlardır;
+                </p>
+                <ul>
+                    <li>Yolcu taşımacılığında gerçek zamanlı veri sağlanması. Taşınan yolcuların, seyahat sıklığını belirlemek, sayısı hakkında net bir bilgiye sahip olmak. Ayrıca seyahat yoğunluğu olan saatlerin belirlenmesi, indirimli tarifelerin hesaplanması ve engelli yolcular için düzenlenen müfredatın takibinin yapılması.</li>
+                    <span class="dots"></span>
+                    <span class="more-text" style="display:none;">
+                    <li>Sektör üzerinde usulsüz yapılan girişlerin engellenmesi, kontrol altına alınması. Alınan bilgiler sonucunda diğer ulaştırma yolları (deniz, hava ve demiryolu) hakkında yatırım odaklı bilgiler alabilmek.</li>
+                    <li>Trafik yoğunluğunun önlenmesini sağlayacak güzergâh ve saat bildirimleri. Asayiş ve güvenlik birimlerine kolaylık sağlayacak gerçek zamanlı bildirimler.</li>
+                    <li>Taşımacılık yapan firmaların mali açıdan net bilgiler elde etmesi ve vergilendirme için paylaşılacak belgelerin gerekli mercilere (MASAK, Gelir İdaresi Başkanlığı) daha hızlı gönderebilmesi.</li>
+                    <li>Sektörde yer alan küçük ve büyük ölçekli tüm firmaların çalışanlarını takip edebilmesi, sosyal ve mali açıdan düzenleme yapabilmesini sağlar. Maaş ve sigorta takibini kolaylaştırır ve çalışma saatleriyle dinlenme saatlerinin net bir plana bağlı olmasına yardımcı olur.</li>
+                    <li>Yolcu ve yük taşımacılığında geleceğe dair net fikirler vermek amacıyla mevsimlik, aylık, günlük hatta saatlik gerçek veriler sağlar.</li>
+                    <li>U-ETDS kullanımı ülke genelinde yapılan tüm ticari karayolu hareketlerinin ilk kez elektronik olarak kontrol edilmesini sağlayacaktır.</li>
+                    </span>
+                </ul>
+                <button class="read-more-btn" onclick="toggleReadMore('section3')">...Devamı için tıklayın</button>
+            </div>
+            <!-- Görsel Alanı -->
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <img src="path_to_image3.jpg" alt="UETDS Faydaları" class="img-fluid rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: U-ETDS Eşya Taşımacılığı Nedir? -->
+    <section id="section4">
+        <div class="d-flex flex-column flex-lg-row-reverse align-items-center justify-content-between mb-5">
+            <div class="col-lg-6">
+                <h3>U-ETDS Eşya Taşımacılığı Nedir?</h3>
+                <p>
+                    <strong>Ulaştırma Elektronik Takip ve Denetim Sistemi (U-ETDS),</strong> ilk olarak 08.01.2018 tarih ve 30295 sayılı Resmi Gazete'de yayımlanarak yürürlüğe giren Karayolu Taşıma Yönetmeliği (KTY) ile tanımlanmıştır.
+                </p>
+                <p>
+                    KTK ve KTY çerçevesinde eşya taşımacılığı faaliyetinde bulunmak üzere adlarına C2, C3, K1 ve K3 yetki belgesi düzenlenen firmaların, yapacakları eşya taşımacılığı faaliyetinde;
+                </p>
+                <span class="dots"></span>
+                <span class="more-text" style="display:none;">
+                    <h4>Eşya Taşımacılığı için UETDS</h4>
+                    <ol>
+                        <li>
+                            Yükün gönderici bilgilerini
+                            <ul>
+                                <li>Vergi kimlik numarasının (gerçek kişilerde T.C. kimlik numarası)</li>
+                                <li>Türk vatandaşı değilse uyruğu, pasaport numarası veya varsa yabancı kimlik numarası</li>
+                                <li>Ad, Soyad / Unvan</li>
+                                <li>Adres</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Yükün alıcı bilgilerini
+                            <ul>
+                                <li>Vergi kimlik numarasının (gerçek kişilerde T.C. kimlik numarası)</li>
+                                <li>Türk vatandaşı değilse uyruğu, pasaport numarası veya varsa yabancı kimlik numarası</li>
+                                <li>Ad, Soyad / Unvan</li>
+                                <li>Adres</li>
+                            </ul>
+                        </li>
+                        <li>
+                            İrsaliye ve fatura/e-fatura bilgilerini
+                            <ul>
+                                <li>Taşıma İrsaliye No</li>
+                                <li>Taşıma İrsaliye Tarihi</li>
+                                <li>Plaka</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Diğer yük bilgileri
+                            <ul>
+                                <li>Taşınan eşyanın cinsi ve ağırlığı</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Eşyanın kabul edildiği saatten, en geç 6 saat sonrasına kadar Bakanlığın U-ETDS sistemine işlemeleri/iletmeleri gerekmektedir.</strong></p>
+
+                    <h4>LOJİSTİK İŞLETMECİLERİ İÇİN U-ETDS</h4>
+                    <p>KTK ve KTY çerçevesinde lojistik işletmeciliği faaliyetinde bulunmak üzere adlarına L1 ve L2 yetki belgesi düzenlenen firmaların, yapacakları lojistik işletmeciliği faaliyetinde</p>
+                    <ul>
+                        <li>
+                            Yükün gönderici bilgilerini
+                            <ol>
+                                <li>Vergi kimlik numarasının (gerçek kişilerde T.C. kimlik numarası)</li>
+                                <li>Türk vatandaşı değilse uyruğu, pasaport numarası veya varsa yabancı kimlik numarası</li>
+                                <li>Ad, Soyad / Unvan</li>
+                                <li>Adres</li>
+                            </ol>
+                        </li>
+                        <li>
+                            Yükün alıcı bilgilerini
+                            <ol>
+                                <li>Vergi kimlik numarasının (gerçek kişilerde T.C. kimlik numarası)</li>
+                                <li>Türk vatandaşı değilse uyruğu, pasaport numarası veya varsa yabancı kimlik numarası</li>
+                                <li>Ad, Soyad / Unvan</li>
+                                <li>Adres</li>
+                            </ol>
+                        </li>
+                        <li>
+                            İrsaliye ve fatura/e-fatura bilgilerini
+                            <ol>
+                                <li>Taşıma İrsaliye No</li>
+                                <li>Taşıma İrsaliye Tarihi</li>
+                                <li>Taşıma Tarihi</li>
+                                <li>Plaka</li>
+                            </ol>
+                        </li>
+                        <li>
+                            Diğer yük bilgileri
+                            <ol>
+                                <li>Taşınan eşyanın cinsi ve ağırlığı</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <p><strong>Eşyanın kabul edildiği saatten, en geç 6 saat sonrasına kadar Bakanlığın U-ETDS sistemine işlemeleri/iletmeleri gerekmektedir.</strong></p>
+
+                    <h4>NAKLİYAT AMBARCILARI İÇİN U-ETDS</h4>
+                    <p>KTK ve KTY çerçevesinde nakliyat ambarı işletmeciliği faaliyetinde bulunmak üzere adlarına N1 ve N2 yetki belgesi düzenlenen firmaların, yapacakları nakliyat ambarı işletmeciliği faaliyetinde;</p>
+                    <ul>
+                        <li>
+                            Yükün gönderici bilgilerini
+                            <ol>
+                                <li>Vergi kimlik numarasının (gerçek kişilerde T.C. kimlik numarası)</li>
+                                <li>Türk vatandaşı değilse uyruğu, pasaport numarası veya varsa yabancı kimlik numarası</li>
+                                <li>Ad, Soyad / Unvan</li>
+                                <li>Adres</li>
+                            </ol>
+                        </li>
+                        <li>
+                            Yükün alıcı bilgilerini
+                            <ol>
+                                <li>Vergi kimlik numarasının (gerçek kişilerde T.C. kimlik numarası)</li>
+                                <li>Türk vatandaşı değilse uyruğu, pasaport numarası veya varsa yabancı kimlik numarası</li>
+                                <li>Ad, Soyad / Unvan</li>
+                                <li>Adres</li>
+                            </ol>
+                        </li>
+                        <li>
+                            İrsaliye ve fatura/e-fatura bilgilerini
+                            <ol>
+                                <li>Taşıma İrsaliye No</li>
+                                <li>Taşıma İrsaliye Tarihi</li>
+                                <li>Taşıma Tarihi</li>
+                                <li>Plaka</li>
+                            </ol>
+                        </li>
+                        <li>
+                            Diğer yük bilgileri
+                            <ol>
+                                <li>Taşınan eşyanın cinsi ve ağırlığı</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <p><strong>Eşyanın kabul edildiği saatten, en geç 6 saat sonrasına kadar Bakanlığın U-ETDS sistemine işlemeleri/iletmeleri gerekmektedir.</strong></p>
+
+                    <h4>TAŞIMA İŞLERİ ORGANİZATÖRLERİ İÇİN U-ETDS</h4>
+                    <p>KTK ve KTY çerçevesinde nakliyat ambarı işletmeciliği faaliyetinde bulunmak üzere adlarına R1 ve R2 yetki belgesi düzenlenen firmaların, yapacakları nakliyat ambarı işletmeciliği faaliyetinde;</p>
+                    <ul>
+                        <li>
+                            Yükün gönderici bilgilerini
+                            <ol>
+                                <li>Vergi kimlik numarasının (gerçek kişilerde T.C. kimlik numarası)</li>
+                                <li>Türk vatandaşı değilse uyruğu, pasaport numarası veya varsa yabancı kimlik numarası</li>
+                                <li>Ad, Soyad / Unvan</li>
+                                <li>Adres</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </span>
+                <button class="read-more-btn" onclick="toggleReadMore('section4')">...Devamı için tıklayın</button>
+            </div>
+            <!-- Görsel Alanı -->
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <img src="path_to_image3.jpg" alt="UETDS Faydaları" class="img-fluid rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: UETDS Zorunlu mu? -->
+    <section id="section5">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
+            <div class="col-lg-6">
+                <h3>U-ETDS Zorunlu mu?</h3>
+                <p>
+                    Ulaştırma Elektronik Takip ve Denetim Sistemi (U-ETDS), ilk olarak 08.01.2018 tarih ve 30295 sayılı Resmi Gazete’de yayımlanarak yürürlüğe giren Karayolu Taşıma Yönetmeliği (KTY) ile tanımlanmıştır.
+                </p>
+                <p>
+                    4925 sayılı Karayolu Taşıma Kanunu (KTK) ve KTY çerçevesinde taşımacılık faaliyetinde bulunan firmaların taşıdıkları eşya, kargo ve yolcu hareketlerini elektronik olarak bildirmek zorundadır. UETDS eşya,kargo ve yolcu taşıyan firmalar için zorunludur.
+                </p>
+                <span class="dots"></span>
+                <span class="more-text" style="display:none;">
+                    Konu ile ilgili Ulaştırma Bakanlığı dökümanı linktedir. <br />
+                    <a href="#">U-ETDS Zorunluluk Yazısı</a>
+                    <p><strong>Eşyanın kabul edildiği saatten, en geç 6 saat sonrasına kadar Bakanlığın U-ETDS sistemine işlemeleri/iletmeleri gerekmektedir.</strong></p>
+                </span>
+                <button class="read-more-btn" onclick="toggleReadMore('section5')">...Devamı için tıklayın</button>
+            </div>
+            <!-- Görsel Alanı -->
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <img src="path_to_image2.jpg" alt="UETDS Sistemi" class="img-fluid rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: U-ETDS Ödüllendirme Cezalandırma Nedir? -->
+    <section id="section6">
+        <div class="d-flex flex-column flex-lg-row-reverse align-items-center justify-content-between mb-5">
+            <div class="col-lg-6">
+                <h3>U-ETDS Ödüllendirme Cezalandırma Nedir?</h3>
+                <p>
+                    Bakanlıkça, takvim yılı başından itibaren üç aylık dönemlerle U-ETDS’ye bildirim yükümlülüklerini yerine getirenlerin, kontrolü yapılan yetki belgesi faaliyetleri için, varsa daha önce verilmiş ve henüz kaldırılmamış olan uyarmalarından,<strong> toplam 20 uyarma iptal edilecektir.</strong>
+                </p>
+                <p>
+                    U-ETDS’YE VERİ GÖNDERMEYENLER NASIL BİR MÜEYYİDEYLE KARŞILAŞIR?
+                </p>
+                <span class="dots"></span>
+                <span class="more-text" style="display:none;">
+                    KTY gereğince,U-ETDS’ye bildirim yükümlülüklerini yerine getirmeyen,yetki belgesi sahiplerine <strong>10 uyarma verilecektir.</strong>
+
+                    U-ETDS’YE YANLIŞ VERİ GÖNDERENLER NASIL BİR MÜEYYİDEYLE KARIŞILAŞIR?
+
+                    Yetki belgesi sahiplerinin, U-ETDS sistemine ilettikleri bilgilerin yanlış olduğunun tespit edilmesi halinde, yetki belgesi sahiplerine <strong> 5 uyarma verilecektir.</strong>
+                </span>
+                <button class="read-more-btn" onclick="toggleReadMore('section6')">...Devamı için tıklayın</button>
+            </div>
+            <!-- Görsel Alanı -->
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <img src="path_to_image2.jpg" alt="UETDS Sistemi" class="img-fluid rounded">
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Expanded Content -->
+<div id="expandedContent" class="expanded-content">
+    <div>
+        <h4>Detaylı Bilgi</h4>
+        <p>UETDS, sektördeki tüm taşıma işlemleri için dijital çözümler sunarak, veri takibini ve yönetimini sağlamaktadır...</p>
+        <button class="close-btn" onclick="closeExpanded()">X</button>
+    </div>
+</div>
+
+<style>
+    button {
+        background-color: transparent;
+        border: none;
+        color: #007bff; /* Mavi renk */
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        button:hover {
+            color: #0056b3; /* Hover durumunda daha koyu mavi */
+            text-decoration: underline; /* Hover ile altı çizili stil */
+        }
+
+        button:focus {
+            outline: none; /* Butona tıklandığında odak çerçevesi olmasın */
+        }
+    .expanded-content {
+        position: fixed;
+        top: 20%;
+        right: 10%;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        width: 300px;
+        max-height: 70%;
+        overflow-y: auto;
+        display: none;
+    }
+
+    .expanded-box {
+        position: relative;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 18px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    #readMoreBtn {
+        color: #007bff;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+<!-- Script -->
+<script>
+        function toggleReadMore(sectionId) {
+        var moreText = document.querySelector(`#${sectionId} .more-text`);
+        var dots = document.querySelector(`#${sectionId} .dots`);
+        var btn = document.querySelector(`#${sectionId} .read-more-btn`);
+
+        // Eğer daha fazla metin gizli ise, göster, yoksa gizle
+        if (moreText.style.display === "none") {
+            moreText.style.display = "inline";
+            dots.style.display = "none"; // '...' gizlensin
+            btn.innerHTML = "Daha az göster";
+        } else {
+            moreText.style.display = "none";
+            dots.style.display = "inline"; // '...' geri gelsin
+            btn.innerHTML = "...Devamı için tıklayın";
+        }
+    }
+
+    // Scroll olayını dinle
+    window.addEventListener('scroll', function() {
+        var sections = document.querySelectorAll('section');
+        sections.forEach(function(section) {
+            var moreText = section.querySelector('.more-text');
+            var dots = section.querySelector('.dots');
+            var btn = section.querySelector('.read-more-btn');
+
+            // Eğer "daha fazla" metin görünür durumdaysa
+            if (moreText && dots && btn && moreText.style.display === "inline") {
+                // Scroll olayında, metni gizle
+                moreText.style.display = "none";
+                dots.style.display = "inline";  // '...' geri gelsin
+                btn.innerHTML = "...Devamı için tıklayın";
+            }
+        });
+    });
+</script>
+

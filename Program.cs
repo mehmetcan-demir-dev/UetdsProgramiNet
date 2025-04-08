@@ -29,7 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         });
 });
 
-// Identity yapılandırması (EKLEMEN GEREKEN KISIM!)
+// Identity yapılandırması
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -39,7 +39,11 @@ builder.Services.AddIdentity<AppUser, AppRole>(options =>
     options.Password.RequiredLength = 6;
 })
 .AddEntityFrameworkStores<AppDbContext>()
-.AddDefaultTokenProviders(); // 🔥 BU ÇOK ÖNEMLİ!
+.AddDefaultTokenProviders();
+
+// UserManager ve SignInManager servisi eklenmeli
+builder.Services.AddScoped<UserManager<AppUser>>();
+builder.Services.AddScoped<SignInManager<AppUser>>();
 
 // Kimlik doğrulama yapılandırması
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -53,6 +57,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = false;
     });
 
+// Session yapılandırması
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -62,7 +67,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Middleware Sıralaması
+// Middleware sıralaması
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -73,14 +78,15 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 
-app.UseRouting();  // 📌 Önce Routing!
+app.UseRouting();
 
-app.UseAuthentication();  // 📌 Sonra Authentication
-app.UseAuthorization();   // 📌 En son Authorization
+// Authentication ve Authorization sırasını kontrol et
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Endpoint yapılandırması
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Referans}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

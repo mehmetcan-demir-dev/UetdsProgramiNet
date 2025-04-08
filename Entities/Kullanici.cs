@@ -2,7 +2,7 @@
 
 namespace UetdsProgramiNet.Entities
 {
-    public class AppUser : IdentityUser
+    public class Kullanici : IdentityUser
     {
 
     }

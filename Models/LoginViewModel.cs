@@ -17,4 +17,3 @@ namespace UetdsProgramiNet.Models
         public bool RememberMe { get; set; }
     }
 }
-

@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Hakkimizda";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<div class="container">
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item"><a href="/Home/Index">AnaSayfa</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Hakkımızda</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Title Section -->
+    <div class="text-center my-5">
+        <h2>U-ETDS Programı Nedir?</h2>
+    </div>
+    <!-- Main Content Section -->
+    <div class="container">
+        <h3>UETDS Programı Nedir?</h3>
+        <p>
+            UETDS Programı lojistik verilerinizi takip etmenizi ve E-Devlete göndermenizi sağlayan bulut tabanlı, E-Devlet ile %100 senkronize çalışan bir uygulamadır.
+        </p>
+        <h3>Neden UETDS Programını Kullanmalıyım?</h3>
+        <ul>
+            <li>Lojistik verilerinizi çok daha hızlı bir şekilde E-Devlete bildirebilirsiniz.</li>
+            <li>Gelişmiş listeleme modülü ile geçmişe dönük tüm kayıtlarınızı filtreleyebilirsiniz.</li>
+            <li>PDF modülü ile kayıtlarınızı pdf olarak saklayabilirsiniz.</li>
+            <li>Raporlama modülü ile yük, şoför, araç ve lojistik kayıtlarınızı istediğiniz şekilde filtreleyebilirsiniz.</li>
+            <li>Kayıt oluştururken tekrarlayan verilerinizi (araç, şoför, dorse, şoför ad soyad, gönderen ve alıcı bilgileri) tekrar tekrar girmek zorunda kalmazsınız.</li>
+            <li>Kaydettiğiniz lojistik kayıtlarınızı, iş planınıza uygun bir şekilde istediğiniz zaman gönderebilirsiniz.</li>
+        </ul>
+        <p>
+            Çok yakında UETDS ve ön muhasebe programı entegre versiyonunu yayınlayacağız.
+        </p>
+
+        <p>
+            Demo istekleri ve program hakkında bilgi almak için 0850 304 11 41 numaralı telefonu arayabilirsiniz.
+        </p>
+        <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800">
+            <div class="d-flex flex-column flex-lg-row pt-3 align-items-lg-center justify-content-center">
+                <div>
+                    <a href="/Fiyat" class="btn btn-rounded btn-green box-shadow-7 font-weight-medium btn-swap-1" data-clone-element="1">
+                        <span>Hemen Sipariş Ver <i class="fa-solid fa-arrow-right ms-2 p-relative left-10"></i></span>
+                    </a>
+                </div>
+                <div class="text-4 px-3 d-none d-lg-block">-</div>
+                <div>
+                    <!-- Ücretsiz Demo Butonu -->
+                    <a id="whatsapp-demo-button" class="btn btn-rounded btn-magenta box-shadow-7 font-weight-medium btn-swap-1" data-clone-element="1">
+                        <span>Ücretsiz Demo <i class="fa-solid fa-arrow-right ms-2 p-relative left-10"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // WhatsApp demo talep URL'si
+    const phoneNumber = '+908503041141';
+    const message = `UETDS DEMO TALEBİ Lütfen demo oluşturabilmemiz için aşağıdaki bilgileri tarafımıza iletiniz. Firma Adı:......... Vergi Dairesi/Vergi No/TCKN:......... Yetkili İsmi:..........`;
+
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=${encodeURIComponent(phoneNumber)}&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
+
+    // Demo butonuna tıklama olayını dinleyip kullanıcıyı WhatsApp'a yönlendirme
+    document.getElementById('whatsapp-demo-button').addEventListener('click', function() {
+        window.location.href = whatsappUrl;
+    });
+</script>

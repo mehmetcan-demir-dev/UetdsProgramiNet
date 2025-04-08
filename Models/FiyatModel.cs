@@ -22,5 +22,8 @@ namespace UetdsProgramiNet.Models
         [Required(ErrorMessage = "Yedekleme Türü zorunludur.")]
         public string YedeklemeTuru { get; set; }
 
+        [Required(ErrorMessage = "WhatsApp URL zorunludur.")]
+        public string WhatsAppUrl { get; set; }
+
     }
 }

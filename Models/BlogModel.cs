@@ -15,5 +15,6 @@ namespace UetdsProgramiNet.Models
         public string InfoUrl { get; set; }
         [Required(ErrorMessage = "Resim yolu gereklidir")]
         public string ImgUrl { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

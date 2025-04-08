@@ -1,8 +1,181 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model UetdsProgramiNet.Models.UserViewModel
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div role="main" class="main px-3 px-lg-5">
+    <!-- SLIDER -->
+    <div class="owl-carousel owl-carousel-light owl-carousel-light-init-fadeIn owl-theme manual nav-style-1 nav-arrows-thin nav-inside nav-inside-plus nav-dark nav-lg nav-font-size-lg rounded-nav nav-borders show-nav-hover mb-0" data-plugin-options="{'autoplay': true, 'autoplayTimeout': 7000}" data-dynamic-height="['750px','750px','750px','750px','750px']" style="height: 750px;">
+        <div class="owl-stage-outer">
+            <div class="owl-stage">
+
+                <!-- Carousel Slide 1 -->
+                @foreach (var slider in Model.SliderData)
+                {
+                    <div class="owl-item p-relative overflow-hidden">
+                        <div class="bg-primary border-radius-2 p-relative z-index-1 overflow-hidden">
+                            <div class="custom-el-2 custom-pos-1">
+                                <img class="img-fluid opacity-2 opacity-hover-2" src="~/assets2/img/demos/accounting-1/svg/waves.svg" alt="">
+                            </div>
+                            <div class="container">
+                                <div class="row justify-content-center align-items-center mh-750px py-5">
+                                    <div class="col-lg-5 text-center text-lg-start px-4">
+                                        <h4 class="text-5 text-lg-6 font-weight-medium mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="0">
+                                            <img width="29" height="29" src="~/assets2/img/demos/accounting-1/icons/icon-7.svg" class="w-auto d-inline-flex p-relative bottom-2" alt=""> @slider.Title
+                                        </h4>
+                                        <h1 class="text-10 text-lg-12 font-weight-semibold line-height-1 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">@slider.Subtitle</h1>
+                                        <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">
+                                            <p class="text-4 text-lg-5 pe-lg-5 line-height-5 text-dark opacity-7 mb-2 mb-lg-4">@slider.Description</p>
+                                        </div>
+                                        <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="600">
+                                            <a href="tel:08503041141" data-hash data-hash-offset="0" data-hash-offset-lg="0" class="btn btn-light btn-effect-2 transition-3ms border-0 btn-rounded btn-xl text-3 py-4 btn-with-arrow-solid mt-3">
+                                                <strong class="d-inline-flex text-dark font-weight-medium text-3-5 text-lg-4 me-3 px-3">@slider.SubDescription</strong>
+                                                <span class="bg-transparent box-shadow-6"><i class="fa-solid fa-arrow-right text-dark"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Görseli biraz daha sağa kaydırmak için margin-right ekleyelim -->
+                                    <div class="col-lg-7 text-center text-lg-start">
+                                        <img src="@slider.ImgUrl" class="img-fluid rounded" alt="@slider.Title" style="max-width: 100%; height: auto; margin-left: 130px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+        <div class="owl-nav">
+            <button type="button" role="presentation" class="owl-prev" aria-label="Previous"></button>
+            <button type="button" role="presentation" class="owl-next" aria-label="Next"></button>
+        </div>
+    </div>
+    <!-- HİZMETLER -->
+    <div class="border-bottom border-bottom-color-grey-100">
+        <div class="container-fluid">
+            <!-- container yerine container-fluid kullanıyoruz -->
+            <div class="row py-5">
+                @foreach (var hizmet in Model.HizmetData)
+                {
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4 mb-sm-5 mb-lg-0">
+                        <div class="feature-box appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="0">
+                            <div class="feature-box-icon bg-transparent w-auto h-auto p-0 top-0 align-items-start">
+                                <div class="p-absolute opacity-2 rotate-l-10">
+                                    <img width="80" src="~/assets2/img/icons/abstract-bg-1.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary'}" />
+                                </div>
+                                <img src="@Url.Content(hizmet.IconUrl)" width="55" height="55" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'p-relative top-10'}" />
+
+                            </div>
+                            <div class="feature-box-info w-100 ps-4 ms-1">
+                                <h4 class="mb-2">@hizmet.Title</h4>
+                                <p class="mb-0 pt-1 line-height-6">@hizmet.Description</p>
+                                <a href="@hizmet.InfoUrl" class="text-primary">Detaylar...</a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+    <!-- NE YAPIYORUZ? -->
+    <div class="container d-flex justify-content-center align-items-center" id="intro" style="min-height:60vh;">
+        <div class="row align-items-center justify-content-center w-100">
+            <div class="col-lg-8 text-center py-5">
+                <div class="appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="0">
+                    <span class="badge bg-gradient-light-primary-rgba-20 text-secondary rounded-pill text-uppercase font-weight-semibold text-2-5 px-3 py-2 px-4 mb-4"><span class="d-inline-flex py-1 px-2">Ne Yapıyoruz?</span></span>
+                </div>
+
+                <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">
+                    <h2 class="text-9 text-lg-12 font-weight-semibold line-height-1 mb-4">SINIRSIZ KULLANICI, ÜCRETSİZ MOBİL UYGULAMA, BULUT RAHATLIĞI</h2>
+                </div>
+                <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">
+                    <p class="pe-lg-5">Siz de bulut rahatlığında verilerinizi E-Devlete aktarmak istiyorsanız hemen sipariş verebilirsiniz.</p>
+                </div>
+                <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800">
+                    <div class="d-flex flex-column flex-lg-row pt-3 align-items-lg-center justify-content-center">
+                        <div>
+                            <a href="/Fiyat/Index" class="btn btn-rounded btn-green box-shadow-7 font-weight-medium btn-swap-1" data-clone-element="1">
+                                <span>Hemen Sipariş Ver <i class="fa-solid fa-arrow-right ms-2 p-relative left-10"></i></span>
+                            </a>
+                        </div>
+                        <div class="text-4 px-3 d-none d-lg-block">-</div>
+                        <div>
+                            <a href="https://api.whatsapp.com/send/?phone=%2B908503041141&text=UETDS+DEMO+TALEB%C4%B0%0AL%C3%BCtfen+demo+olu%C5%9Fturabilmemiz+i%C3%A7in+a%C5%9Fa%C4%9F%C4%B1daki+bilgileri+taraf%C4%B1m%C4%B1za+iletiniz.%0AFirma+Ad%C4%B1%3A.........%0AVergi+Dairesi%2FVergi+No%2FTCKN%3A.........%0AYetkili+%C4%B0smi%3A..........&type=phone_number&app_absent=0" class="btn btn-rounded btn-magenta box-shadow-7 font-weight-medium btn-swap-1" data-clone-element="1">
+                                <span>Ücretsiz Demo <i class="fa-solid fa-arrow-right ms-2 p-relative left-10"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- App Store ve Google Play Butonları -->
+                <div class="mt-4">
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="http://apps.apple.com/tr/app/u-etds-programi/id1570845670?l=tr" target="_blank">
+                            <img src="/assets2/img/demos/accounting-1/icons/appstore.svg" alt="App Store" width="150" height="50">
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=com.uetds.logi&gl=TR&pli=1" target="_blank">
+                            <img src="/assets2/img/demos/accounting-1/icons/googleplay.svg" alt="Google Play" width="150" height="50">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- REFERANSLAR -->
+    <div class="bg-tertiary px-3 px-xl-0 border-radius-2 text-light p-relative overflow-hidden">
+        <div class="custom-el-3 custom-pos-2 opacity-1">
+            <img class="img-fluid opacity-5" src="~/assets2/img/demos/accounting-1/svg/waves-2.svg" alt="">
+        </div>
+        <div class="container-fluid p-relative z-index-1">
+            <!-- container yerine container-fluid kullanıldı -->
+            <div class="row align-items-center py-3">
+                <!-- py-5'i py-3 yaptık, alan daha dar olacak -->
+                <div class="col py-2">
+                    <!-- py-4'ü py-2 yaparak alanı daralttık -->
+                    <div class="text-center appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="0" style="margin-top: 10px;">
+                        <span class="badge bg-gradient-tertiary-dark text-light rounded-pill text-uppercase font-weight-semibold text-2-5 px-3 py-2 px-4 mb-2">
+                            <span class="d-inline-flex py-1 px-2">Referanslarımız</span>
+                        </span>
+                    </div>
+                    <div class="text-center appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" style="margin-top: 0;">
+                        <h2 class="text-9 text-lg-12 font-weight-semibold line-height-1 mb-1 text-light">İş Ortaklarımız</h2>
+                    </div>
+                    <div class="text-center appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400" style="margin-top: 0;">
+                        <p class="pe-lg-5 text-light opacity-7 mb-0">Aşağıda 7/24 Destek Verdiğimiz İş Ortaklarımızı Bulabilirsiniz.</p>
+                    </div>
+                    <div class="container-fluid pt-4 pb-4">
+                        <!-- padding'i azaltarak boşluğu daralttık -->
+                        <div class="row justify-content-start">
+                            <!-- Kartları sola yaslamak için justify-content-start ekledik -->
+                            @foreach (var referans in Model.ReferansData)  // Controller'dan gelen aktif veriler
+                            {
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-4">
+                                    <!-- col-lg-2 kullanarak her kartı büyüttük -->
+                                    <div class="box-shadow-7 border-radius-2 overflow-hidden">
+                                        <span class="thumb-info thumb-info-no-overlay thumb-info-show-hidden-content-hover">
+                                            <span class="thumb-info-wrapper overlay overlay-show overlay-gradient-bottom-content border-radius-0 rounded-top">
+                                                <a href="#" title="">
+                                                    <img src="@referans.ImageUrl" loading="lazy" class="img-fluid" alt="" />
+                                                </a>
+                                            </span>
+                                            <span class="thumb-info-content">
+                                                <span class="thumb-info-content-inner bg-light p-2">
+                                                    <h4 class="text-5 mb-1">@referans.Description</h4>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

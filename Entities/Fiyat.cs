@@ -8,5 +8,6 @@
         public string DestekBilgisi { get; set; }
         public string DestekSaatleri { get; set; }
         public string YedeklemeTuru { get; set; }
+        public string WhatsAppUrl { get; set; }
     }
 }

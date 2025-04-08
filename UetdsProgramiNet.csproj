@@ -385,4 +385,8 @@
     <TypeScriptCompile Include="wwwroot\assets2\vendor\simple-line-icons\node_modules\tslib\tslib.d.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

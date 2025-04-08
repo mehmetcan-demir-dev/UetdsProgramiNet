@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet.Filters;
 using UetdsProgramiNet.Models;
 
@@ -8,19 +9,40 @@ namespace UetdsProgramiNet.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly AppDbContext _context;
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AppDbContext context, ILogger<HomeController> logger)
         {
+            _context = context;
             _logger = logger;
         }
-        [Authorize]
+        
         public IActionResult Index()
         {
-            return View();
-            //HttpContext.Session.SetString("IUL", "true");
-        }
+            // Örnek: Veritabaný context'i üzerinden veri çekme (Entity Framework kullanarak)
+            var blogData = _context.Bloglar.ToList(); // Blog tablosundan veriler
+            var fiyatData = _context.Fiyatlar.ToList(); // Fiyat tablosundan veriler
+            var hizmetData = _context.Hizmetler.ToList(); // Hizmet tablosundan veriler
+            var referansData = _context.Referanslar.ToList(); // Referans tablosundan veriler
+            var sliderData = _context.Sliders.ToList(); // Slider tablosundan veriler
 
+            // Verileri ViewModel'e atama
+            var viewModel = new UserViewModel
+            {
+                BlogData = blogData,
+                FiyatData = fiyatData,
+                HizmetData = hizmetData,
+                ReferansData = referansData,
+                SliderData = sliderData
+            };
+
+            // Veriyi View'a gönderme
+            return View(viewModel);
+        }
+        public IActionResult Hakkimizda()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

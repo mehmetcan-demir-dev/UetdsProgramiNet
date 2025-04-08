@@ -14,22 +14,10 @@ public class ReferansController : Controller
         _context = context;
     }
 
-    // Kullanıcı sayfası için Index
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var referanslar = await _context.Referanslar
-            .Where(r => !r.IsDeleted && r.IsActive)  // Aktif ve silinmemiş referansları göster
-            .Select(r => new ReferansModel
-            {
-                Id = r.Id,
-                ImageUrl = r.ImageUrl,
-                Description = r.Description,
-                IsActive = r.IsActive
-            })
-            .ToListAsync();
-
-        return View(referanslar);
+        return View();
     }
 
     // Admin paneli için AdminIndex
