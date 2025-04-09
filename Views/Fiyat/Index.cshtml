@@ -6,11 +6,30 @@
 
 <div class="container">
     <!-- Breadcrumb Section -->
-    <div class="breadcrumb-container mb-4">
+    <div class="page-header py-0 bg-primary px-3 px-xl-0 border-radius-2 p-relative mb-5">
+        <div class="overflow-hidden p-absolute top-0 left-0 bottom-0 h-100 w-100">
+            <div class="custom-el-5 custom-pos-4">
+                <img class="img-fluid opacity-2 opacity-hover-2" src="img/demos/accounting-1/svg/waves.svg" alt="">
+            </div>
+        </div>
+        <div class="container p-relative z-index-1 py-2">
+            <div class="row align-items-center py-4">
+                <div class="col-4 col-md-5 p-relative">
+                    <div class="opacity-2 p-absolute w-100 rotate-r-50 custom-pos-5 d-none d-lg-block">
+                        <img src="~/assets2/img/icons/abstract-bg-1.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-secondary w-100'}" />
+                    </div>
+                    <div class="custom-mask-img custom-mask-img-4 custom-el-6">
+                        <img src="img/demos/accounting-1/generic/generic-4.jpg" loading="lazy" class="img-fluid" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breadcrumb Nav -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb justify-content-center">
-                <li class="breadcrumb-item"><a href="/Home/Index">AnaSayfa</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Fiyatlandırma</li>
+                <li class="breadcrumb-item"><a href="/Home" class="text-white text-lg">AnaSayfa</a></li>
+                <li class="breadcrumb-item active text-white text-lg" aria-current="page">U-ETDS Fiyatlandırma</li>
             </ol>
         </nav>
     </div>
@@ -77,3 +96,24 @@
             </div>
         </div>
 </div>
+    <style>
+        .breadcrumb {
+            font-size: 1.25rem; /* Yazı boyutunu büyüt */
+            font-weight: bold; /* Yazı kalınlığını artır */
+        }
+
+            .breadcrumb a, .breadcrumb .active {
+                color: white; /* Yazı rengini beyaz yap */
+            }
+
+        .page-header {
+            background-color: green; /* Arka plan rengini yeşil yap */
+            position: relative; /* Konumlandırma için gerekli */
+        }
+
+        nav[aria-label="breadcrumb"] {
+            position: absolute; /* Breadcrumb'ı sayfa üzerinde konumlandır */
+            top: 20px; /* Breadcrumb'ı yukarıya kaydır */
+            width: 100%; /* Breadcrumb'ın tüm genişliği kaplaması için */
+        }
+    </style>

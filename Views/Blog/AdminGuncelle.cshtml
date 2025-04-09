@@ -8,13 +8,13 @@
     <div class="page-content">
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row">   
+            <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
                         <h4 class="mb-sm-0">Blog Güncelle</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Blog/AdminIndex">Bloglar</a></li>
+                                <li class="breadcrumb-item"><a href="/Blog/blog-listesi">Bloglar</a></li>
                                 <li class="breadcrumb-item active">Blog Güncelle</li>
                             </ol>
                         </div>
@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Blog Güncelle</h4><br />
-                            <form asp-action="AdminGuncelle" method="post" enctype="multipart/form-data">
+                            <form asp-action="AdminGuncelle" asp-controller="Blog" method="post">
                                 <input type="hidden" asp-for="Id" />
                                 <div class="mb-3">
                                     <label asp-for="Title" class="form-label">Blog Başlığı</label>
@@ -56,9 +56,16 @@
                                     <input asp-for="InfoUrl" class="form-control" required />
                                     <span asp-validation-for="InfoUrl" class="text-danger"></span>
                                 </div>
+                                <div class="form-check">
+                                    <input asp-for="IsActive" class="form-check-input" />
+                                    <label asp-for="IsActive" class="form-check-label">
+                                        @(Model.IsActive ? "Yayında" : "Yayında Değil")
+                                    </label>
+                                </div>
+                                <br />
 
                                 <button type="submit" class="btn btn-success">Güncelle</button>
-                                <a asp-action="AdminIndex" class="btn btn-secondary">İptal</a>
+                                <a asp-action="blog-listesi" class="btn btn-secondary">İptal</a>
                             </form>
                         </div>
                     </div>
@@ -83,3 +90,14 @@
         </div>
     </footer>
 </div>
+
+<script>
+            document.getElementById('IsActive').addEventListener('change', function() {
+        const label = document.querySelector('label[for="IsActive"]');
+        if (this.checked) {
+            label.textContent = "Yayında";
+        } else {
+            label.textContent = "Yayında Değil";
+        }
+    });
+</script>

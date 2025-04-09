@@ -8,5 +8,7 @@
         public string SubDescription { get; set; }
         public string InfoUrl { get; set; }
         public string ImgUrl { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime? PublishedDate { get; set; }
     }
 }

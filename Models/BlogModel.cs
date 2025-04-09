@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using UetdsProgramiNet.Entities;
 
 namespace UetdsProgramiNet.Models
 {
-    public class BlogModel
+    public class BlogModel : BaseEntity
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Başlık gereklidir")]
@@ -15,6 +16,8 @@ namespace UetdsProgramiNet.Models
         public string InfoUrl { get; set; }
         [Required(ErrorMessage = "Resim yolu gereklidir")]
         public string ImgUrl { get; set; }
-        public DateTime CreatedDate { get; set; }
+        
+        public bool IsActive { get; set; }
+        public DateTime? PublishedDate { get; set; }
     }
 }

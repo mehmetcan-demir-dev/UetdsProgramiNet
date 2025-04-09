@@ -39,6 +39,7 @@ public class HizmetController : Controller
     // Admin paneli için AdminIndex
     [AccessControl]
     [HttpGet]
+    [Route("Hizmet/hizmet-listesi")]
     public async Task<IActionResult> AdminIndex()
     {
         var hizmetler = await _context.Hizmetler
@@ -58,6 +59,7 @@ public class HizmetController : Controller
 
     // Referans Ekleme Sayfası - Admin
     [AccessControl]
+    [Route("hizmet/hizmet-ekle")]
     public IActionResult AdminEkle()
     {
         return View();
@@ -95,6 +97,7 @@ public class HizmetController : Controller
 
     // Hizmet Güncelleme Sayfası
     [AccessControl]
+    [Route("Hizmet/hizmet-guncelle")]
     public async Task<IActionResult> AdminGuncelle(int? id)
     {
         if (id == null)
@@ -125,6 +128,7 @@ public class HizmetController : Controller
     [AccessControl]
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Route("Hizmet/hizmet-guncelle")]
     public async Task<IActionResult> AdminGuncelle(int id, HizmetModel model)
     {
         if (id != model.Id)
@@ -165,10 +169,8 @@ public class HizmetController : Controller
                     throw;
                 }
             }
-
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminIndex");
         }
-
         return View(model);
     }
 

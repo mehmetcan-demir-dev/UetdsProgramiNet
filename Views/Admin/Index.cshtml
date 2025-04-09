@@ -2,4 +2,54 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-Hoşgeldiniz.
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- Start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+                        <h4 class="mb-sm-0">Admin Paneli</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- End page title -->
+            <!-- Start Welcome Section -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Hoşgeldiniz!</h4>
+                            <p>Merhaba <strong>@User.Identity.Name</strong>, admin paneline hoş geldiniz. Burada sitenizin yönetimini yapabilir, içeriklerinizi güncelleyebilir ve listeleyebilirsiniz.</p>
+                            <p>Yönetim paneline dair kısa bir genel bakış:</p>
+                            <ul>
+                                <li><strong>Hizmet Yönetimi:</strong> Sitenizdeki hizmetleri ekleyebilir, güncelleyebilir veya silebilirsiniz.</li>
+                                <li><strong>Kullanıcı Yönetimi:</strong> Sistemdeki kullanıcıları yönetebilirsiniz.</li>
+                                <li><strong>İstatistikler:</strong> Site kullanım istatistiklerine göz atabilirsiniz.</li>
+                            </ul>
+                            <p>Başlamak için sol menüyü kullanarak işlemlere göz atabilirsiniz.</p>
+
+                            <a href="/Hizmet/hizmet-listesi" class="btn btn-primary">Hizmet Listesine Git</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Welcome Section -->
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <script>document.write(new Date().getFullYear())</script> © Velzon.
+            </div>
+            <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block">
+                    Design & Develop by Mehmetcan Demir 
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

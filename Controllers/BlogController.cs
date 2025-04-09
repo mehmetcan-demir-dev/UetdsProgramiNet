@@ -13,10 +13,11 @@ namespace UetdsProgramiNet.Controllers
         {
             _context = context;
         }
+
         public async Task<IActionResult> Index()
         {
             var bloglar = await _context.Bloglar
-                .Where(r => r.IsDeleted == false)  // Silinmiş olanları hariç tutuyoruz (IsDeleted == false)
+                .Where(r => r.IsDeleted == false)  // Silinmiş olanları hariç tutuyoruz
                 .Select(r => new BlogModel
                 {
                     Id = r.Id,
@@ -25,13 +26,16 @@ namespace UetdsProgramiNet.Controllers
                     SubDescription = r.SubDescription,
                     InfoUrl = r.InfoUrl,
                     ImgUrl = r.ImgUrl,
+                    PublishedDate = r.PublishedDate // Yayına alınma tarihini de alıyoruz
                 })
                 .ToListAsync();
 
             return View(bloglar);
         }
+
         [AccessControl]
         [HttpGet]
+        [Route("Blog/blog-listesi")]
         public async Task<IActionResult> AdminIndex()
         {
             var bloglar = await _context.Bloglar
@@ -44,22 +48,26 @@ namespace UetdsProgramiNet.Controllers
                     SubDescription = r.SubDescription,
                     InfoUrl = r.InfoUrl,
                     ImgUrl = r.ImgUrl,
+                    PublishedDate = r.PublishedDate // Yayına alınma tarihini de alıyoruz
                 })
                 .ToListAsync();
 
             return View(bloglar);
         }
+
         // Blog Ekleme Sayfası
         [AccessControl]
+        [Route("Blog/blog-ekle")]
         public IActionResult AdminEkle()
         {
-            return View();
+            return View(new BlogModel()); // Buraya model göndermezsen View'da Model null olur
         }
 
         // Blog Ekleme POST
         [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Blog/blog-ekle")]
         public async Task<IActionResult> AdminEkle(BlogModel model)
         {
             if (ModelState.IsValid)
@@ -80,13 +88,14 @@ namespace UetdsProgramiNet.Controllers
                     UpdatedDate = DateTime.Now,  // İlk güncelleme tarihini atıyoruz
                     CreatedUsername = User.Identity.Name,  // Giriş yapan kullanıcı adını alıyoruz
                     UpdatedUsername = User.Identity.Name,  // Güncelleyen kullanıcıyı da aynı şekilde alıyoruz
-                    IsDeleted = false // Yeni eklenen kaydın silinmediğini belirtmek için false
+                    IsDeleted = false, // Yeni eklenen kaydın silinmediğini belirtmek için false
+                    PublishedDate = model.IsActive ? DateTime.Now : (DateTime?)null // Eğer aktifse yayına alınma tarihini atıyoruz
                 };
 
                 _context.Bloglar.Add(yeniBlog);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("AdminIndex");
+                return RedirectToAction("blog-listesi");
             }
 
             return View(model);
@@ -94,15 +103,17 @@ namespace UetdsProgramiNet.Controllers
 
         // Blog Güncelleme Sayfası
         [AccessControl]
+        [Route("Blog/blog-guncelle")]
         public async Task<IActionResult> AdminGuncelle(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
             var bloglar = await _context.Bloglar.FindAsync(id);
-            if (bloglar == null || bloglar.IsDeleted == true)  // Silinmiş kaydı kontrol ediyoruz
+            if (bloglar == null || bloglar.IsDeleted == true)
             {
                 return NotFound();
             }
@@ -114,18 +125,22 @@ namespace UetdsProgramiNet.Controllers
                 Description = bloglar.Description,
                 SubDescription = bloglar.SubDescription,
                 InfoUrl = bloglar.InfoUrl,
-                ImgUrl = bloglar.ImgUrl
+                ImgUrl = bloglar.ImgUrl,
+                IsActive = bloglar.IsActive,
+                PublishedDate = bloglar.PublishedDate // Yayına alınma tarihini ekliyoruz
             };
 
             return View(model);
         }
 
         // Blog Güncelleme POST
-        [AccessControl]
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost]
+        [AccessControl]
+        [Route("Blog/blog-guncelle")]
         public async Task<IActionResult> AdminGuncelle(int id, BlogModel model)
         {
+            
             if (id != model.Id)
             {
                 return NotFound();
@@ -133,7 +148,9 @@ namespace UetdsProgramiNet.Controllers
 
             if (ModelState.IsValid)
             {
-                if (!string.IsNullOrEmpty(model.ImgUrl) && !model.ImgUrl.StartsWith("/assets/images/") && !model.ImgUrl.StartsWith("http"))
+                if (!string.IsNullOrEmpty(model.ImgUrl) &&
+                    !model.ImgUrl.StartsWith("/assets/images/") &&
+                    !model.ImgUrl.StartsWith("http"))
                 {
                     model.ImgUrl = "/assets/images/" + model.ImgUrl;
                 }
@@ -150,8 +167,14 @@ namespace UetdsProgramiNet.Controllers
                 blog.SubDescription = model.SubDescription;
                 blog.InfoUrl = model.InfoUrl;
                 blog.ImgUrl = model.ImgUrl;
-                blog.UpdatedDate = DateTime.Now;  // Güncellenme tarihi
-                blog.UpdatedUsername = User.Identity.Name;  // Güncellenen kullanıcı adı
+                blog.IsActive = model.IsActive; // <-- Bu satır çok önemli
+                blog.UpdatedDate = DateTime.Now;
+                blog.UpdatedUsername = User.Identity.Name;
+
+                if (model.IsActive && blog.PublishedDate == null)
+                {
+                    blog.PublishedDate = DateTime.Now;
+                }
 
                 try
                 {
@@ -170,7 +193,7 @@ namespace UetdsProgramiNet.Controllers
                     }
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("AdminIndex");
             }
 
             return View(model);
@@ -178,7 +201,7 @@ namespace UetdsProgramiNet.Controllers
 
         private bool BlogExists(int id)
         {
-            return _context.Bloglar.Any(e => e.Id == id && e.IsDeleted == false); // Silinmiş blogları hariç tutuyoruz
+            return _context.Bloglar.Any(e => e.Id == id && e.IsDeleted == false);
         }
 
         // Blog Silme Sayfası
@@ -191,7 +214,7 @@ namespace UetdsProgramiNet.Controllers
             }
 
             var blog = await _context.Bloglar
-                .Where(m => m.IsDeleted == false)  // Silinmiş olmayanları kontrol ediyoruz
+                .Where(m => m.IsDeleted == false)
                 .Select(r => new BlogModel
                 {
                     Id = r.Id,
@@ -208,7 +231,7 @@ namespace UetdsProgramiNet.Controllers
             return View(blog);
         }
 
-        // Blog Silme POST (Silme işlemi yerine IsDeleted alanını true yapıyoruz)
+        // Blog Silme POST
         [AccessControl]
         [HttpPost, ActionName("Sil")]
         [ValidateAntiForgeryToken]
@@ -220,7 +243,7 @@ namespace UetdsProgramiNet.Controllers
                 return NotFound();
             }
 
-            blog.IsDeleted = true; // Kayıt silinmiş gibi işaretleniyor
+            blog.IsDeleted = true;
             _context.Update(blog);
             await _context.SaveChangesAsync();
 

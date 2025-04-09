@@ -37,6 +37,7 @@ namespace UetdsProgramiNet.Controllers
         // Admin paneli için AdminIndex
         [AccessControl]
         [HttpGet]
+        [Route("Slider/slider-listesi")]
         public async Task<IActionResult> AdminIndex()
         {
             var sliders = await _context.Sliders
@@ -59,6 +60,7 @@ namespace UetdsProgramiNet.Controllers
 
         // Slider Ekleme Sayfası
         [AccessControl]
+        [Route("Slider/slider-ekle")]
         public IActionResult AdminEkle()
         {
             return View();
@@ -69,6 +71,7 @@ namespace UetdsProgramiNet.Controllers
         [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Slider/slider-ekle")]
         public async Task<IActionResult> AdminEkle(SliderModel model)
         {
             if (ModelState.IsValid)
@@ -105,6 +108,7 @@ namespace UetdsProgramiNet.Controllers
 
         // Slider Güncelleme Sayfası
         [AccessControl]
+        [Route("Slider/slider-guncelle")]
         public async Task<IActionResult> AdminGuncelle(int? id)
         {
             if (id == null)
@@ -139,6 +143,7 @@ namespace UetdsProgramiNet.Controllers
         [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Slider/slider-guncelle")]
         public async Task<IActionResult> AdminGuncelle(int id, SliderModel model)
         {
             if (id != model.Id)
@@ -167,7 +172,7 @@ namespace UetdsProgramiNet.Controllers
                 _context.Update(slider);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("AdminIndex");
             }
 
             return View(model);

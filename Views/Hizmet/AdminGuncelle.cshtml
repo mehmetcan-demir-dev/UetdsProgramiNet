@@ -15,7 +15,7 @@
                         <h4 class="mb-sm-0">Hizmet Güncelle</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Hizmet/AdminIndex">Hizmetler</a></li>
+                                <li class="breadcrumb-item"><a href="/Hizmet/hizmet-listesi">Hizmetler</a></li>
                                 <li class="breadcrumb-item active">Hizmet Güncelle</li>
                             </ol>
                         </div>
@@ -29,7 +29,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Hizmet Güncelle</h4>
-                            <form asp-action="AdminGuncelle" method="post" enctype="multipart/form-data">
+                            <form asp-action="hizmet-guncelle" method="post" enctype="multipart/form-data">
                                 <input type="hidden" asp-for="Id" />
 
                                 <div class="mb-3">
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-success">Güncelle</button>
-                                <a asp-action="AdminIndex" class="btn btn-secondary">İptal</a>
+                                <a asp-action="hizmet-listesi" class="btn btn-secondary">İptal</a>
                             </form>
                         </div>
                     </div>

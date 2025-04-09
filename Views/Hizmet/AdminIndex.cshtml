@@ -15,7 +15,7 @@
                         <h4 class="mb-sm-0">Hizmet Listesi</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Hizmet/AdminIndex">Hizmetler</a></li>
+                                <li class="breadcrumb-item"><a href="/Hizmet/hizmet-listesi">Hizmetler</a></li>
                                 <li class="breadcrumb-item active">Hizmet Listesi</li>
                             </ol>
                         </div>
@@ -52,7 +52,8 @@
                                                 <td>@(item.Description.Length > 30 ? item.Description.Substring(0, 30) + "..." : item.Description)</td>
                                                 <td>@(item.InfoUrl.Length > 30 ? item.InfoUrl.Substring(0, 30) + "..." : item.InfoUrl)</td>
                                                 <td>
-                                                    <a asp-action="AdminGuncelle" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
+                                                    
+                                                    <a href="/Hizmet/hizmet-guncelle?id=@item.Id" class="btn btn-warning">Güncelle</a>
                                                     <!-- Silme Butonu -->
                                                     <button type="button" class="btn btn-danger btn-sm ml-2" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">Sil</button>
                                                 </td>
@@ -61,7 +62,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <a asp-action="AdminEkle" class="btn btn-primary mt-3">Yeni Hizmet Ekle</a>
+                            <a asp-action="hizmet-ekle" class="btn btn-primary mt-3">Yeni Hizmet Ekle</a>
                         </div>
                     </div>
                 </div>

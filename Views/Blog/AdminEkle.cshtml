@@ -14,7 +14,7 @@
                         <h4 class="mb-sm-0">Yeni Blog Ekle</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Blog/AdminIndex">Slider</a></li>
+                                <li class="breadcrumb-item"><a href="/Blog/blog-listesi">Bloglar</a></li>
                                 <li class="breadcrumb-item active">Yeni Blog Ekle</li>
                             </ol>
                         </div>
@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Yeni Blog Ekle</h4><br />
-                            <form asp-action="AdminEkle" method="post">
+                            <form asp-action="blog-ekle" method="post">
                                 <div class="mb-3">
                                     <label asp-for="Title" class="form-label">Başlık</label>
                                     <input asp-for="Title" class="form-control" required />
@@ -55,8 +55,15 @@
                                     <input asp-for="ImgUrl" class="form-control" required />
                                     <span asp-validation-for="ImgUrl" class="text-danger"></span>
                                 </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" for="IsActive">
+                                        @(Model.IsActive ? "Yayında" : "Yayında Değil")
+                                    </label>
+                                </div>
+
                                 <button type="submit" class="btn btn-success">Kaydet</button>
-                                <a asp-action="AdminIndex" class="btn btn-secondary">İptal</a>
+                                <a asp-action="blog-listesi" class="btn btn-secondary">İptal</a>
                             </form>
                         </div>
                     </div>

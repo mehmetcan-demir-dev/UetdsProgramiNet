@@ -23,6 +23,7 @@ public class ReferansController : Controller
     // Admin paneli için AdminIndex
     [AccessControl]
     [HttpGet]
+    [Route("Referans/referans-listesi")]
     public async Task<IActionResult> AdminIndex()
     {
         var referanslar = await _context.Referanslar
@@ -41,6 +42,7 @@ public class ReferansController : Controller
 
     // Referans Ekleme Sayfası - Admin
     [AccessControl]
+    [Route("Referans/referans-ekle")]
     public IActionResult AdminEkle()
     {
         return View();
@@ -50,6 +52,7 @@ public class ReferansController : Controller
     [AccessControl]
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Route("Referans/referans-ekle")]
     public async Task<IActionResult> AdminEkle(ReferansModel model)
     {
         if (ModelState.IsValid)
@@ -76,6 +79,7 @@ public class ReferansController : Controller
 
     // Referans Güncelleme Sayfası - Admin
     [AccessControl]
+    [Route("Referans/referans-guncelle")]
     public async Task<IActionResult> AdminGuncelle(int? id)
     {
         if (id == null)
@@ -104,6 +108,7 @@ public class ReferansController : Controller
     [AccessControl]
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Route("Referans/referans-guncelle")]
     public async Task<IActionResult> AdminGuncelle(int id, ReferansModel model)
     {
         if (id != model.Id)

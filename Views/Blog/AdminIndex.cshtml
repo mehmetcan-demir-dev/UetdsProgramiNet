@@ -14,7 +14,7 @@
                         <h4 class="mb-sm-0">Blog Listesi</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Blog/AdminIndex">Bloglar</a></li>
+                                <li class="breadcrumb-item"><a href="/Blog/blog-listesi">Bloglar</a></li>
                                 <li class="breadcrumb-item active">Blog Listesi</li>
                             </ol>
                         </div>
@@ -36,6 +36,7 @@
                                         <th>Alt Açıklama</th>
                                         <th>Link Yolu</th>
                                         <th>Resim Yolu</th>
+                                        <th>Yayınlama</th>
                                         <th>İşlemler</th>
                                     </tr>
                                 </thead>
@@ -43,9 +44,11 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td style="padding-top: 30px;">@Html.DisplayFor(modelItem => item.Title)</td>
                                             <td style="padding-top: 30px;">
-                                                @(item.Description?.Length > 20 ? item.Description.Substring(0, 20) + "..." : item.Description)
+                                                @(item.Title.Length > 20 ? item.Title.Substring(0, 20) + "..." : item.Title)
+                                            </td>
+                                            <td style="padding-top: 30px;">
+                                                @(item.Description?.Length > 30 ? item.Description.Substring(0, 30) + "..." : item.Description)
                                             </td>
                                             <td style="padding-top: 30px;">
                                                 @(item.SubDescription?.Length > 50 ? item.SubDescription.Substring(0, 50) + "..." : item.SubDescription)
@@ -53,21 +56,35 @@
                                             <td style="padding-top: 30px;">
                                                 @(item.InfoUrl.Length > 30 ? item.InfoUrl.Substring(0, 30) + "..." : item.InfoUrl)
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal-@item.Id">
                                                     <img src="@item.ImgUrl" style="width: 100px; height: auto; object-fit: cover;" alt="Blog Resmi" />
                                                 </a>
+
                                             </td>
+                                            <td class="text-center align-middle">
+                                                @if (item.IsActive)
+                                                {
+                                                    <span class="badge bg-success px-3 py-2 fs-6">Yayında</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning px-3 py-2 fs-6">Yayında Değil</span>
+                                                }
+                                            </td>
+
                                             <td style="padding-top: 25px;">
-                                                <a asp-action="AdminGuncelle" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
+                                                <a href="/Blog/blog-guncelle?id=@item.Id" class="btn btn-warning">Güncelle</a>
                                                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">Sil</button>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
+
+
                             <p>
-                                <a asp-action="AdminEkle" class="btn btn-primary">Yeni Slider Ekle</a>
+                                <a asp-action="blog-ekle" class="btn btn-primary">Yeni Blog Ekle</a>
                             </p>
                         </div>
                     </div>

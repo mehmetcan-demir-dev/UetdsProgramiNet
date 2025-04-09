@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
-                    <a href="#" class="logo logo-dark">
+                    <a href="/Admin/Index" class="logo logo-dark">
                         <span class="logo-sm">
                             <img src="/assets/images/uetds-light.png" alt="" height="22">
                         </span>
@@ -12,7 +12,7 @@
                             <img src="/assets/images/uetds-light.png" alt="" height="17">
                         </span>
                     </a>
-                    <a href="#" class="logo logo-light">
+                    <a href="/Admin/Index" class="logo logo-light">
                         <span class="logo-sm">
                             <img src="/assets/images/uetds-dark.png" alt="" height="22">
                         </span>
@@ -58,10 +58,10 @@
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <h6 class="dropdown-header">Hoş geldin! @User.Identity.Name</h6>
-                        <a class="dropdown-item" href="pages-profile.html"><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
+                        @* <a class="dropdown-item" href="pages-profile.html"><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a> *@
                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
                             <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
-                            <span class="align-middle" data-key="t-logout">Logout</span>
+                            <span class="align-middle" data-key="t-logout">Çıkış yap</span>
                         </a>
                         <form id="logoutForm" asp-area="" asp-controller="Account" asp-action="Logout" method="post" style="display: none;">
                             <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />

@@ -4,7 +4,235 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<div class="container mt-3 mb-5">
+<div role="main" class="main px-3 px-lg-5">
+
+    <div class="page-header py-0 bg-tertiary px-3 px-xl-0 border-radius-2 p-relative mb-0 overflow-hidden bg-size-cover bg-position-center overlay overlay-color-dark overlay-show overlay-op-5" style="background-image: url(/assets2/img/demos/accounting-1/bg/bg-1.jpg);">
+        >
+        <div class="container p-relative z-index-5 py-2">
+            <div class="row mh-200px mh-lg-300px align-items-center py-4">
+                <div class="col">
+                    <div class="appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="0">
+                        <span class="badge bg-color-dark-rgba-30 text-light rounded-pill text-uppercase font-weight-semibold text-2-5 px-3 py-2 px-4 mb-3"><span class="d-inline-flex py-1 px-2">İş Ortaklığına Varız!</span></span>
+                    </div>
+                    <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="200">
+                        <h1 class="text-dark text-9 text-lg-12 text-color-light font-weight-semibold line-height-1 mb-2">Bize ulaşın.</h1>
+                    </div>
+                    <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="200">
+                        <ul class="breadcrumb d-flex text-3-5 font-weight-semi-bold pb-2 mb-3">
+                            <li><a href="/" class="text-light text-decoration-none">Anasayfa</a></li>
+                            <li class="active text-light opacity-7">Bize ulaşın</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="container pt-4 pt-lg-5 pb-4" id="intro">
+        <div class="row pt-4">
+            <div class="col">
+                <div class="appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="0">
+                    <span class="badge bg-gradient-light-primary-rgba-20 text-secondary rounded-pill text-uppercase font-weight-semibold text-2-5 px-3 py-2 px-4 mb-4"><span class="d-inline-flex py-1 px-2">Başlayalım</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="200">
+                    <h2 class="text-9 text-lg-12 font-weight-semibold line-height-1 mb-2">Aşağıdaki iletişim seçeneklerini kullanarak bize ulaşabilirsiniz:</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 p-relative">
+                <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">
+                    <p class="mb-0">Hizmetlerimiz hakkında sorularınız varsa, vergi planlaması konusunda danışmak istiyorsanız veya bir görüşme planlamak isterseniz, deneyimli ekibimiz size yardımcı olmaya hazır.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 pt-2">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="400">
+
+                    <div class="owl-carousel owl-theme" data-plugin-options="{'items': 1, 'autoplay': true, 'dots': false, 'autoplayTimeout': 5000, 'margin': 10, 'animateOut': 'fadeOut'}">
+                        <div>
+                            <img class="img-fluid border-radius-2" src="@Url.Content("~/assets2/img/demos/accounting-1/generic/generic-14.jpg")" alt="">
+                        </div>
+
+                        <div>
+                            <img class="img-fluid border-radius-2" src="@Url.Content("~/assets2/img/demos/accounting-1/generic/generic-15.jpg")" alt="">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+
+                <div class="feature-box feature-box-secondary">
+                    <div class="feature-box-icon feature-box-icon-lg p-static box-shadow-7">
+                        <img src="~/assets2/img/icons/pin-light.svg" width="30" height="30" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': ''}" />
+                    </div>
+                    <div class="feature-box-info ps-3">
+                        <strong class="d-block text-4-5 text-dark mb-1">Ofis Adresi</strong>
+                        <p class="mb-0 text-3-5 line-height-7">Adalet Mah. Manas Bulv. Folkart Towers,</p>
+                        <p class="mb-0 text-3-5 line-height-7">No:47/B İç Kapı No:2601 Bayraklı/İZMİR</p>
+                        <p class="mb-0 text-3-5 line-height-7"><a href="https://www.google.com/maps" target="_blank" class="text-color-secondary text-color-hover-primary font-weight-semi-bold text-decoration-underline">Haritada Göster</a></p>
+                    </div>
+                </div>
+
+                <div class="feature-box feature-box-secondary mt-4 pt-2">
+                    <div class="feature-box-icon feature-box-icon-lg p-static box-shadow-7">
+                        <img src="~/assets2/img/icons/email.svg" width="30" height="30" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-light'}" />
+                    </div>
+                    <div class="feature-box-info ps-3">
+                        <strong class="d-block text-4-5 text-dark mb-1">Eposta</strong>
+                        <p class="mb-0 text-3-5 line-height-7">Bilgi ve Destek İçin</p>
+                        <p class="mb-0 text-3-5 line-height-7 pb-3"><a href="mailto:uetds@uetdsprogrami.net" class="text-color-secondary text-color-hover-primary font-weight-semi-bold text-decoration-underline">uetds@uetdsprogrami.net</a></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+
+                <div class="feature-box feature-box-secondary mb-5">
+                    <div class="feature-box-icon feature-box-icon-lg p-static box-shadow-7">
+                        <img src="~/assets2/img/icons/clock.svg" width="30" height="30" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-light'}" />
+                    </div>
+                    <div class="feature-box-info ps-3">
+                        <strong class="d-block text-4-5 text-dark mb-1">İş Saatleri</strong>
+                        <p class="mb-0 text-3-5 line-height-7">Pazartesi :  Cuma : 09:00 - 18:00</p>
+                        <p class="mb-0 text-3-5 line-height-7">Cumartesi : 10:00 - 14:00</p>
+                        <p class="mb-0 text-3-5 line-height-7">Pazar : Kapalı</p>
+                    </div>
+                </div>
+
+                <div class="feature-box feature-box-secondary mt-4 pt-2">
+
+                    <div class="feature-box-icon feature-box-icon-lg p-static box-shadow-7">
+                        <img src="~/assets2/img/icons/phone-2.svg" width="30" height="30" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-light'}" />
+                    </div>
+                    <div class="feature-box-info ps-3">
+                        <strong class="d-block text-4-5 text-dark mb-1">Telefon</strong>
+                        <p class="mb-0 text-3-5 line-height-7">Bilgi ve Destek İçin<a href="tel:08503041141" class="text-color-secondary text-color-hover-primary font-weight-semi-bold text-decoration-underline"> 0850 304 11 41</a></p>
+                        <p class="mb-0 text-3-5 line-height-7">numaralı hattımızı arayabilirsiniz.<a href="tel:08503041141" class="text-color-secondary text-color-hover-primary font-weight-semi-bold text-decoration-underline"></a></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <div class="col pt-4">
+                <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">
+                    <p class="mb-0 text-dark d-flex justify-content-center">
+                        <img src="~/assets2/img/demos/accounting-1/icons/icon-5.svg" width="30" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-dark me-2'}" />
+                        7/24 Hizmetinizdeyiz.
+                        Muhasebe ihtiyaçlarınız için günün her saati kesintisiz destek sunuyoruz.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Google Maps - Go to the bottom of the page to change settings and map location. -->
+    <div class="bg-grey-100 px-3 px-xl-0 border-radius-2 p-relative overflow-hidden mt-5">
+        <div id="googlemaps" class="google-map m-0" style="min-height: 580px;"></div>
+    </div>
+
+    <!-- Free Quote -->
+    @* <div class="container pt-5">
+        <div class="row pt-4 pt-lg-5">
+            <div class="col-lg-7 mb-5 mb-lg-0">
+                <div class="appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="0">
+                    <span class="badge bg-gradient-light-primary-rgba-20 text-secondary rounded-pill text-uppercase font-weight-semibold text-2-5 px-3 py-2 px-4 mb-4"><span class="d-inline-flex py-1 px-2">İletişim Formu</span></span>
+                </div>
+                <h2 class="text-9 text-lg-12 font-weight-semibold line-height-1 mb-4">Ekibimizle iletişime geçin.</h2>
+
+                <form class="contact-form pt-3" action="#" method="POST">
+                    <div class="contact-form-success alert alert-success d-none mt-4">
+                        <strong>Başarılı!</strong> Mesajınız tarafımıza ulaştı.
+                    </div>
+
+                    <div class="contact-form-error alert alert-danger d-none mt-4">
+                        <strong>Hata!</strong> Mesajınız gönderilirken hata oluştu.
+                        <span class="mail-error-message text-1 d-block"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="form-label font-weight-bold text-uppercase text-dark mb-1 text-2">Adınız*</label>
+                            <input type="text" value="" placeholder="Adınızı giriniz." data-msg-required="Lütfen adınızı belirtiniz." maxlength="100" class="form-control text-3 h-auto border-width-2 border-radius-2 border-color-grey-200 py-2" name="name" required>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="form-label font-weight-bold text-uppercase text-dark mb-1 text-2">Eposta Adresiniz</label>
+                            <input type="email" value="" placeholder="Eposta adresinizi giriniz." data-msg-required="Lütfen eposta adresinizi belirtiniz." data-msg-email="Lütfen geçerli bir mail adresi giriniz." maxlength="100" class="form-control text-3 h-auto border-width-2 border-radius-2 border-color-grey-200 py-2" name="email" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="form-label font-weight-bold text-uppercase text-dark mb-1 text-2">Telefon Numaranız</label>
+                            <input type="tel" value="" placeholder="Telefon numaranızı giriniz." class="form-control text-3 h-auto border-width-2 border-radius-2 border-color-grey-200 py-2" name="phone">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="form-label font-weight-bold text-uppercase text-dark mb-1 text-2">Şirket Adınız</label>
+                            <input type="text" value="" placeholder="Şirket isminizi belirtiniz." class="form-control text-3 h-auto border-width-2 border-radius-2 border-color-grey-200 py-2" name="company">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label class="form-label font-weight-bold text-uppercase text-dark mb-1 text-2">Ek Bilgi</label>
+                            <textarea maxlength="5000" placeholder="Merak ettikleriniz..." rows="8" class="form-control text-3 h-auto border-width-2 border-radius-2 border-color-grey-200 py-2" name="message"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <button type="submit" class="btn btn-rounded btn-dark box-shadow-7 font-weight-medium btn-swap-1" data-clone-element="1">
+                                <span>Gönder <i class="fa-solid fa-arrow-right ms-2 p-relative left-10"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-5 ps-lg-5" style="margin-top: 160px;">
+                <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
+                    <div class="py-2 d-flex align-items-center text-4-5 n-ls-1 text-dark"> 
+                        <div class="appear-animation pt-lg-5 mt-lg-2" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
+                            <div class="d-flex align-items-center pt-2 pb-4">
+                                <p class="d-inline-block mb-0 font-weight-bold line-height-1"><mark class="text-dark mark mark-pos-2 mark-height-50 mark-color bg-color-before-primary-rgba-30 font-secondary text-15 mark-height-30 n-ls-5 p-0">10+</mark></p>
+                                <span class="custom-font-tertiary text-6 text-dark n-ls-1 fst-italic ps-2">Yıllık Deneyim</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Explore Further -->
+                <div class="bg-secondary border-radius-2 p-relative overflow-hidden mt-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col px-0 text-center text-color-light">
+                                <div class="d-flex flex-column">
+                                    <div class="flex-grow-1">
+                                        <span class="d-inline-block text-3 py-4 px-5 text-uppercase font-weight-medium custom-bg-gradient-1 w-100">Sık İncelenenler :</span>
+                                    </div>
+                                    <div class="me-3 ps-3 p-relative bottom-1 pt-3">
+                                        <a href="/Fiyat" class="btn btn-arrow-effect-1 bg-transparent text-light border-0 text-lg-3-5 py-2">Fiyatlandırma <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                    <div class="py-3 p-relative bottom-1 border-start border-color-light-rgba-20">
+                                        <a href="/" class="btn btn-arrow-effect-1 bg-transparent text-light border-0 text-lg-3-5 py-2">Anasayfa <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> *@
+
+</div>
+
+
+@* <div class="container mt-3 mb-5">
     <!-- Sayfa Başlığı ve Breadcrumb Alanı -->
     <div class="d-flex flex-column align-items-center">
         <nav aria-label="breadcrumb" class="mb-2">
@@ -36,7 +264,7 @@
             </div>
         </div>
 
-        <!-- Sağ Tarafta Google Maps Konumu -->
+        <!-- Sağ Tarafta Google Maps Konumu -->s
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body p-0">
@@ -45,5 +273,66 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 
+<script>
+    (g => {
+        var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window;
+        b = b[c] || (b[c] = {});
+        var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => {
+            await (a = m.createElement("script"));
+            e.set("libraries", [...r] + "");
+            for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+            e.set("callback", c + ".maps." + q);
+            a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+            d[q] = f;
+            a.onerror = () => h = n(Error(p + " could not load."));
+            a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+            m.head.append(a);
+        }));
+        d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
+    })({
+        key: "YOUR_API_KEY", v: "weekly"
+    });
+
+    async function initMap() {
+        const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+        const map = new Map(document.getElementById("googlemaps"), {
+            zoom: 14,
+            center: { lat: 38.454534, lng: 27.176803 },
+            mapId: "YOUR_MAP_API_ID",
+        });
+        const markers = [
+            {
+                position: { lat: 38.454534, lng: 27.176803 },
+                title: "Folkart Towers<br>Adalet Mah. Manas Bulv. No:47/B İç Kapı No:2601 Bayraklı/İZMİR<br>Phone: 123-456-1234",
+            }
+        ];
+
+        const infoWindow = new InfoWindow();
+
+        markers.forEach(({ position, title }, i) => {
+            const pin = new PinElement({
+                background: "#e36159",
+                borderColor: "#e36159",
+                glyphColor: "#FFF",
+            });
+            const marker = new AdvancedMarkerElement({
+                position,
+                map,
+                title: `${title}`,
+                content: pin.element,
+            });
+
+            marker.addListener("click", ({ domEvent, latLng }) => {
+                const { target } = domEvent;
+                infoWindow.close();
+                infoWindow.setContent(marker.title);
+                infoWindow.open(marker.map, marker);
+            });
+        });
+    }
+
+    initMap();
+</script>

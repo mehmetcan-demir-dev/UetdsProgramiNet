@@ -6,12 +6,57 @@
 <div class="container">
     <!-- Breadcrumbs -->
     <div class="breadcrumb-container mb-4">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb justify-content-center">
-                <li class="breadcrumb-item"><a href="/Home/Index">AnaSayfa</a></li>
-                <li class="breadcrumb-item active" aria-current="page">U-ETDS Bilgilendirme</li>
-            </ol>
-        </nav>
+
+        <div class="page-header py-0 bg-primary px-3 px-xl-0 border-radius-2 p-relative mb-5">
+            <div class="overflow-hidden p-absolute top-0 left-0 bottom-0 h-100 w-100">
+                <div class="custom-el-5 custom-pos-4">
+                    <img class="img-fluid opacity-2 opacity-hover-2" src="img/demos/accounting-1/svg/waves.svg" alt="">
+                </div>
+            </div>
+            <div class="container p-relative z-index-1 py-2">
+                <div class="row align-items-center py-4">
+                    <div class="col-4 col-md-5 p-relative">
+                        <div class="opacity-2 p-absolute w-100 rotate-r-50 custom-pos-5 d-none d-lg-block">
+                            <img src="~/assets2/img/icons/abstract-bg-1.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-secondary w-100'}" />
+                        </div>
+                        <div class="custom-mask-img custom-mask-img-4 custom-el-6">
+                            <img src="img/demos/accounting-1/generic/generic-4.jpg" loading="lazy" class="img-fluid" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Nav -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="/Home" class="text-white text-lg">AnaSayfa</a></li>
+                    <li class="breadcrumb-item active text-white text-lg" aria-current="page">U-ETDS Bilgilendirme</li>
+                </ol>
+            </nav>
+        </div>
+
+        <style>
+            .breadcrumb {
+                font-size: 1.25rem; /* Yazı boyutunu büyüt */
+                font-weight: bold; /* Yazı kalınlığını artır */
+            }
+
+                .breadcrumb a, .breadcrumb .active {
+                    color: white; /* Yazı rengini beyaz yap */
+                }
+
+            .page-header {
+                background-color: green; /* Arka plan rengini yeşil yap */
+                position: relative; /* Konumlandırma için gerekli */
+            }
+
+            nav[aria-label="breadcrumb"] {
+                position: absolute; /* Breadcrumb'ı sayfa üzerinde konumlandır */
+                top: 20px; /* Breadcrumb'ı yukarıya kaydır */
+                width: 100%; /* Breadcrumb'ın tüm genişliği kaplaması için */
+            }
+        </style>
+
     </div>
     <!-- Title Section -->
     <div class="text-center my-5">
@@ -22,6 +67,7 @@
     <section id="section1">
         <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
             <div class="flex-lg-6">
+
                 <h3>UETDS Hangi Belgeleri Kapsıyor?</h3>
                 <p style="margin-left: 20px;">
                     Karayolu Taşıma Kanunca E-Devlet üzerinden veri gönderme <br /> zorunluluğu olan sürücü belgeleri aşağıda ki gibidir;
@@ -46,7 +92,9 @@
     <section id="section2">
         <div class="d-flex flex-column flex-lg-row-reverse align-items-center justify-content-between mb-5">
             <div class="col-lg-6">
+                
                 <h3>UETDS Sistemi Nedir?</h3>
+                
                 <p>
                     <strong>08.01.2018 tarihli ve 30295 sayılı Resmi Gazete yayımıyla yürürlüğe giren U-ETDS (Ulaştırma Elektronik Takip ve Denetim Sistemi), (KTY) ‘’Karayolu taşıma yönetmeliğince’’ tanımlanmış bir yasadır.</strong>
                 </p>
@@ -60,6 +108,7 @@
                     Ulaştırma Bakanlığınca istenen veriler, U-ETDS programı aracılığıyla aktarılmaktadır.
                 </span>
                 <button class="read-more-btn" onclick="toggleReadMore('section2')">...Devamı için tıklayın</button>
+
             </div>
             <!-- Görsel Alanı -->
             <div class="col-lg-6 mt-4 mt-lg-0">

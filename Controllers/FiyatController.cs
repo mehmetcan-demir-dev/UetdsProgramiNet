@@ -36,6 +36,7 @@ namespace UetdsProgramiNet.Controllers
         // Admin paneli için AdminIndex
         [AccessControl]
         [HttpGet]
+        [Route("Fiyat/fiyat-listesi")]
         public async Task<IActionResult> AdminIndex()
         {
             var fiyatlar = await _context.Fiyatlar
@@ -55,7 +56,9 @@ namespace UetdsProgramiNet.Controllers
 
             return View(fiyatlar);
         }
+
         // Fiyat Ekleme Sayfası
+        [Route("Fiyat/fiyat-ekle")]
         public IActionResult AdminEkle()
         {
             return View();
@@ -65,6 +68,7 @@ namespace UetdsProgramiNet.Controllers
         [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Fiyat/fiyat-ekle")]
         public async Task<IActionResult> AdminEkle(FiyatModel model)
         {
             if (ModelState.IsValid)
@@ -96,6 +100,7 @@ namespace UetdsProgramiNet.Controllers
 
         // Fiyat Güncelleme Sayfası
         [AccessControl]
+        [Route("Fiyat/fiyat-guncelle")]
         public async Task<IActionResult> AdminGuncelle(int? id)
         {
             if (id == null)
@@ -129,6 +134,7 @@ namespace UetdsProgramiNet.Controllers
         [AccessControl]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Fiyat/fiyat-guncelle")]
         public async Task<IActionResult> AdminGuncelle(int id, FiyatModel model)
         {
             if (id != model.Id)

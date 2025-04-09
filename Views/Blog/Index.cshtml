@@ -7,12 +7,28 @@
 <!-- Main Content Wrapper -->
 <div class="main-content-wrapper">
 
-    <!-- Breadcrumb Section -->
-    <div class="breadcrumb-container mb-4">
+    <div class="page-header py-0 bg-primary px-3 px-xl-0 border-radius-2 p-relative mb-5">
+        <div class="overflow-hidden p-absolute top-0 left-0 bottom-0 h-100 w-100">
+            <div class="custom-el-5 custom-pos-4">
+                <img class="img-fluid opacity-2 opacity-hover-2" src="img/demos/accounting-1/svg/waves.svg" alt="">
+            </div>
+        </div>
+        <div class="container p-relative z-index-1 py-2">
+            <div class="row align-items-center py-4">
+                <div class="col-4 col-md-5 p-relative">
+                    
+                    <div class="custom-mask-img custom-mask-img-4 custom-el-6">
+                        <img src="img/demos/accounting-1/generic/generic-4.jpg" loading="lazy" class="img-fluid" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breadcrumb Nav -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb justify-content-center">
-                <li class="breadcrumb-item"><a href="/Home/Index">AnaSayfa</a></li>
-                <li class="breadcrumb-item active" aria-current="page">BLOG</li>
+                <li class="breadcrumb-item"><a href="/Home" class="text-white text-lg">AnaSayfa</a></li>
+                <li class="breadcrumb-item active text-white text-lg" aria-current="page">U-ETDS Programı Blog</li>
             </ol>
         </nav>
     </div>
@@ -36,7 +52,7 @@
                             </div>
                             <div class="created-date text-center mt-2">
                                 <medium class="text-muted" style="font-size: 1.1rem;">
-                                    @item.value.CreatedDate.ToString("D")
+                                    @item.value.CreatedDate.ToString("D") 
                                 </medium>
                             </div>
                         </div>
@@ -51,10 +67,11 @@
                                         data-blog-title="@item.value.Title"
                                         data-blog-description="@item.value.Description"
                                         data-blog-subdescription="@item.value.SubDescription"
-                                        data-blog-image="@item.value.ImgUrl"
-                                        data-blog-date="@item.value.CreatedDate.ToString("D")">
+                                        data-blog-image="@item.value.ImgUrl">
+                                       
                                     Devamı için tıklayınız
                                 </button>
+                                 data-blog-date="@item.value.CreatedDate.ToString("D")"> 
                             </div>
                         </div>
                     }
@@ -71,8 +88,8 @@
                                         data-blog-title="@item.value.Title"
                                         data-blog-description="@item.value.Description"
                                         data-blog-subdescription="@item.value.SubDescription"
-                                        data-blog-image="@item.value.ImgUrl"
-                                        data-blog-date="@item.value.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")">
+                                        data-blog-image="@item.value.ImgUrl">
+                                        data-blog-date="@item.value.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")"
                                     Devamı için tıklayınız
                                 </button>
                             </div>
@@ -83,7 +100,7 @@
                             </div>
                             <div class="created-date text-center mt-2">
                                 <medium class="text-muted" style="font-size: 1.1rem;">
-                                    @item.value.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")
+                                    @* @item.value.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss") *@
                                 </medium>
                             </div>
                         </div>
@@ -122,15 +139,35 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            @* <div class="modal-footer">
                 <!-- Kapat butonunu data-bs-dismiss ile düzenledik -->
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-            </div>
+            </div> *@
         </div>
     </div>
 </div>
 
+<style>
+    .breadcrumb {
+        font-size: 1.25rem; /* Yazı boyutunu büyüt */
+        font-weight: bold; /* Yazı kalınlığını artır */
+    }
 
+        .breadcrumb a, .breadcrumb .active {
+            color: white; /* Yazı rengini beyaz yap */
+        }
+
+    .page-header {
+        background-color: green; /* Arka plan rengini yeşil yap */
+        position: relative; /* Konumlandırma için gerekli */
+    }
+
+    nav[aria-label="breadcrumb"] {
+        position: absolute; /* Breadcrumb'ı sayfa üzerinde konumlandır */
+        top: 20px; /* Breadcrumb'ı yukarıya kaydır */
+        width: 100%; /* Breadcrumb'ın tüm genişliği kaplaması için */
+    }
+</style>
 
 
 
