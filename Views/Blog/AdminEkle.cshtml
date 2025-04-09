@@ -62,6 +62,7 @@
                                     </label>
                                 </div>
 
+
                                 <button type="submit" class="btn btn-success">Kaydet</button>
                                 <a asp-action="blog-listesi" class="btn btn-secondary">İptal</a>
                             </form>
@@ -88,3 +89,14 @@
         </div>
     </footer>
 </div>
+
+<script>
+    document.getElementById('IsActive').addEventListener('change', function() {
+        const label = document.querySelector('label[for="IsActive"]');
+        if (this.checked) {
+            label.textContent = "Yayında";
+        } else {
+            label.textContent = "Yayında Değil";
+        }
+    });
+</script>

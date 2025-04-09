@@ -61,7 +61,7 @@ namespace UetdsProgramiNet.Controllers
         [Route("Fiyat/fiyat-ekle")]
         public IActionResult AdminEkle()
         {
-            return View();
+            return View(new FiyatModel());
         }
 
         // Fiyat Ekleme POST

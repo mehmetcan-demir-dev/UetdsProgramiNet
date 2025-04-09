@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Blog Güncelle</h4><br />
-                            <form asp-action="AdminGuncelle" asp-controller="Blog" method="post">
+                            <form asp-action="AdminGuncelle" method="post" enctype="multipart/form-data">
                                 <input type="hidden" asp-for="Id" />
                                 <div class="mb-3">
                                     <label asp-for="Title" class="form-label">Blog Başlığı</label>
@@ -62,10 +62,11 @@
                                         @(Model.IsActive ? "Yayında" : "Yayında Değil")
                                     </label>
                                 </div>
+
                                 <br />
 
                                 <button type="submit" class="btn btn-success">Güncelle</button>
-                                <a asp-action="blog-listesi" class="btn btn-secondary">İptal</a>
+                                <a asp-action="AdminIndex" class="btn btn-secondary">İptal</a>
                             </form>
                         </div>
                     </div>
@@ -83,7 +84,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end d-none d-sm-block">
-                        Design & Develop by Themesbrand
+                        Design & Develop by M.Demir
                     </div>
                 </div>
             </div>
@@ -92,7 +93,7 @@
 </div>
 
 <script>
-            document.getElementById('IsActive').addEventListener('change', function() {
+    document.getElementById('IsActive').addEventListener('change', function() {
         const label = document.querySelector('label[for="IsActive"]');
         if (this.checked) {
             label.textContent = "Yayında";

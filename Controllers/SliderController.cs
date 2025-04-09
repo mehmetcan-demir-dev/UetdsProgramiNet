@@ -100,7 +100,7 @@ namespace UetdsProgramiNet.Controllers
                 _context.Sliders.Add(yeniSlider);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("AdminIndex");
             }
 
             return View(model);
@@ -211,7 +211,7 @@ namespace UetdsProgramiNet.Controllers
 
         // Slider Silme POST işlemi
         [AccessControl]
-        [HttpPost, ActionName("Sil")]
+        [HttpPost, ActionName("AdminSil")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SilConfirmed(int id)
         {
@@ -229,7 +229,7 @@ namespace UetdsProgramiNet.Controllers
             _context.Sliders.Update(slider);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminIndex");
         }
     }
 }

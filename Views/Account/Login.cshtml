@@ -1,36 +1,164 @@
-﻿@model UetdsProgramiNet.Models.LoginViewModel
+﻿@model LoginViewModel
+@{
 
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <h2>@ViewData["Title"]</h2>
-        <hr />
-        <form asp-controller="Account" asp-action="Login" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group mb-3">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" type="email" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" type="password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-check mb-3">
-                <input asp-for="RememberMe" class="form-check-input" />
-                <label asp-for="RememberMe" class="form-check-label">Beni hatırla</label>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Giriş Yap</button>
-            </div>
-            <div class="mt-3 d-flex justify-content-between">
-                <a href="@Url.Action("ForgotPassword", "Account")">Şifremi Unuttum?</a>
-                <a href="@Url.Action("Register", "Account")" class="btn btn-success btn-sm">Kullanıcı Oluştur</a>
-            </div>
-        </form>
-    </div>
-</div>
-
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
+    Layout = null;
 }
+
+<!doctype html>
+<html lang="tr" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="enable" data-theme="default" data-theme-colors="default">
+
+<head>
+
+    <meta charset="utf-8" />
+    <title>Giriş Yap | Logi UETDS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Logi UETDS yönetim sistemleri" name="description" />
+    <meta content="Logi" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/assets/images/LogikeyLogo.ico">
+    @* <link rel="shortcut icon" type="image/x-icon" href="~/assets/images/LogikeyLogo.png"> *@
+
+    <!-- Layout config Js -->
+    <script src="~/assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="~/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <!-- Sweet Alert css-->
+    <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <div class="auth-page-wrapper pt-5">
+        <!-- auth page bg -->
+        <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
+            <div class="bg-overlay"></div>
+
+            <div class="shape">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
+                    <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- auth page content -->
+        <div class="auth-page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center mt-sm-5 mb-4 text-white-50">
+                            <div>
+                                <a href="/Admin" class="d-inline-block auth-logo">
+                                    <img src="~/assets/images/uetds-dark.png" alt="" height="65">
+                                </a>
+                            </div>
+                            <p class="mt-3 fs-15 fw-medium">Logi UETDS Yönetim Sistemi</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card mt-4 card-bg-fill">
+
+                            <div class="card-body p-4">
+                                <div class="text-center mt-2">
+                                    <h5 class="text-primary">Tekrar Hoşgeldiniz !</h5>
+                                    <p class="text-muted">Devam etmek için giriş yapınız.</p>
+                                </div>
+                                <div class="p-2 mt-4">
+
+                                    @if (ViewBag.Error != null)
+                                    {
+                                        <div class="alert alert-danger alert-dismissible fade show material-shadow" role="alert">
+                                            Bir hata oluştu. Hata kodunu yöneticinize iletiniz.<strong> Hata Kodu: @ViewBag.Error </strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    }
+                                    @if (ViewBag.NotFound != null)
+                                    {
+                                        <div class="alert alert-warning alert-dismissible fade show material-shadow" role="alert">
+                                            <strong> Kullanıcı adı veya şifre hatalı! </strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    }
+
+                                    <form asp-action="Login" asp-controller="Account" id="loginForm" class="row">
+
+                                        <div class="mb-3">
+                                            <label for="Username" class="form-label">Kullanıcı Adı</label>
+                                            <input type="text" class="form-control" asp-for="Email" placeholder="Kullanıcı adınızı giriniz">
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="password-input">Parola</label>
+                                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                                <input type="password" class="form-control pe-5 password-input" placeholder="Parolanızı giriniz" asp-for="Password">
+                                                <button style="margin-right:15px;" class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon material-shadow-none" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <button class="btn btn-success w-100" type="submit">Giriş Yap</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card -->
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end auth page content -->
+        <!-- footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <p class="mb-0 text-muted">
+                                &copy;
+                                Copyright <script>document.write(new Date().getFullYear())</script> Logi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+    </div>
+    <!-- end auth-page-wrapper -->
+    <!-- JAVASCRIPT -->
+    <script src="~/assets/js/pages/jquery-3.7.1.min.js"></script>
+    <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/assets/libs/node-waves/waves.min.js"></script>
+    <script src="~/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="~/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/assets/js/plugins.js"></script>
+    <script src="~/assets/js/pages/form-validation.init.js"></script>
+    <script src="~/assets/js/loadingoverlay.js"></script>
+    <!-- particles js -->
+    <script src="~/assets/libs/particles.js/particles.js"></script>
+    <!-- particles app js -->
+    <script src="~/assets/js/pages/particles.app.js"></script>
+    <!-- password-addon init -->
+    <script src="~/assets/js/pages/password-addon.init.js"></script>
+    <!-- Sweet Alerts js -->
+    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 using UetdsProgramiNet;
 using UetdsProgramiNet.Entities;
 using UetdsProgramiNet.Filters;
@@ -120,7 +121,7 @@ public class ReferansController : Controller
         {
             var referans = await _context.Referanslar.FindAsync(id);
 
-            if (referans == null)
+            if (referans == null || referans.IsDeleted == true)
             {
                 return NotFound();
             }

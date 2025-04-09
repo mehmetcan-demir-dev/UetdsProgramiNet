@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UetdsProgramiNet;
 using Microsoft.EntityFrameworkCore;
 using UetdsProgramiNet.Entities;
 using UetdsProgramiNet.Filters;
@@ -26,7 +27,7 @@ namespace UetdsProgramiNet.Controllers
                     SubDescription = r.SubDescription,
                     InfoUrl = r.InfoUrl,
                     ImgUrl = r.ImgUrl,
-                    PublishedDate = r.PublishedDate // Yayına alınma tarihini de alıyoruz
+                    //PublishedDate = r.PublishedDate // Yayına alınma tarihini de alıyoruz
                 })
                 .ToListAsync();
 
@@ -48,7 +49,8 @@ namespace UetdsProgramiNet.Controllers
                     SubDescription = r.SubDescription,
                     InfoUrl = r.InfoUrl,
                     ImgUrl = r.ImgUrl,
-                    PublishedDate = r.PublishedDate // Yayına alınma tarihini de alıyoruz
+                    IsActive = r.IsActive,
+                    //PublishedDate = r.PublishedDate // Yayına alınma tarihini de alıyoruz
                 })
                 .ToListAsync();
 
@@ -72,11 +74,13 @@ namespace UetdsProgramiNet.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Resim URL'sini kontrol et
                 if (!string.IsNullOrEmpty(model.ImgUrl) && !model.ImgUrl.StartsWith("/assets/images/") && !model.ImgUrl.StartsWith("http"))
                 {
                     model.ImgUrl = "/assets/images/" + model.ImgUrl;
                 }
 
+                // Yayında olan blog için yayın tarihi atama
                 var yeniBlog = new Blog
                 {
                     Title = model.Title,
@@ -84,29 +88,25 @@ namespace UetdsProgramiNet.Controllers
                     SubDescription = model.SubDescription,
                     InfoUrl = model.InfoUrl,
                     ImgUrl = model.ImgUrl,
-                    CreatedDate = DateTime.Now,  // CreatedDate'i şimdi atıyoruz
-                    UpdatedDate = DateTime.Now,  // İlk güncelleme tarihini atıyoruz
-                    CreatedUsername = User.Identity.Name,  // Giriş yapan kullanıcı adını alıyoruz
-                    UpdatedUsername = User.Identity.Name,  // Güncelleyen kullanıcıyı da aynı şekilde alıyoruz
-                    IsDeleted = false, // Yeni eklenen kaydın silinmediğini belirtmek için false
-                    PublishedDate = model.IsActive ? DateTime.Now : (DateTime?)null // Eğer aktifse yayına alınma tarihini atıyoruz
+                    IsActive = model.IsActive,
+                    PublishedDate = model.IsActive ? DateTime.Now : (DateTime?)null, // Eğer aktifse yayın tarihi atanır
+                    CreatedUsername = User.Identity.Name // Oturumdaki kullanıcının adı, burada User.Identity.Name kullanılır
                 };
 
                 _context.Bloglar.Add(yeniBlog);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("blog-listesi");
+                return RedirectToAction("AdminIndex"); // Başka bir sayfaya yönlendir
             }
 
-            return View(model);
+            return View(model); // Model geçerli değilse tekrar formu göster
         }
 
-        // Blog Güncelleme Sayfası
+        // Blog Güncelleme Sayfası (GET)
         [AccessControl]
-        [Route("Blog/blog-guncelle")]
+        [Route("blog/blog-guncelle")]
         public async Task<IActionResult> AdminGuncelle(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
@@ -127,70 +127,35 @@ namespace UetdsProgramiNet.Controllers
                 InfoUrl = bloglar.InfoUrl,
                 ImgUrl = bloglar.ImgUrl,
                 IsActive = bloglar.IsActive,
-                PublishedDate = bloglar.PublishedDate // Yayına alınma tarihini ekliyoruz
             };
 
             return View(model);
         }
 
         // Blog Güncelleme POST
-        [ValidateAntiForgeryToken]
-        [HttpPost]
         [AccessControl]
-        [Route("Blog/blog-guncelle")]
-        public async Task<IActionResult> AdminGuncelle(int id, BlogModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("blog/blog-guncelle")]
+        public async Task<IActionResult> AdminGuncelle(BlogModel model)
         {
-            
-            if (id != model.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                if (!string.IsNullOrEmpty(model.ImgUrl) &&
-                    !model.ImgUrl.StartsWith("/assets/images/") &&
-                    !model.ImgUrl.StartsWith("http"))
+                var blog = await _context.Bloglar.FindAsync(model.Id);
+
+                if (blog != null)
                 {
-                    model.ImgUrl = "/assets/images/" + model.ImgUrl;
-                }
+                    blog.Title = model.Title;
+                    blog.Description = model.Description;
+                    blog.SubDescription = model.SubDescription;
+                    blog.InfoUrl = model.InfoUrl;
+                    blog.ImgUrl = model.ImgUrl;
+                    blog.IsActive = model.IsActive;
 
-                var blog = await _context.Bloglar.FindAsync(id);
+                    // Eğer aktifse, yayın tarihi güncelleniyor
+                    blog.PublishedDate = model.IsActive ? DateTime.Now : blog.PublishedDate;
 
-                if (blog == null || blog.IsDeleted == true)
-                {
-                    return NotFound();
-                }
-
-                blog.Title = model.Title;
-                blog.Description = model.Description;
-                blog.SubDescription = model.SubDescription;
-                blog.InfoUrl = model.InfoUrl;
-                blog.ImgUrl = model.ImgUrl;
-                blog.IsActive = model.IsActive; // <-- Bu satır çok önemli
-                blog.UpdatedDate = DateTime.Now;
-                blog.UpdatedUsername = User.Identity.Name;
-
-                if (model.IsActive && blog.PublishedDate == null)
-                {
-                    blog.PublishedDate = DateTime.Now;
-                }
-
-                try
-                {
-                    _context.Update(blog);
                     await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BlogExists(blog.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
                 }
 
                 return RedirectToAction("AdminIndex");
@@ -198,6 +163,8 @@ namespace UetdsProgramiNet.Controllers
 
             return View(model);
         }
+
+
 
         private bool BlogExists(int id)
         {
@@ -233,7 +200,7 @@ namespace UetdsProgramiNet.Controllers
 
         // Blog Silme POST
         [AccessControl]
-        [HttpPost, ActionName("Sil")]
+        [HttpPost, ActionName("AdminSil")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SilConfirmed(int id)
         {
@@ -247,7 +214,7 @@ namespace UetdsProgramiNet.Controllers
             _context.Update(blog);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminIndex");
         }
     }
 }

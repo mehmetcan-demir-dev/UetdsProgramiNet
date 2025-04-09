@@ -14,7 +14,7 @@
                         <h4 class="mb-sm-0">Yeni Fiyat Ekle</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/Fiyat/AdminIndex">Fiyatlandırmalar</a></li>
+                                <li class="breadcrumb-item"><a href="/Fiyat/fiyat-listesi">Fiyatlandırmalar</a></li>
                                 <li class="breadcrumb-item active">Yeni Fiyat Ekle</li>
                             </ol>
                         </div>
@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Yeni Fiyat Ekle</h4><br />
-                            <form asp-action="AdminEkle" method="post">
+                            <form asp-action="fiyat-ekle" method="post">
                                 <div class="mb-3">
                                     <label asp-for="AracPaketi" class="form-label">Araç Paketi</label>
                                     <input asp-for="AracPaketi" class="form-control" required />
