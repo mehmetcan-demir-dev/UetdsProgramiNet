@@ -23,6 +23,7 @@
     <link id="googleFonts" href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" type="text/css">
 
     <!-- Vendor CSS -->
+    
     <link rel="stylesheet" href="~/assets2/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets2/vendor/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="~/assets2/vendor/animate/animate.compat.css">
@@ -46,7 +47,7 @@
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="~/assets2/css/custom.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
+     <style>
         .modal {
             display: none;
             position: fixed;
@@ -116,6 +117,7 @@
                                 <div class="header-nav-main header-nav-main-text-capitalize header-nav-main-arrows header-nav-main-effect-2">
                                     <nav class="collapse">
                                         <ul class="nav nav-pills" id="mainNav">
+
                                             <li>
                                                 <a href="/" class="nav-link">
                                                     Anasayfa
@@ -362,27 +364,31 @@
 
     <!-- Current Page Vendor and Views -->
     <script src="~/assets2/js/views/view.contact.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+    @* <script src="~/js/site.js"></script> *@
+ <script>
+               document.addEventListener('DOMContentLoaded', function () {
           // Modalı açma fonksiyonu
           function openModal(title, content) {
             document.getElementById('modalLabel').textContent = title;
             document.getElementById('modalBody').innerHTML = content;
             document.getElementById('customModal').style.display = 'block';
           }
+
           // Modalı kapatma fonksiyonu
           function closeModal() {
             document.getElementById('customModal').style.display = 'none';
           }
+
           // Kapatma butonuna basıldığında modalı kapat
           document.querySelector('.btn-close').addEventListener('click', closeModal);
           document.querySelector('.btn-secondary').addEventListener('click', closeModal);
-          // Linklere tıklanıldığında modalı aç
+
+          // Sadece belirli linklere tıklanıldığında modalı aç
           document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function (e) {
-              e.preventDefault(); // Linkin normal işlevini engelle
+              // Sadece özel linkler için işlem yap
               if (this.textContent.includes('Gizlilik Politikası')) {
+                e.preventDefault(); // Sadece bu durumda normal işlevi engelle
                 openModal(
                   'Gizlilik Politikası',
                   `<p>Gizliliğiniz bizim için önemlidir. Bu gizlilik politikası, topladığımız bilgilerin türlerini, bu bilgilerin nasıl kullanıldığını ve korunmasını açıklar.</p>
@@ -395,7 +401,8 @@
                    <p>Bu politika zaman zaman güncellenebilir. Lütfen düzenli olarak kontrol ediniz.</p>`
                 );
               }
-              if (this.textContent.includes('Hizmet Şartları')) {
+              else if (this.textContent.includes('Hizmet Şartları')) {
+                e.preventDefault(); // Sadece bu durumda normal işlevi engelle
                 openModal(
                   'Hizmet Şartları',
                   `<p>Bu web sitesini kullanarak aşağıdaki hizmet şartlarını kabul etmiş olursunuz:</p>
@@ -408,10 +415,29 @@
                    <p>Lütfen siteyi kullanmadan önce bu şartları dikkatlice okuyunuz.</p>`
                 );
               }
+              // Diğer linkler için hiçbir şey yapmayız, normal davranışlarını sergilerler
             });
           });
         });
-    </script>
+
+      
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Sayfa yüklendi, DOM hazır");
+
+            // Tüm linkleri seçin
+            const allLinks = document.querySelectorAll("a");
+
+            // Her link için event listener ekleyin
+            allLinks.forEach(link => {
+                console.log("Link bulundu:", link.href);
+
+                link.addEventListener("click", function(e) {
+                    console.log("Link tıklandı:", this.href);
+                });
+            });
+        });
+
+    </script> 
 
 
 </body>

@@ -2,16 +2,51 @@
     ViewData["Title"] = "Hakkimizda";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
-<div class="container">
+<div class="main-content wrapper">
     <!-- Breadcrumbs -->
-    <div class="breadcrumb-container">
+   @*  <div class="breadcrumb-container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb justify-content-center">
                 <li class="breadcrumb-item"><a href="/Home/Index">AnaSayfa</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Hakkımızda</li>
             </ol>
         </nav>
+    </div> *@
+    
+    <div class="page-header py-0 bg-primary px-3 px-xl-0 border-radius-2 p-relative mb-5">
+        <div class="overflow-hidden p-absolute top-0 left-0 bottom-0 h-100 w-100">
+            <div class="custom-el-5 custom-pos-4">
+                <img class="img-fluid opacity-2 opacity-hover-2" src="img/demos/accounting-1/svg/waves.svg" alt="">
+            </div>
+        </div>
+        <div class="container p-relative z-index-1 py-2">
+            <div class="row align-items-center py-4">
+                <div class="col-4 col-md-5 p-relative">
+
+                    <div class="custom-mask-img custom-mask-img-4 custom-el-6">
+                        <img src="img/demos/accounting-1/generic/generic-4.jpg" loading="lazy" class="img-fluid" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb Nav -->
+        <!-- Breadcrumb Nav -->
+        <!-- Breadcrumb Nav -->
+        <nav aria-label="breadcrumb" class="position-absolute top-50 start-50 translate-middle">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item">
+                    <a href="/" class="text-white fw-bold" style="font-size: 1rem;">AnaSayfa</a>
+                </li>
+                <li class="breadcrumb-item active text-white fw-bold" aria-current="page" style="font-size: 1rem;">
+                    Hakkımızda
+                </li>
+            </ol>
+        </nav>
+
+
     </div>
+
+
     <!-- Title Section -->
     <div class="text-center my-5">
         <h2>U-ETDS Programı Nedir?</h2>

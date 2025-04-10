@@ -92,7 +92,7 @@ namespace UetdsProgramiNet.Controllers
                 _context.Fiyatlar.Add(yeniFiyat);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("AdminIndex");
+                return RedirectToAction("fiyat-listesi");
             }
 
             return View(model);
@@ -178,7 +178,7 @@ namespace UetdsProgramiNet.Controllers
                     }
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("AdminIndex");
             }
 
             return View(model);
