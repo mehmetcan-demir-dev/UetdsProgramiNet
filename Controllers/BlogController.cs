@@ -174,11 +174,9 @@ namespace UetdsProgramiNet.Controllers
                 blog.IsActive = model.IsActive; // <-- Bu satır çok önemli
                 blog.UpdatedDate = DateTime.Now;
                 blog.UpdatedUsername = User.Identity.Name;
-
-                if (model.IsActive && blog.PublishedDate == null)
-                {
-                    blog.PublishedDate = DateTime.Now;
-                }
+                
+                    blog.PublishedDate = DateTime.Now;  // Yayın tarihi aktifse ve boşsa güncelleniyor
+                
 
                 try
                 {

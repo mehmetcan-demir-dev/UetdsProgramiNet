@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Yeni Fiyat Ekle</h4><br />
-                            <form asp-action="fiyat-ekle" method="post">
+                            <form asp-action="AdminEkle" asp-controller="Fiyat" method="post">
                                 <div class="mb-3">
                                     <label asp-for="AracPaketi" class="form-label">Araç Paketi</label>
                                     <input asp-for="AracPaketi" class="form-control" required />
@@ -64,7 +64,11 @@
                                     <input asp-for="YedeklemeTuru" class="form-control" required />
                                     <span asp-validation-for="YedeklemeTuru" class="text-danger"></span>
                                 </div>
-
+                                <div class="mb-3">
+                                    <label asp-for="WhatsAppUrl" class="form-label">Destek Alma Linki</label>
+                                    <input asp-for="WhatsAppUrl" class="form-control" required />
+                                    <span asp-validation-for="WhatsAppUrl" class="text-danger"></span>
+                                </div>
                                 <button type="submit" class="btn btn-success">Kaydet</button>
                                 <a asp-action="AdminIndex" class="btn btn-secondary">İptal</a>
                             </form>

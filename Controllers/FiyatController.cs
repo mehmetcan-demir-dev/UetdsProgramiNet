@@ -58,44 +58,39 @@ namespace UetdsProgramiNet.Controllers
         }
 
         // Fiyat Ekleme Sayfası
+        [AccessControl]
         [Route("Fiyat/fiyat-ekle")]
         public IActionResult AdminEkle()
         {
             return View(new FiyatModel());
         }
-
         // Fiyat Ekleme POST
-        [AccessControl]
         [HttpPost]
+        [AccessControl]
         [ValidateAntiForgeryToken]
         [Route("Fiyat/fiyat-ekle")]
         public async Task<IActionResult> AdminEkle(FiyatModel model)
         {
-            if (ModelState.IsValid)
+            var yeniFiyat = new Fiyat
             {
-                var yeniFiyat = new Fiyat
-                {
-                    AracPaketi = model.AracPaketi,
-                    KullaniciMiktari = model.KullaniciMiktari,
-                    MobilBilgisi = model.MobilBilgisi,
-                    DestekBilgisi = model.DestekBilgisi,
-                    DestekSaatleri = model.DestekSaatleri,
-                    YedeklemeTuru = model.YedeklemeTuru,
-                    WhatsAppUrl = model.WhatsAppUrl,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
-                    CreatedUsername = User.Identity.Name,
-                    UpdatedUsername = User.Identity.Name,
-                    IsDeleted = false // Yeni eklenen kaydın silinmediğini belirtmek için false
-                };
+                AracPaketi = model.AracPaketi , // Null kontrolü
+                KullaniciMiktari = model.KullaniciMiktari,
+                MobilBilgisi = model.MobilBilgisi ,
+                DestekBilgisi = model.DestekBilgisi ,
+                DestekSaatleri = model.DestekSaatleri ,
+                YedeklemeTuru = model.YedeklemeTuru ,
+                WhatsAppUrl = model.WhatsAppUrl ,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                CreatedUsername = User.Identity?.Name,
+                UpdatedUsername = User.Identity?.Name,
+                IsDeleted = false
+            };
 
-                _context.Fiyatlar.Add(yeniFiyat);
-                await _context.SaveChangesAsync();
+            _context.Fiyatlar.Add(yeniFiyat);
+            await _context.SaveChangesAsync();
 
-                return RedirectToAction("fiyat-listesi");
-            }
-
-            return View(model);
+            return RedirectToAction("AdminIndex");
         }
 
         // Fiyat Güncelleme Sayfası
@@ -211,7 +206,7 @@ namespace UetdsProgramiNet.Controllers
 
         // Fiyat Silme POST (Silme işlemi yerine IsDeleted alanını true yapıyoruz)
         [AccessControl]
-        [HttpPost, ActionName("Sil")]
+        [HttpPost, ActionName("AdminSil")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SilConfirmed(int id)
         {
@@ -225,7 +220,7 @@ namespace UetdsProgramiNet.Controllers
             _context.Update(fiyat);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminIndex");
         }
     }
 }

@@ -62,12 +62,13 @@ public class HizmetController : Controller
     [Route("hizmet/hizmet-ekle")]
     public IActionResult AdminEkle()
     {
-        return View();
+        return View(new HizmetModel());
     }
 
     // Referans Ekleme POST - Admin
     [AccessControl]
     [HttpPost]
+    [Route("Hizmet/hizmet-ekle")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AdminEkle(HizmetModel model)
     {
@@ -195,7 +196,7 @@ public class HizmetController : Controller
 
     // Silme Onayı (SilConfirmed) Aksiyon
     [AccessControl]
-    [HttpPost, ActionName("Sil")]
+    [HttpPost, ActionName("AdminSil")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SilConfirmed(int id)
     {
@@ -210,7 +211,7 @@ public class HizmetController : Controller
         hizmet.IsDeleted = true;  // Gerçekten silmek yerine "IsDeleted" değerini true yapıyoruz
         await _context.SaveChangesAsync();
 
-        return RedirectToAction(nameof(Index)); // Silme işlemi tamamlandıktan sonra listeye geri dön
+        return RedirectToAction("AdminIndex"); // Silme işlemi tamamlandıktan sonra listeye geri dön
     }
 
     private bool HizmetExists(int id)

@@ -39,6 +39,7 @@ namespace UetdsProgramiNet.Controllers
             // Veriyi View'a gönderme
             return View(viewModel);
         }
+        [Route("Anasayfa/Hakkimizda")]
         public IActionResult Hakkimizda()
         {
             return View();
