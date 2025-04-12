@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Sayfa Kayıp Oldu";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";  // Layout dosyasının doğru olduğundan emin olun
+}
+
+<div class="not-found-container" style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+    <img src="~/assets2/img/bulunamadi.png" alt="Sayfa Bulunamadı" style="max-width: 1000px; margin-bottom: 20px;">
+
+    <h1 style="color: #333; font-size: 3em; font-weight: bold; margin-bottom: 20px;">
+        Ups! Aradığınız Sayfa Kayıp Oldu
+    </h1>
+
+    <p style="color: #777; font-size: 1.2em; margin-bottom: 30px;">
+        Maalesef, girdiğiniz URL sistemde bulunamadı. <br>
+        Endişelenmeyin, aşağıdaki bağlantılarla hızla geri dönebilirsiniz.
+    </p>
+
+    <a href="/" style="background-color: #007BFF; color: white; padding: 15px 30px; font-size: 1.1em; border-radius: 5px; text-decoration: none;">
+        Anasayfaya Dön
+    </a>
+
+    <p style="margin-top: 20px; font-size: 1em; color: #555;">
+        Hala sorun mu yaşıyorsunuz? <a href="/Iletisim" style="color: #007BFF;">Bize Ulaşın</a>!
+    </p>
+</div>
