@@ -34,6 +34,32 @@ namespace UetdsProgramiNet.Controllers
             return View(bloglar);
         }
 
+        [HttpGet]
+        [Route("Blog/Detay/{id}")]
+        public async Task<IActionResult> BlogDetay(int id)
+        {
+            var blog = await _context.Bloglar
+                .Where(r => r.Id == id && r.IsDeleted == false && r.IsActive == true)
+                .Select(r => new BlogModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Description = r.Description,
+                    SubDescription = r.SubDescription,
+                    InfoUrl = r.InfoUrl,
+                    ImgUrl = r.ImgUrl,
+                    PublishedDate = r.PublishedDate
+                })
+                .FirstOrDefaultAsync();
+
+            if (blog == null)
+            {
+                return NotFound();
+            }
+
+            return View(blog);
+        }
+
 
         [AccessControl]
         [HttpGet]
@@ -201,9 +227,6 @@ namespace UetdsProgramiNet.Controllers
             return View(model);
         }
         
-
-
-
         private bool BlogExists(int id)
         {
             return _context.Bloglar.Any(e => e.Id == id && e.IsDeleted == false);

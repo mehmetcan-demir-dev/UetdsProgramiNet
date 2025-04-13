@@ -1,0 +1,29 @@
+﻿@model BlogModel
+
+@{
+    ViewData["Title"] = "Blog Detay";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white p-0 mb-4">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 20px;">
+        <div>
+            <img src="@Model.ImgUrl" alt="@Model.Title" class="img-fluid rounded mt-2 mb-3">
+            <div class="text-muted medium mt-1">
+                @Model.PublishedDate?.ToString("dd.MM.yyyy HH:mm:ss")
+            </div>
+        </div>
+        <div>
+            <h2>@Model.Title</h2>
+            <p>@Model.Description</p>
+            <p class="mt-4">@Model.SubDescription</p>
+        </div>
+    </div>
+</div>

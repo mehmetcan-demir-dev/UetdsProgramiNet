@@ -3,61 +3,43 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<div class="container">
-    <!-- Breadcrumbs -->
-    <div class="breadcrumb-container mb-4">
-
-        <div class="page-header py-0 bg-primary px-3 px-xl-0 border-radius-2 p-relative mb-5">
-            <div class="overflow-hidden p-absolute top-0 left-0 bottom-0 h-100 w-100">
-                <div class="custom-el-5 custom-pos-4">
-                    <img class="img-fluid opacity-2 opacity-hover-2" src="img/demos/accounting-1/svg/waves.svg" alt="">
+<div role="main" class="main px-3 px-lg-5">
+    <div class="page-header py-0 bg-primary px-3 px-xl-0 border-radius-2 p-relative mb-5">
+        <div class="container p-relative z-index-1 py-2">
+            <div class="row align-items-center py-4">
+                <div class="col-8 col-md-7">
+                    <div class="appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="0">
+                        <span class="badge bg-color-dark-rgba-10 text-light rounded-pill text-uppercase font-weight-semibold text-2-5 px-3 py-2 px-4 mb-3">
+                            <span class="d-inline-flex py-1 px-2">uetds</span>
+                        </span>
+                    </div>
+                    <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="200">
+                        <h1 class="text-dark text-9 text-lg-12 font-weight-semibold line-height-1 mb-2">U-ETDS'ye dair</h1>
+                    </div>
+                    <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="200">
+                        <ul class="breadcrumb d-flex text-3-5 font-weight-semi-bold pb-2 mb-3">
+                            <li><a href="/" class="text-dark text-decoration-none">Anasayfa</a></li>
+                            <li class="active">UETDS</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="container p-relative z-index-1 py-2">
-                <div class="row align-items-center py-4">
-                    <div class="col-4 col-md-5 p-relative">
-                        <div class="opacity-2 p-absolute w-100 rotate-r-50 custom-pos-5 d-none d-lg-block">
-                            <img src="~/assets2/img/icons/abstract-bg-1.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-secondary w-100'}" />
-                        </div>
-                        <div class="custom-mask-img custom-mask-img-4 custom-el-6">
-                            <img src="img/demos/accounting-1/generic/generic-4.jpg" loading="lazy" class="img-fluid" alt="" />
-                        </div>
+                <div class="col-4 col-md-5 p-relative">
+                    <div class="opacity-2 p-absolute w-100 rotate-r-50 custom-pos-5 d-none d-lg-block">
+                        <img src="~/img/icons/abstract-bg-1.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-secondary w-100'}" />
+                    </div>
+                    <div class="custom-mask-img custom-mask-img-4 custom-el-6">
+                        <img src="~/assets2/img/demos/accounting-1/generic/fiyatPeople.jpg" loading="lazy" class="img-fluid" alt="" />
                     </div>
                 </div>
             </div>
-
-            <!-- Breadcrumb Nav -->
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb justify-content-center">
-                    <li class="breadcrumb-item"><a href="/Home" class="text-white text-lg">AnaSayfa</a></li>
-                    <li class="breadcrumb-item active text-white text-lg" aria-current="page">U-ETDS Bilgilendirme</li>
-                </ol>
-            </nav>
         </div>
-
-        <style>
-            .breadcrumb {
-                font-size: 1.25rem; /* Yazı boyutunu büyüt */
-                font-weight: bold; /* Yazı kalınlığını artır */
-            }
-
-                .breadcrumb a, .breadcrumb .active {
-                    color: white; /* Yazı rengini beyaz yap */
-                }
-
-            .page-header {
-                background-color: green; /* Arka plan rengini yeşil yap */
-                position: relative; /* Konumlandırma için gerekli */
-            }
-
-            nav[aria-label="breadcrumb"] {
-                position: absolute; /* Breadcrumb'ı sayfa üzerinde konumlandır */
-                top: 20px; /* Breadcrumb'ı yukarıya kaydır */
-                width: 100%; /* Breadcrumb'ın tüm genişliği kaplaması için */
-            }
-        </style>
-
     </div>
+</div>
+
+
+
+<div class="container">
+    <!-- Alt kısım için normal container -->
     <!-- Title Section -->
     <div class="text-center my-5">
         <h3>UETDS Programına Dair Bilgiler</h3>
@@ -66,7 +48,7 @@
     <!-- Section 1: UETDS Belgeleri -->
     <section id="section1">
         <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
-            <div class="flex-lg-6">
+            <div class="col-lg-6">
 
                 <h3>UETDS Hangi Belgeleri Kapsıyor?</h3>
                 <p style="margin-left: 20px;">
@@ -92,14 +74,14 @@
     <section id="section2">
         <div class="d-flex flex-column flex-lg-row-reverse align-items-center justify-content-between mb-5">
             <div class="col-lg-6">
-                
+
                 <h3>UETDS Sistemi Nedir?</h3>
-                
+
                 <p>
-                    <strong>08.01.2018 tarihli ve 30295 sayılı Resmi Gazete yayımıyla yürürlüğe giren U-ETDS (Ulaştırma Elektronik Takip ve Denetim Sistemi), (KTY) ‘’Karayolu taşıma yönetmeliğince’’ tanımlanmış bir yasadır.</strong>
+                    <strong>08.01.2018 tarihli ve 30295 sayılı Resmi Gazete yayımıyla yürürlüğe giren U-ETDS (Ulaştırma Elektronik Takip ve Denetim Sistemi), (KTY) ''Karayolu taşıma yönetmeliğince'' tanımlanmış bir yasadır.</strong>
                 </p>
                 <p>
-                    4925 sayılı ‘’Karayolu Taşıma Kanunu’’ ve KTY bünyesinde taşımacılık yapmakta olan bütün firmaların taşımakta olduğu yolcu, yük ve kargo süreçlerinin elektronik ortamda, gerçek zamanlı olarak değerlendirilmesi ve denetiminin yapılmasıdır.
+                    4925 sayılı ''Karayolu Taşıma Kanunu'' ve KTY bünyesinde taşımacılık yapmakta olan bütün firmaların taşımakta olduğu yolcu, yük ve kargo süreçlerinin elektronik ortamda, gerçek zamanlı olarak değerlendirilmesi ve denetiminin yapılmasıdır.
                 </p>
                 <span class="dots"></span>
                 <span class="more-text" style="display:none;">
@@ -117,6 +99,7 @@
         </div>
     </section>
 
+    <!-- Section 3 ve sonrası aynı kalıyor... -->
     <!-- Section 3: UETDS Kullanımında Sağlanan Faydalar Nelerdir? -->
     <section id="section3">
         <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-5">
@@ -303,7 +286,7 @@
             <div class="col-lg-6">
                 <h3>U-ETDS Zorunlu mu?</h3>
                 <p>
-                    Ulaştırma Elektronik Takip ve Denetim Sistemi (U-ETDS), ilk olarak 08.01.2018 tarih ve 30295 sayılı Resmi Gazete’de yayımlanarak yürürlüğe giren Karayolu Taşıma Yönetmeliği (KTY) ile tanımlanmıştır.
+                    Ulaştırma Elektronik Takip ve Denetim Sistemi (U-ETDS), ilk olarak 08.01.2018 tarih ve 30295 sayılı Resmi Gazete'de yayımlanarak yürürlüğe giren Karayolu Taşıma Yönetmeliği (KTY) ile tanımlanmıştır.
                 </p>
                 <p>
                     4925 sayılı Karayolu Taşıma Kanunu (KTK) ve KTY çerçevesinde taşımacılık faaliyetinde bulunan firmaların taşıdıkları eşya, kargo ve yolcu hareketlerini elektronik olarak bildirmek zorundadır. UETDS eşya,kargo ve yolcu taşıyan firmalar için zorunludur.
@@ -329,16 +312,16 @@
             <div class="col-lg-6">
                 <h3>U-ETDS Ödüllendirme Cezalandırma Nedir?</h3>
                 <p>
-                    Bakanlıkça, takvim yılı başından itibaren üç aylık dönemlerle U-ETDS’ye bildirim yükümlülüklerini yerine getirenlerin, kontrolü yapılan yetki belgesi faaliyetleri için, varsa daha önce verilmiş ve henüz kaldırılmamış olan uyarmalarından,<strong> toplam 20 uyarma iptal edilecektir.</strong>
+                    Bakanlıkça, takvim yılı başından itibaren üç aylık dönemlerle U-ETDS'ye bildirim yükümlülüklerini yerine getirenlerin, kontrolü yapılan yetki belgesi faaliyetleri için, varsa daha önce verilmiş ve henüz kaldırılmamış olan uyarmalarından,<strong> toplam 20 uyarma iptal edilecektir.</strong>
                 </p>
                 <p>
-                    U-ETDS’YE VERİ GÖNDERMEYENLER NASIL BİR MÜEYYİDEYLE KARŞILAŞIR?
+                    U-ETDS'YE VERİ GÖNDERMEYENLER NASIL BİR MÜEYYİDEYLE KARŞILAŞIR?
                 </p>
                 <span class="dots"></span>
                 <span class="more-text" style="display:none;">
-                    KTY gereğince,U-ETDS’ye bildirim yükümlülüklerini yerine getirmeyen,yetki belgesi sahiplerine <strong>10 uyarma verilecektir.</strong>
+                    KTY gereğince,U-ETDS'ye bildirim yükümlülüklerini yerine getirmeyen,yetki belgesi sahiplerine <strong>10 uyarma verilecektir.</strong>
 
-                    U-ETDS’YE YANLIŞ VERİ GÖNDERENLER NASIL BİR MÜEYYİDEYLE KARIŞILAŞIR?
+                    U-ETDS'YE YANLIŞ VERİ GÖNDERENLER NASIL BİR MÜEYYİDEYLE KARIŞILAŞIR?
 
                     Yetki belgesi sahiplerinin, U-ETDS sistemine ilettikleri bilgilerin yanlış olduğunun tespit edilmesi halinde, yetki belgesi sahiplerine <strong> 5 uyarma verilecektir.</strong>
                 </span>
@@ -362,6 +345,29 @@
 </div>
 
 <style>
+    /* Üst banner genişliği için ekstra stiller */
+    .page-header {
+        width: 100%;
+        background-color: green; /* Arka plan rengini yeşil yap */
+        position: relative; /* Konumlandırma için gerekli */
+    }
+
+    .breadcrumb {
+        font-size: 1.25rem; /* Yazı boyutunu büyüt */
+        font-weight: bold; /* Yazı kalınlığını artır */
+    }
+
+        .breadcrumb a, .breadcrumb .active {
+            color: white; /* Yazı rengini beyaz yap */
+        }
+
+    nav[aria-label="breadcrumb"] {
+        position: absolute; /* Breadcrumb'ı sayfa üzerinde konumlandır */
+        top: 20px; /* Breadcrumb'ı yukarıya kaydır */
+        width: 100%; /* Breadcrumb'ın tüm genişliği kaplaması için */
+    }
+
+
     button {
         background-color: transparent;
         border: none;
@@ -381,6 +387,7 @@
         button:focus {
             outline: none; /* Butona tıklandığında odak çerçevesi olmasın */
         }
+
     .expanded-content {
         position: fixed;
         top: 20%;
@@ -415,7 +422,6 @@
         cursor: pointer;
     }
 </style>
-
 <!-- Script -->
 <script>
         function toggleReadMore(sectionId) {
@@ -435,22 +441,5 @@
         }
     }
 
-    // Scroll olayını dinle
-    window.addEventListener('scroll', function() {
-        var sections = document.querySelectorAll('section');
-        sections.forEach(function(section) {
-            var moreText = section.querySelector('.more-text');
-            var dots = section.querySelector('.dots');
-            var btn = section.querySelector('.read-more-btn');
-
-            // Eğer "daha fazla" metin görünür durumdaysa
-            if (moreText && dots && btn && moreText.style.display === "inline") {
-                // Scroll olayında, metni gizle
-                moreText.style.display = "none";
-                dots.style.display = "inline";  // '...' geri gelsin
-                btn.innerHTML = "...Devamı için tıklayın";
-            }
-        });
-    });
 </script>
 

@@ -29,17 +29,18 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Yeni Referans Ekle</h4><br />
-                            <form asp-action="AdminEkle" method="post">
+                            <form asp-action="AdminEkle" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label asp-for="Description" class="form-label">Referans Açıklaması</label>
                                     <input asp-for="Description" class="form-control" required />
                                     <span asp-validation-for="Description" class="text-danger"></span>
                                 </div>
-
+                                <input type="hidden" name="ImageUrl" value="Test">
                                 <div class="mb-3">
-                                    <label asp-for="ImageUrl" class="form-label">Resim Dosya Adı (örn: uetdslogo.png)</label>
-                                    <input asp-for="ImageUrl" class="form-control" required />
-                                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                    <label asp-for="Dosya" class="form-label">Resim Dosya</label>
+                                    @* <input asp-for="ImageUrl" class="form-control" required /> *@
+                                    <input type="file" asp-for="Dosya" required class="form-control" />
+                                    <span asp-validation-for="Dosya" class="text-danger"></span>
                                 </div>
                                 <div class="form-check">
                                     <input asp-for="IsActive" class="form-check-input" />

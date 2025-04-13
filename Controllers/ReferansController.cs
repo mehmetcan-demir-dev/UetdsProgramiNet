@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using UetdsProgramiNet;
@@ -58,20 +59,34 @@ public class ReferansController : Controller
     {
         if (ModelState.IsValid)
         {
-            var yeniReferans = new Referans
+            if (model.Dosya != null && model.Dosya.ContentType != "image/png" && model.Dosya.ContentType != "image/jpg" && model.Dosya.ContentType != "image/jpeg")
             {
-                Description = model.Description,
-                ImageUrl = model.ImageUrl,
-                IsActive = model.IsActive,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                CreatedUsername = User.Identity.Name,
-                UpdatedUsername = User.Identity.Name
-            };
-
-            _context.Referanslar.Add(yeniReferans);
-            await _context.SaveChangesAsync();
-
+                TempData["AlertType"] = "warning";
+                TempData["AlertHeader"] = "Sistem Uyarısı";
+                TempData["AlertContent"] = "Geçersiz dosya tipi yüklediniz. Dosyalarınız Png, Jpg, Jpeg uzantılı olmalıdır.";
+            }
+            else
+            {
+                var fileName = Guid.NewGuid().ToString() + "_" + model.Dosya.FileName;
+                var fullFilePath = Path.Combine(Environment.CurrentDirectory + $"\\wwwroot\\assets2\\img\\referanslar", fileName);
+                var yeniReferans = new Referans
+                {
+                    Description = model.Description,
+                    ImageUrl = Path.Combine($"\\assets2\\img\\referanslar", fileName),
+                    IsActive = model.IsActive,
+                    CreatedDate = DateTime.Now,
+                    CreatedUsername = HttpContext.Session.GetString("Username")
+                };
+                if (model.Dosya.Length > 0)
+                {
+                    using (var stream = System.IO.File.Create(fullFilePath))
+                    {
+                        await model.Dosya.CopyToAsync(stream);
+                    }
+                }
+                _context.Referanslar.Add(yeniReferans);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction("AdminIndex");
         }
 
@@ -105,6 +120,7 @@ public class ReferansController : Controller
         return View(model);
     }
 
+
     // Referans Güncelleme POST - Admin
     [AccessControl]
     [HttpPost]
@@ -126,14 +142,50 @@ public class ReferansController : Controller
                 return NotFound();
             }
 
+            // Formdan gelen yeni açıklamayı ve durumu güncelle
             referans.Description = model.Description;
-            referans.ImageUrl = model.ImageUrl;
             referans.IsActive = model.IsActive;
             referans.UpdatedDate = DateTime.Now;
             referans.UpdatedUsername = User.Identity.Name;
 
+            // Dosya yükleme işlemi
+            if (model.Dosya != null)
+            {
+                // Geçerli dosya tiplerini kontrol et
+                if (model.Dosya.ContentType != "image/png" && model.Dosya.ContentType != "image/jpg" && model.Dosya.ContentType != "image/jpeg")
+                {
+                    TempData["AlertType"] = "warning";
+                    TempData["AlertHeader"] = "Sistem Uyarısı";
+                    TempData["AlertContent"] = "Geçersiz dosya tipi yüklediniz. Dosyalarınız Png, Jpg, Jpeg uzantılı olmalıdır.";
+                    return View(model);
+                }
+
+                // Yeni dosya adı oluştur
+                var fileName = Guid.NewGuid().ToString() + "_" + model.Dosya.FileName;
+                var fullFilePath = Path.Combine(Environment.CurrentDirectory + $"\\wwwroot\\assets2\\img\\referanslar", fileName);
+
+                // Mevcut dosyayı sil (varsa) ve yeni dosyayı kaydet
+                if (!string.IsNullOrEmpty(referans.ImageUrl))
+                {
+                    var oldFilePath = Path.Combine(Environment.CurrentDirectory + "\\wwwroot" + referans.ImageUrl);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
+                // Yeni dosyayı kaydet
+                using (var stream = System.IO.File.Create(fullFilePath))
+                {
+                    await model.Dosya.CopyToAsync(stream);
+                }
+
+                referans.ImageUrl = Path.Combine($"\\assets2\\img\\referanslar", fileName);
+            }
+
             try
             {
+                // Veritabanında güncelleme işlemi
                 _context.Update(referans);
                 await _context.SaveChangesAsync();
             }
@@ -154,6 +206,7 @@ public class ReferansController : Controller
 
         return View(model);
     }
+
 
     // Silme Sayfası - Admin
     [AccessControl]

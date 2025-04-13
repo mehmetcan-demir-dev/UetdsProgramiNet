@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UetdsProgramiNet.Models
 {
@@ -10,10 +11,9 @@ namespace UetdsProgramiNet.Models
         [Required(ErrorMessage = "Açıklama gereklidir")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Resim URL gereklidir")]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         public bool IsActive { get; set; }
-       
+        public IFormFile? Dosya { get; set; }
     }
 }

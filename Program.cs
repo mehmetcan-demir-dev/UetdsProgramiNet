@@ -18,8 +18,6 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 // MVC yapılandırması
 builder.Services.AddControllersWithViews();
 
-// Servisleri DI konteynırına ekleme
-builder.Services.AddScoped<IUserService, UserService>();  // IUserService için UserService implementasyonu
 
 // DbContext ve Identity yapılandırması
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -30,33 +28,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     });
 });
 
-// Identity yapılandırması
-builder.Services.AddIdentity<AppUser, AppRole>(options =>
-{
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 6;
-})
-.AddEntityFrameworkStores<AppDbContext>()
-.AddDefaultTokenProviders();
-
-// UserManager ve SignInManager servislerini DI'ye ekleyelim
-builder.Services.AddScoped<UserManager<AppUser>>();
-builder.Services.AddScoped<SignInManager<AppUser>>();
-
-// Kimlik doğrulama yapılandırması (Cookie Authentication)
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/Account/Login";
-        options.LogoutPath = "/Account/Logout";
-        options.AccessDeniedPath = "/Account/AccessDenied";
-        options.Cookie.HttpOnly = true;
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);  // Oturum süresi
-        options.SlidingExpiration = true;  // Oturum aktifse süresi uzar
-    });
 
 // Session yapılandırması
 builder.Services.AddSession(options =>

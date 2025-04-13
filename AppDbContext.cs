@@ -4,7 +4,7 @@ using UetdsProgramiNet.Entities;
 
 namespace UetdsProgramiNet
 {
-    public class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

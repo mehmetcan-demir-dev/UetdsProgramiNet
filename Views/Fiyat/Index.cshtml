@@ -4,34 +4,36 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<div class="container" >
-    <!-- Breadcrumb Section -->
+<!-- Main Content Wrapper -->
+
+<div role="main" class="main px-3 px-lg-5">
     <div class="page-header py-0 bg-primary px-3 px-xl-0 border-radius-2 p-relative mb-5">
-        <div class="overflow-hidden p-absolute top-0 left-0 bottom-0 h-100 w-100">
-            <div class="custom-el-5 custom-pos-4">
-                <img class="img-fluid opacity-2 opacity-hover-2" src="img/demos/accounting-1/svg/waves.svg" alt="">
-            </div>
-        </div>
         <div class="container p-relative z-index-1 py-2">
             <div class="row align-items-center py-4">
+                <div class="col-8 col-md-7">
+                    <div class="appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="0">
+                        <span class="badge bg-color-dark-rgba-10 text-light rounded-pill text-uppercase font-weight-semibold text-2-5 px-3 py-2 px-4 mb-3"><span class="d-inline-flex py-1 px-2">fiyat listesi</span></span>
+                    </div>
+                    <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="200">
+                        <h1 class="text-dark text-9 text-lg-12 font-weight-semibold line-height-1 mb-2">Fiyat Listesini İnceleyebilirsiniz.</h1>
+                    </div>
+                    <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="200">
+                        <ul class="breadcrumb d-flex text-3-5 font-weight-semi-bold pb-2 mb-3">
+                            <li><a href="/" class="text-dark text-decoration-none">Anasayfa</a></li>
+                            <li class="active">Fiyat Listesi</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="col-4 col-md-5 p-relative">
                     <div class="opacity-2 p-absolute w-100 rotate-r-50 custom-pos-5 d-none d-lg-block">
-                        <img src="~/assets2/img/icons/abstract-bg-1.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-secondary w-100'}" />
+                        <img src="~/img/icons/abstract-bg-1.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-secondary w-100'}" />
                     </div>
                     <div class="custom-mask-img custom-mask-img-4 custom-el-6">
-                        <img src="img/demos/accounting-1/generic/generic-4.jpg" loading="lazy" class="img-fluid" alt="" />
+                        <img src="~/assets2/img/demos/accounting-1/generic/fiyatPeople.jpg" loading="lazy" class="img-fluid" alt="" />
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Breadcrumb Nav -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb justify-content-center">
-                <li class="breadcrumb-item"><a href="/" class="text-white text-lg">AnaSayfa</a></li>
-                <li class="breadcrumb-item active text-white text-lg" aria-current="page">U-ETDS Fiyatlandırma</li>
-            </ol>
-        </nav>
     </div>
 
     <!-- Title Section -->
@@ -41,79 +43,97 @@
     </div>
 
     <!-- Fiyat Listesi Kartları -->
-    <div class="row">
-        @foreach (var fiyat in Model)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h5 class="card-title">@fiyat.AracPaketi</h5>
-                    </div>
-                    <div class="card-body text-center">
-                        <div style="background-color: #4DB050; padding: 10px 0; color: white;">
-                            <strong>Teklif İsteyin</strong>
+    <div class="container">
+        <div class="row">
+            @foreach (var fiyat in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h5 class="card-title">@fiyat.AracPaketi</h5>
                         </div>
-                        <ul class="list-group">
-                            <li class="list-group-item">Teklif: <strong>@fiyat.KullaniciMiktari</strong></li>
-                            <li class="list-group-item">Sınırsız Kullanıcı: @fiyat.MobilBilgisi</li>
-                            <li class="list-group-item">Ücretsiz Mobil Uygulama: @fiyat.DestekBilgisi</li>
-                            <li class="list-group-item">Ücretsiz Destek: @fiyat.DestekSaatleri</li>
-                            <li class="list-group-item">7/24 Destek: @fiyat.YedeklemeTuru</li>
-                        </ul>
-                    </div>
-                    <div class="card-footer text-center">
-                        <a style="background-color: #4DB050; color:white;" href="@fiyat.WhatsAppUrl" target="_blank" class="btn btn-primary mt-2">Sipariş Ver</a>
+                        <div class="card-body text-center">
+                            <div style="background-color: #4DB050; padding: 10px 0; color: white;">
+                                <strong>Teklif İsteyin</strong>
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item">Teklif: <strong>@fiyat.KullaniciMiktari</strong></li>
+                                <li class="list-group-item">Sınırsız Kullanıcı: @fiyat.MobilBilgisi</li>
+                                <li class="list-group-item">Ücretsiz Mobil Uygulama: @fiyat.DestekBilgisi</li>
+                                <li class="list-group-item">Ücretsiz Destek: @fiyat.DestekSaatleri</li>
+                                <li class="list-group-item">7/24 Destek: @fiyat.YedeklemeTuru</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a style="background-color: #4DB050; color:white;" href="@fiyat.WhatsAppUrl" target="_blank" class="btn btn-primary mt-2">Sipariş Ver</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+        </div>
 
-        }
-    </div>
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
-                    <h5 class="card-title text-center text-uppercase mb-4">Önemli Bilgilendirme</h5>
-                    <p class="text-muted mb-2">📌 <strong>Tüm fiyatlar KDV hariçtir.</strong></p>
-                    <p class="text-muted mb-4">📌 <strong>Tüm fiyatlar 1 yıllık hizmeti kapsamaktadır.</strong></p>
+        <!-- Important Notice Section -->
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-uppercase mb-4">Önemli Bilgilendirme</h5>
+                        <p class="text-muted mb-2">📌 <strong>Tüm fiyatlar KDV hariçtir.</strong></p>
+                        <p class="text-muted mb-4">📌 <strong>Tüm fiyatlar 1 yıllık hizmeti kapsamaktadır.</strong></p>
 
-                    <hr />
+                        <hr />
 
-                    <h6 class="text-dark fw-bold mb-2">Logi Soft Lojistik Bilişim Sistemleri San. Tic. Ltd. Şti.</h6>
-                    <p class="mb-1"><strong>Vergi Dairesi:</strong> KARŞIYAKA V.D.</p>
-                    <p class="mb-3"><strong>Vergi No:</strong> 6091119777</p>
+                        <h6 class="text-dark fw-bold mb-2">Logi Soft Lojistik Bilişim Sistemleri San. Tic. Ltd. Şti.</h6>
+                        <p class="mb-1"><strong>Vergi Dairesi:</strong> KARŞIYAKA V.D.</p>
+                        <p class="mb-3"><strong>Vergi No:</strong> 6091119777</p>
 
-                    <h6 class="text-dark fw-bold mb-2">Banka Hesap Bilgileri</h6>
-                    <p class="mb-1"><strong>Banka:</strong> Ziraat Bankası</p>
-                    <p class="mb-1"><strong>IBAN:</strong> TR09 0001 0008 0497 5019 5550 01</p>
-                    <p class="mb-1"><strong>Şube No:</strong> 804 Hatay/İZMİR Şubesi</p>
-                    <p class="mb-3"><strong>Hesap No:</strong> 804-97501955-5001</p>
+                        <h6 class="text-dark fw-bold mb-2">Banka Hesap Bilgileri</h6>
+                        <p class="mb-1"><strong>Banka:</strong> Ziraat Bankası</p>
+                        <p class="mb-1"><strong>IBAN:</strong> TR09 0001 0008 0497 5019 5550 01</p>
+                        <p class="mb-1"><strong>Şube No:</strong> 804 Hatay/İZMİR Şubesi</p>
+                        <p class="mb-3"><strong>Hesap No:</strong> 804-97501955-5001</p>
 
-                    <div class="alert alert-warning mt-4 mb-0" role="alert">
-                        <strong>Not:</strong> Lütfen HAVALE veya EFT’nizden sonra <strong>firma adınızı</strong> ve <strong>ödeme dekontunuzu</strong> <a href="mailto:info@uetdsprogrami.net">info@uetdsprogrami.net</a> adresine gönderiniz.
+                        <div class="alert alert-warning mt-4 mb-0" role="alert">
+                            <strong>Not:</strong> Lütfen HAVALE veya EFT’nizden sonra <strong>firma adınızı</strong> ve <strong>ödeme dekontunuzu</strong> <a href="mailto:info@uetdsprogrami.net">info@uetdsprogrami.net</a> adresine gönderiniz.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
-    <style>
-        .breadcrumb {
-            font-size: 1.25rem; /* Yazı boyutunu büyüt */
-            font-weight: bold; /* Yazı kalınlığını artır */
+
+<style>
+    .breadcrumb {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+        .breadcrumb a, .breadcrumb .active {
+            color: white;
         }
 
-            .breadcrumb a, .breadcrumb .active {
-                color: white; /* Yazı rengini beyaz yap */
-            }
+    .page-header {
+        background-color: green;
+        position: relative;
+    }
 
-        .page-header {
-            background-color: green; /* Arka plan rengini yeşil yap */
-            position: relative; /* Konumlandırma için gerekli */
-        }
+    nav[aria-label="breadcrumb"] {
+        position: absolute;
+        top: 20px;
+        width: 100%;
+    }
 
-        nav[aria-label="breadcrumb"] {
-            position: absolute; /* Breadcrumb'ı sayfa üzerinde konumlandır */
-            top: 20px; /* Breadcrumb'ı yukarıya kaydır */
-            width: 100%; /* Breadcrumb'ın tüm genişliği kaplaması için */
-        }
-    </style>
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #f7f7f7;
+    }
+
+    .btn-primary {
+        background-color: #4DB050;
+        border-color: #4DB050;
+    }
+</style>
